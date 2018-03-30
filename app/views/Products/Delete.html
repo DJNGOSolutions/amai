@@ -1,0 +1,48 @@
+{{set . "title" "Home"}}
+{{append . "moreStyles" "css/style.css"}}
+{{template "header.html" .}}
+
+<header class="" style="">
+  <div class="container">
+    <div class="row">
+      <h1>Test Page</h1>
+      <p></p>
+    </div>
+  </div>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th> codigo </th>
+                        <th> precio </tg>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{ range .products}}
+                    <tr>
+                        <td> {{.Code}} </td>
+                        <td> {{.Price}}</td>
+                        <td> <form method="POST" action="delete/{{ .ProductID }}" >
+                                <button class="btn" type="submit">delete </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="span6">
+      {{template "flash.html" .}}
+    </div>
+  </div>
+</div>
+
+{{template "footer.html" .}}
