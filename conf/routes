@@ -8,6 +8,7 @@ module:testrunner
 
 
 GET     /                                       App.Index
+GET     /test                                   App.Test
 GET     /insert                                 App.Insert
 GET     /insert/:code/:price                    Products.Insert
 GET     /show/:code                             Products.Show

@@ -2,17 +2,42 @@ html,body{
     height: 100%;
     background-color:#1c1f2b;
     color:#bdcadb ;
+    font-size: 17px;
 }
+ body{
+     margin: 0;
+ }
 header{
     background: #2d3143;
+    margin-left: 15%;
 }
 
 .menuBorder{
-    border-right: 2px solid #2d3143;
-    height: 100vh;
+    height: 100%;
 }
 
 .menu{
+    background: #2d3143;
+    border-right: 2px solid #2d3143;
+    list-style-type: none;
+    margin: 0;
+    padding-top: 70px;
+    width: 15%;
+    height: 100%;
     position: fixed;
+    overflow-x: hidden;
+    z-index:1;
+    top: 0;
+    left: 0;
 }
 
+.menu a{
+    display: block;
+    padding: 10px;
+    padding-left: 10px;
+    background-color:#292d3c;
+}
+
+.menu a:hover{
+    background-color: #232733;
+}

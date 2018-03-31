@@ -19,6 +19,10 @@ func (c App) Index() revel.Result {
 	return c.Render(products)
 }
 
+func (c App) Test() revel.Result {
+	return c.Render()
+}
+
 func (c *App) Insert() revel.Result {
 	pro := models.Product{Code: "a", Price: 100}
 	Gdb.Create(&pro)
