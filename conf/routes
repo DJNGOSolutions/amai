@@ -13,6 +13,7 @@ GET     /insert/:code/:price                    Products.Insert
 GET     /show/:code                             Products.Show
 GET     /delete                                 Products.Delete
 POST    /delete/:id                             Products.Pop 
+GET     /help                                   App.Help
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

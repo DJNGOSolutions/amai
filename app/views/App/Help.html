@@ -1,0 +1,51 @@
+{{set . "title" "Home"}}
+{{append . "moreStyles" "css/style.css"}}
+{{template "header.html" .}}
+
+<header class="" style="">
+  <div class="container">
+    <div class="row">
+      <h1>Help Page</h1>
+      <p></p>
+    </div>
+  </div>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+      <div >
+          
+      </div>
+      <div class="col-md-2 menuBorder">
+          <div class="menu">
+             <h4>Index</h4> 
+             <ol>
+                 <li>
+                     <a href="#database" >Database Text</a>
+                     <ol>
+                         <li><a href="#config" >Configuración</a></li>
+                     </ol>
+                 </li>
+                 <li> <a href="#routing" >Routing</a></li>
+             </ol>
+              
+          </div>
+      </div>
+      <div class="col-md-10">
+             <h2 id="database"> Database</h2>
+         <ol>
+             <li><h3  id="config"> Configurando la base de datos</h3> </li>
+         <p> Para asignar la base de datos hay que pasar por multiples archivos, el primero es gorm.go </p>
+         <p> ---- gorm.go esta en <b><i><em> app > controllers > gorm.go </em></i></b>  y en la linea 27 los
+         datos a modificar</p> 
+         <img src="public/img/db_gorm.png" alt="">
+         <p>El siguiente archivo esta en <b><i><em>conf > app.conf </em></i></b> al inicio del archihvo esta la configuración</p>
+         <img src="public/img/db_app.conf.png" alt="">
+         <h2 id="routing"> Routing</h2> 
+         <ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{template "footer.html" .}}

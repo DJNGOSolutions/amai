@@ -24,3 +24,7 @@ func (c *App) Insert() revel.Result {
 	Gdb.Create(&pro)
 	return c.Redirect(routes.App.Index())
 }
+
+func (c App) Help() revel.Result {
+	return c.Render()
+}
