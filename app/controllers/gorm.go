@@ -30,6 +30,7 @@ func InitDB() {
 		panic(err)
 	}
 	Gdb.AutoMigrate(&models.Product{})
+	Gdb.AutoMigrate(&models.User{})
 	// unique index if need
 	//Gdb.Model(&models.User{}).AddUniqueIndex("idx_user_name", "name")
 }
