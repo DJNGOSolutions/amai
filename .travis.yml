@@ -1,0 +1,76 @@
+language: go
+
+go:
+  - "1.10.x"
+  - master
+  
+os:
+  - linux
+  #- osx !temporal
+  - windows
+
+sudo: false
+
+notifications:
+  slack: djangosolutions:FXXzat2yuZjb2jqmjm4G99XF
+
+branches:
+  only:
+    - master
+    
+services:
+  - memcache 
+  - redis-server
+  - postgresql
+  
+before_install:
+  - ln -s $GOPATH/src/github.com/pdmp/amai $GOPATH/src/amai
+  - echo $TRAVIS_OS_NAME
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      brew update && brew install memcached redis && brew services start redis && brew services start memcached
+      export PG_DATA=$(brew --prefix)/var/postgres
+      pg_ctl -w start -l postgres.log --pgdata ${PG_DATA}
+      createuser -s postgres
+      psql -c 'create database amai_development;' -U postgres
+      cat postgres.log
+    fi
+  - redis-server --daemonize yes
+  - redis-cli info
+  - |
+    if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
+      psql -c 'create database amai_development;' -U postgres
+    fi 
+  
+  
+install:
+  - export PATH=$PATH:$HOME/gopath/bin
+  - export REVEL_BRANCH="develop"
+  - 'if [[ "$TRAVIS_BRANCH" == "master" ]]; then export REVEL_BRANCH="master"; fi'
+  - 'echo "Travis branch: $TRAVIS_BRANCH, Revel dependency branch: $REVEL_BRANCH"'
+  - git clone -b $REVEL_BRANCH git://github.com/revel/modules ../modules/
+  - git clone -b $REVEL_BRANCH git://github.com/revel/cmd ../cmd/
+  - git clone -b $REVEL_BRANCH git://github.com/revel/config ../config/
+  - git clone -b $REVEL_BRANCH git://github.com/revel/cron ../cron/
+  - git clone -b $REVEL_BRANCH git://github.com/revel/examples ../examples/
+  - go get -v github.com/revel/revel/...
+  - go get -v github.com/revel/cmd/revel
+  - go get -v github.com/mattn/go-sqlite3
+  - go get -v github.com/jinzhu/gorm
+  
+script:
+  #- go test -v github.com/revel/revel/...
+  #- revel version
+  #- revel new     my/testapp
+  #- revel test    my/testapp
+  #- revel clean   my/testapp
+  #- revel build   my/testapp build/testapp
+  #- revel build   my/testapp build/testapp prod
+  #- revel package my/testapp
+  #- revel package my/testapp prod
+  - revel test    github.com/pdmp/amai dev
+
+
+matrix:
+  allow_failures:
+    os: osx
