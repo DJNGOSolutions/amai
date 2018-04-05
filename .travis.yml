@@ -59,15 +59,6 @@ install:
   - go get -v github.com/jinzhu/gorm
   
 script:
-  #- go test -v github.com/revel/revel/...
-  #- revel version
-  #- revel new     my/testapp
-  #- revel test    my/testapp
-  #- revel clean   my/testapp
-  #- revel build   my/testapp build/testapp
-  #- revel build   my/testapp build/testapp prod
-  #- revel package my/testapp
-  #- revel package my/testapp prod
   - revel test    github.com/pdmp/amai dev
 
 
