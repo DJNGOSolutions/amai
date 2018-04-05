@@ -8,9 +8,8 @@ module:testrunner
 
 
 GET     /                                       App.Index
-GET     /insert                                 App.Insert
 GET     /insert/:code/:price                    Products.Insert
-GET     /show/:code                             Products.Show
+POST    /show/:code                             Products.Show
 GET     /delete                                 Products.Delete
 POST    /delete/:id                             Products.Pop 
 GET     /help                                   App.Help

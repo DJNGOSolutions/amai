@@ -1,32 +1,22 @@
 package controllers
 
 import (
-	"amai/app/models"
-	"amai/app/routes"
+	"github.com/pdmp/amai/app/models"
 
+	gormc "github.com/revel/modules/orm/gorm/app/controllers"
 	"github.com/revel/revel"
 )
 
 type App struct {
-	*revel.Controller
+	gormc.Controller
 }
 
 func (c App) Index() revel.Result {
 	var products []*models.Product
 	//var prods models.Product
 	//Gdb.Select("code", "price").Find(&prods).Scan(&products)
-	Gdb.Raw("SELECT * FROM products;").Scan(&products)
+	c.DB.Raw("SELECT * FROM product;").Scan(&products)
 	return c.Render(products)
-}
-
-func (c App) Test() revel.Result {
-	return c.Render()
-}
-
-func (c *App) Insert() revel.Result {
-	pro := models.Product{Code: "a", Price: 100}
-	Gdb.Create(&pro)
-	return c.Redirect(routes.App.Index())
 }
 
 func (c App) Help() revel.Result {
