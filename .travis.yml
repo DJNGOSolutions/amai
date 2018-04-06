@@ -11,9 +11,6 @@ os:
 
 sudo: false
 
-notifications:
-  slack: djangosolutions:FXXzat2yuZjb2jqmjm4G99XF
-
 branches:
   only:
     - master
