@@ -1,68 +1,50 @@
 language: go
-
 go:
-  - "1.10.x"
-  - master
-  
+- 1.10.x
+- master
 os:
-  - linux
-  #- osx !temporal
-  - windows
-
+- linux
+- windows
 sudo: false
-
-notifications:
-  slack: 
-    secure: "VF/MgUXL0MAmsQVJNJVzAyxcnSi2vF0PWhNZTpnzGcL0rlA5Ds8MNA6+OPVCWpDxvEMv7BuaAptw2SoNx30lfBXNKu9HGQfWEg76Hk/7VQoLTFYlPTeZShdsy5YwKLiXirx2Sg4CwPCOUXcKKZ6kUthp7THQIKg96mLn9oAOW7dGHyF/XzOJKY7YtRcQwkqFvASsnTF8sfY6nOCXE7USxCPEyQABBvr5ZlJTcEB9jOWPXn+i8h5IkNnb4DytfPqioDtU8OOi8gslPkV96Ym0x6wf5+sol4HarcU9VclpbPRwK+IAaBzlMLB1h+gq6bZ34ad/zFHFhos8/eFdQScQ+uCNyQfz0SSrfRmwExfmBuI73xEjE30S/Mmsf/r47cq/sskaj+YTzgovuHpaGIH6GRbcCKYxMHc0g07aEWOlb8vznmkxygR+xtT9Mgvz1lSgSdW/qgNgxPjNTugVtQvOQPt5ma4P3CFyWG1cfv+JnOsREsJ1Lprlb0XMQhA1+99u5Zv2ppFd09PtGYtqy1tqhDOwyy/QZN0eb8X5qj0vdoJcfJn9Q7XVdhXxhBySqbDt7F/nHZRQCO+loiaclmDl+zLT1+3Q86caECLo/36WRuJ8XkEDkD7oAy1xRsvOjjSBahVuvCDTRuzbtumnr5K/Wgueo0T+9+2ciC6aL7zQqhg="
-
 branches:
   only:
-    - master
-    
+  - master
 services:
-  - memcache 
-  - redis-server
-  - postgresql
-  
+- memcache
+- redis-server
+- postgresql
 before_install:
-  - ln -s $GOPATH/src/github.com/pdmp/amai $GOPATH/src/amai
-  - echo $TRAVIS_OS_NAME
-  - |
-    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-      brew update && brew install memcached redis && brew services start redis && brew services start memcached
-      export PG_DATA=$(brew --prefix)/var/postgres
-      pg_ctl -w start -l postgres.log --pgdata ${PG_DATA}
-      createuser -s postgres
-      psql -c 'create database amai_development;' -U postgres
-      cat postgres.log
-    fi
-  - redis-server --daemonize yes
-  - redis-cli info
-  - |
-    if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
-      psql -c 'create database amai_development;' -U postgres
-    fi 
-  
-  
+- ln -s $GOPATH/src/github.com/pdmp/amai $GOPATH/src/amai
+- echo $TRAVIS_OS_NAME
+- |
+  if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+    brew update && brew install memcached redis && brew services start redis && brew services start memcached
+    export PG_DATA=$(brew --prefix)/var/postgres
+    pg_ctl -w start -l postgres.log --pgdata ${PG_DATA}
+    createuser -s postgres
+    psql -c 'create database amai_development;' -U postgres
+    cat postgres.log
+  fi
+- redis-server --daemonize yes
+- redis-cli info
+- "if [[ \"$TRAVIS_OS_NAME\" != \"osx\" ]]; then\n  psql -c 'create database amai_development;'
+  -U postgres\nfi \n"
 install:
-  - export PATH=$PATH:$HOME/gopath/bin
-  - export REVEL_BRANCH="develop"
-  - 'if [[ "$TRAVIS_BRANCH" == "master" ]]; then export REVEL_BRANCH="master"; fi'
-  - 'echo "Travis branch: $TRAVIS_BRANCH, Revel dependency branch: $REVEL_BRANCH"'
-  - git clone -b $REVEL_BRANCH git://github.com/revel/modules ../modules/
-  - git clone -b $REVEL_BRANCH git://github.com/revel/cmd ../cmd/
-  - git clone -b $REVEL_BRANCH git://github.com/revel/config ../config/
-  - git clone -b $REVEL_BRANCH git://github.com/revel/cron ../cron/
-  - git clone -b $REVEL_BRANCH git://github.com/revel/examples ../examples/
-  - go get -v github.com/revel/revel/...
-  - go get -v github.com/revel/cmd/revel
-  - go get -v github.com/mattn/go-sqlite3
-  - go get -v github.com/jinzhu/gorm
-  
+- export PATH=$PATH:$HOME/gopath/bin
+- export REVEL_BRANCH="develop"
+- if [[ "$TRAVIS_BRANCH" == "master" ]]; then export REVEL_BRANCH="master"; fi
+- 'echo "Travis branch: $TRAVIS_BRANCH, Revel dependency branch: $REVEL_BRANCH"'
+- git clone -b $REVEL_BRANCH git://github.com/revel/modules ../modules/
+- git clone -b $REVEL_BRANCH git://github.com/revel/cmd ../cmd/
+- git clone -b $REVEL_BRANCH git://github.com/revel/config ../config/
+- git clone -b $REVEL_BRANCH git://github.com/revel/cron ../cron/
+- git clone -b $REVEL_BRANCH git://github.com/revel/examples ../examples/
+- go get -v github.com/revel/revel/...
+- go get -v github.com/revel/cmd/revel
+- go get -v github.com/mattn/go-sqlite3
+- go get -v github.com/jinzhu/gorm
 script:
-  - revel test    github.com/pdmp/amai dev
-
-
-matrix:
-  allow_failures:
-    os: osx
+- revel test    github.com/pdmp/amai dev
+notifications:
+  slack:
+    secure: VmHt1Geqcc2c4i46rC7oqB8SRK6kNXZd5SWvpk7apevsvqwNoivA4WgzakhvWwXEGaF7LIz4VjB1OaK8uI6o3mvXUuFtw+eiIpHE4cDu0XTwXamJr6P1KELLs2Be2R6ls/dymKGCaKcG41tEs4xzQ70ybiqFpVh6iveoqoa7sxB69MtIGQf27HmYGzwCl/7wGj2JPrF1TZ24ForKMoWrlrOO9GHHSlcAgdEC0ZpYAAZgq+GYLZK/+KNt8Vzm9e7ic8q4hxPbOfQWEYV923CvXxa108PrKc/p08nSaeDvGyDs4ZIz2wcskoLzjmpOy7epMdrhysJ/WLLsR6fFMRVU8v2CurudJjpP+hzxHV8gqDo0jJmHU3fUE33trfWkN5yd4SujNk5891KNsNPELxtxwuFwJyCT6C1QyIeQfCeSDTbXOqKNo0SpDXHIQF4y/apZcfH6P2eEDq/fsB2ZBfhXfP02jDE6O932dnc9R7qE+iOq8obttP5tte0RzmIy6K0TvtpH7InQ5RQtuavU9P06Jzfv+HCQp5x+7UD4GvWILnxmZo6Pgk5dxYhPXg3yq0t0FNZURjVtXY0TTd0YpIS4SHbkSV3i5D9/25xdgoAEhsRCjkcw+EntNFWMphvONr1hwlwuNENAIHrjD+noAPU54xrce/zkdiGmzqc9ktV0cLA=
