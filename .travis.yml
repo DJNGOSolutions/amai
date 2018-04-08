@@ -29,6 +29,7 @@ before_install:
 - redis-cli info
 - "if [[ \"$TRAVIS_OS_NAME\" != \"osx\" ]]; then\n  psql -c 'create database amai_development;'
   -U postgres\nfi \n"
+- go get github.com/mattn/goveralls
 install:
 - export PATH=$PATH:$HOME/gopath/bin
 - export REVEL_BRANCH="develop"
@@ -45,6 +46,10 @@ install:
 - go get -v github.com/jinzhu/gorm
 script:
 - revel test    github.com/pdmp/amai dev
+- "$GOPATH/bin/goveralls -service=travis-ci"
 notifications:
   slack:
     secure: VmHt1Geqcc2c4i46rC7oqB8SRK6kNXZd5SWvpk7apevsvqwNoivA4WgzakhvWwXEGaF7LIz4VjB1OaK8uI6o3mvXUuFtw+eiIpHE4cDu0XTwXamJr6P1KELLs2Be2R6ls/dymKGCaKcG41tEs4xzQ70ybiqFpVh6iveoqoa7sxB69MtIGQf27HmYGzwCl/7wGj2JPrF1TZ24ForKMoWrlrOO9GHHSlcAgdEC0ZpYAAZgq+GYLZK/+KNt8Vzm9e7ic8q4hxPbOfQWEYV923CvXxa108PrKc/p08nSaeDvGyDs4ZIz2wcskoLzjmpOy7epMdrhysJ/WLLsR6fFMRVU8v2CurudJjpP+hzxHV8gqDo0jJmHU3fUE33trfWkN5yd4SujNk5891KNsNPELxtxwuFwJyCT6C1QyIeQfCeSDTbXOqKNo0SpDXHIQF4y/apZcfH6P2eEDq/fsB2ZBfhXfP02jDE6O932dnc9R7qE+iOq8obttP5tte0RzmIy6K0TvtpH7InQ5RQtuavU9P06Jzfv+HCQp5x+7UD4GvWILnxmZo6Pgk5dxYhPXg3yq0t0FNZURjVtXY0TTd0YpIS4SHbkSV3i5D9/25xdgoAEhsRCjkcw+EntNFWMphvONr1hwlwuNENAIHrjD+noAPU54xrce/zkdiGmzqc9ktV0cLA=
+env:
+  global:
+    secure: JyOoHb0UoDcB/2qbK5FJSFmm3M69AoulSiLRowhh8HiP8ANO8ZajFMuJblKGCeWIT87dKi+nJIxJp+b9yI+86ZpfGy7pzE2GKNzm4zgC5+Rxp/xj8qBuXUL8uBqDg0GlhkNG5Aa5etPf3f9THG2zoKE6aw1kyKU8hZSaxpnNmq0V5A5G2D57XOVB7BPuz1hX+9R1Y0f8vHJeAoA04VZA5vOZLKKlXH5dGjgAalhSkfAi89hYl9J0lTwj8ZeXPRvVldO2pkuFprbvFq8jljH3tKXriRYhikrz89sWbvuqxmX0bPTkE6x1lhvlW2LLNiZj06gNvWKmZWNZC7ZI68+qlgtXjjF73XneYHYZNTI457WwJBIK/ju35tNQbbtsygScn7l0M5YjhN8cIcuwdmOQYPV7vWkiIdeoY8PGma325Brcrm5C/6y6COOo+WrqvAbDN5LzBT1qbD1v2dpDGeW+8KuLj93E4xic13t+7UuiHY/byV/VfByBkTCm3BRqp1g/md10bZQSomeXSmrquaLSEyQcPHD+fKrM31Jtq/fkONtnp15ue0Xt5zfoyo4qJamCXqzn2Zopz51qFiDPqMWqeDvN0xF7Gu3fL1Aq8VJmJ5HGNK7CuPLOwd6sk2LZEW/hPaCA5aaZYtbyQ8ehPSos+kKFjGiER893yPyY3+JY05I=
