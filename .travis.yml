@@ -46,14 +46,13 @@ install:
 - go get -v github.com/jinzhu/gorm
 script:
 - revel test    github.com/pdmp/amai dev
-- $HOME/gopath/bin/goveralls -service=travis-ci -repotoken $COVERALLS_TOKEN
-- $HOME/gopath/bin/goveralls -service=travis-ci 
-- $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN
-- $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci
-
+- "$HOME/gopath/bin/goveralls -service=travis-ci -repotoken $COVERALLS_TOKEN"
+- "$HOME/gopath/bin/goveralls -service=travis-ci"
+- "$HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken  $COVERALLS_TOKEN"
+- "$HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci"
 notifications:
   slack:
     secure: VmHt1Geqcc2c4i46rC7oqB8SRK6kNXZd5SWvpk7apevsvqwNoivA4WgzakhvWwXEGaF7LIz4VjB1OaK8uI6o3mvXUuFtw+eiIpHE4cDu0XTwXamJr6P1KELLs2Be2R6ls/dymKGCaKcG41tEs4xzQ70ybiqFpVh6iveoqoa7sxB69MtIGQf27HmYGzwCl/7wGj2JPrF1TZ24ForKMoWrlrOO9GHHSlcAgdEC0ZpYAAZgq+GYLZK/+KNt8Vzm9e7ic8q4hxPbOfQWEYV923CvXxa108PrKc/p08nSaeDvGyDs4ZIz2wcskoLzjmpOy7epMdrhysJ/WLLsR6fFMRVU8v2CurudJjpP+hzxHV8gqDo0jJmHU3fUE33trfWkN5yd4SujNk5891KNsNPELxtxwuFwJyCT6C1QyIeQfCeSDTbXOqKNo0SpDXHIQF4y/apZcfH6P2eEDq/fsB2ZBfhXfP02jDE6O932dnc9R7qE+iOq8obttP5tte0RzmIy6K0TvtpH7InQ5RQtuavU9P06Jzfv+HCQp5x+7UD4GvWILnxmZo6Pgk5dxYhPXg3yq0t0FNZURjVtXY0TTd0YpIS4SHbkSV3i5D9/25xdgoAEhsRCjkcw+EntNFWMphvONr1hwlwuNENAIHrjD+noAPU54xrce/zkdiGmzqc9ktV0cLA=
 env:
   global:
-    secure: HJnLD6OAz9vkKMjMqGddsNYcD1208kr2l+2yTNSXSEVRyv8zcAZOETWuvcUtPJHPEo9VAaQMhOC6kHm3tDq+q/GAP76I+jmLevXp3tamr+tdtDr73qttF60uVfGgbKTuO6xbSJd60OcNnB4mr0/yqsgpvgzA2K/+BXM4KWrZlOw2vF+3JRFSNQj14skSNj/DkFq0gODOlGXfmAhpWZPyOzP/gho1n+OG5bdbTs2HWGASDQPYFm4fBrIYR9MTtp/HYG2jnP/NPR4bOnDr5bisWJD0orIw0ml5QtSWt1Kp5AeyyyBmsooT8ch5M49MgRG4Z4r4FaTxQYZpii4HioO1nTRe6G1HONzpj2heXkgNPlf4FHidIjlee5IieEPB5GvlXwuFuvYTJsRSjafx0rXZ+P+s17nUvU6+uB/5Swb7wi48OMUEHKVJD4ENjta8t4zOelSKW6z7vt1kWKZ0HFsQuZ63oXY5vJ620vtMS3V2lsyJzTbZK1cm2W+xWigfQtPIJ0sVREFKdNwadqxzt82H5WjQoQSGqMbrKWf1UkaroguJjZCj3CIFWTeceEnFBTeXvSLboGk8zC1d+icYn2XWXPdIesDTy3n7zKtoMv/MiClMJQ8Lg46CnI9S0zeoYqNp/R5uxKBCc6q/clLp0AdqgpnsLvAX5PuQN/hO1QyOaGQ=
+    secure: dWXzntJwLD5rtILyJxaWRap/PIULRoJw6Km4NLMLfDgESYAhuJ/ZrMJUWzz8PHrIFQEXoLQa/JVBp9R238Dze53XOm5Jm2cKQEakPgqmVH0OoC1RYRWM0N1Fsf66bIwaEP33JlxSY+DIOB4Gqi38E8aCZD0eJSdqCjXEvEJQ+p29Xhr8aZZISfx+cTJvtDjfKc1NhyvhM2PmjrdPbQRuX9B3XV3Ni5q6ThlFOclvIBYCfMtzzLceZm+7SCcpm2w/J+nKQ88V57i5hL+QTTfw0xkYl6B2/OK1Q4vArCvF7lae+38ltLbsxQE5B/igYcSJdZ23UeSGLd7ly8QnFU9vlYO1fiAwwEnVv6j8imHVO0RqpDSfTKw8sy8WXmkcCugp9jbIMiPb3m1va1L/j//Seu7Q3jjVvOf0gq0TB3QQMzyIxsDHsZYNkK882E5KgD2eBgvxuRqR6rZF15eQRUeG8wRy5EPmVUt9rodGDteN5s/ZSXEC8iF/jzHP/EmJEi5uTPidDUkd3LnS4Ur3DrTo93pwMis5iXOo1t4tWrnUD5zi9fuAgaBFZASh+MOb8/UKkGNV8fFg9KMs7woNkRdnD7VAXtMqSvPuYcJ7dTMZztnWO4xMXz8R0rnnPhx/GRkLZYg+XjMW5xcUhIX0jfkUH2IUmnoXyd7SXml8Ie1w33U=
