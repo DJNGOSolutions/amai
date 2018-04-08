@@ -46,7 +46,7 @@ install:
 - go get -v github.com/jinzhu/gorm
 script:
 - revel test    github.com/pdmp/amai dev
-#- "$HOME/gopath/bin/goveralls -service=travis-ci -repotoken $COVERALLS_TOKEN"
+- "$HOME/gopath/bin/goveralls -service=travis-ci -repotoken $COVERALLS_TOKEN"
 notifications:
   slack:
     secure: VmHt1Geqcc2c4i46rC7oqB8SRK6kNXZd5SWvpk7apevsvqwNoivA4WgzakhvWwXEGaF7LIz4VjB1OaK8uI6o3mvXUuFtw+eiIpHE4cDu0XTwXamJr6P1KELLs2Be2R6ls/dymKGCaKcG41tEs4xzQ70ybiqFpVh6iveoqoa7sxB69MtIGQf27HmYGzwCl/7wGj2JPrF1TZ24ForKMoWrlrOO9GHHSlcAgdEC0ZpYAAZgq+GYLZK/+KNt8Vzm9e7ic8q4hxPbOfQWEYV923CvXxa108PrKc/p08nSaeDvGyDs4ZIz2wcskoLzjmpOy7epMdrhysJ/WLLsR6fFMRVU8v2CurudJjpP+hzxHV8gqDo0jJmHU3fUE33trfWkN5yd4SujNk5891KNsNPELxtxwuFwJyCT6C1QyIeQfCeSDTbXOqKNo0SpDXHIQF4y/apZcfH6P2eEDq/fsB2ZBfhXfP02jDE6O932dnc9R7qE+iOq8obttP5tte0RzmIy6K0TvtpH7InQ5RQtuavU9P06Jzfv+HCQp5x+7UD4GvWILnxmZo6Pgk5dxYhPXg3yq0t0FNZURjVtXY0TTd0YpIS4SHbkSV3i5D9/25xdgoAEhsRCjkcw+EntNFWMphvONr1hwlwuNENAIHrjD+noAPU54xrce/zkdiGmzqc9ktV0cLA=
