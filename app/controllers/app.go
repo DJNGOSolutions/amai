@@ -16,7 +16,7 @@ func (c App) Index() revel.Result {
 	//var prods models.Product
 	//Gdb.Select("code", "price").Find(&prods).Scan(&products)
 	c.DB.Raw("SELECT * FROM product;").Scan(&products)
-	return c.RenderJSON(products)
+	return c.Render(products)
 }
 
 func (c App) Help() revel.Result {
