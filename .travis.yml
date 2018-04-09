@@ -29,6 +29,7 @@ before_install:
 - redis-cli info
 - "if [[ \"$TRAVIS_OS_NAME\" != \"osx\" ]]; then\n  psql -c 'create database amai_development;'
   -U postgres\nfi \n"
+#- go get github.com/mattn/goveralls
 install:
 - export PATH=$PATH:$HOME/gopath/bin
 - export REVEL_BRANCH="develop"
