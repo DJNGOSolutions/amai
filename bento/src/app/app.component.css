@@ -1,0 +1,84 @@
+/* Application-wide Styles */
+h1 {
+    color: #369;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 250%;
+}
+h2, h3 {
+    color: #444;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+}
+body {
+    height: 100%;
+}
+body, input[text], button {
+    color: #888;
+    font-family: Cambria, Georgia;
+}
+/* everywhere else */
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#page {
+    display: grid;
+    width: 100%;
+    height:100vh;
+    grid-template: [header-left] "head head head" 11% [header-right]
+                 [main-left]   "nav main main" 79%  [main-right]
+                 [footer-left] "nav foot foot" 10% [footer-right]
+                 / 15% 1fr;
+}
+
+header {
+    background-color: #1b1b1b;
+    color: white;
+    grid-area: head;
+}
+
+header h1{
+    text-align: center;
+    padding: 8px;
+    margin: auto;
+    color: white;
+}
+
+nav {
+    background-color: #212121;
+    border-right: 5px solid #1b1b1b;
+    grid-area: nav;
+}
+
+nav a {
+    padding: 8px;
+    display: block;
+    color: white;
+    text-decoration: none;
+    background-color: #f44336;
+}
+
+.active{
+    background-color: red !important;
+}
+
+main {
+    color: #eeeeee;
+    padding: 16px;
+    background-color: #212121;
+    grid-area: main;
+}
+
+footer {
+    color: #eeeeee;
+    background-color: #1b1b1b;
+    grid-column: foot;
+}
+
+footer p{
+    text-align: center;
+    padding: 8px;
+    margin: auto;
+    color: white;
+}
+
