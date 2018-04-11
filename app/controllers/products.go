@@ -45,7 +45,7 @@ func (c Products) Pop(id uint) revel.Result {
 	var product models.Product
 	c.DB.Raw("DELETE FROM product WHERE product_id = ?;", id).Scan(&product)
 	fmt.Println("id", id)
-	return c.Redirect(routes.Products.Delete())
+	return c.Redirect("/crud")
 	//return c.RenderJSON(product) //debuging
 }
 

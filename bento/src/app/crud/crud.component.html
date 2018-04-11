@@ -3,8 +3,8 @@
       {{item.Code}}
       {{item.Price}}
       {{item.ProductID}}
-      <form action="" method="POST" accept-charset="utf-8">
-          <button class="btn" (click)="onSubmit(item.ProductID)" type="submit">delete </button>
+      <form (ngSubmit)="onSubmit(item.ProductID)" [ngFormOptions]="{ updateOn: 'submit' }"method="POST" accept-charset="utf-8">
+          <button class="btn" type="submit">delete </button>
       </form>
    </li>
 </ul>

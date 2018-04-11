@@ -22,7 +22,6 @@ export class CrudComponent implements OnInit {
         this.service.deleteProduct(id);
     }
 
-
     ngOnInit() {
       this.service.getProductsObservable().subscribe(res => {
         this.items = res;

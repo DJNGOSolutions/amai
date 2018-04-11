@@ -21,7 +21,7 @@ export class AmaiService {
 
     deleteProduct( id: number ) {
         console.log("delete");
-        this.http.delete(this.url+id).subscribe();
+        this.http.delete(this.url+"delete/"+id).subscribe();
     }
 
     createProduct( code: string, price: number ) {
