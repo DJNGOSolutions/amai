@@ -15,11 +15,23 @@ type Products struct {
 	gormc.Controller
 }
 
-func (c Products) Show(code string) revel.Result {
+func (c Products) Show() revel.Result {
+	var products []*models.Product
+	//var prods models.Product
+	//Gdb.Select("code", "price").Find(&prods).Scan(&products)
+	c.DB.Raw("SELECT * FROM product;").Scan(&products)
+	return c.RenderJSON(products)
+}
+
+func (c Products) Crud() revel.Result {
+	return c.RenderFileName("bento/dist/index.html", revel.NoDisposition)
+}
+
+func (c Products) GetProduct(code string) revel.Result {
 	var product models.Product
 	c.DB.Raw("SELECT code,price FROM product WHERE code = ?;", code).Scan(&product)
 	//return c.RenderJSON(product) //debug
-	return c.Render(product)
+	return c.RenderJSON(product)
 }
 
 func (c Products) Delete() revel.Result {

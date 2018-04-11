@@ -8,13 +8,15 @@ import { HomeComponent } from './home/home.component';
 import { CrudComponent } from './crud/crud.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AmaiService } from './amai.service';
+import { CreateProductComponent } from './create-product/create-product.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    CrudComponent
+    CrudComponent,
+    CreateProductComponent
   ],
   imports: [
     BrowserModule,

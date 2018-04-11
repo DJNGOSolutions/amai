@@ -28,12 +28,26 @@ var Products tProducts
 
 
 func (_ tProducts) Show(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Products.Show", args).URL
+}
+
+func (_ tProducts) Crud(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Products.Crud", args).URL
+}
+
+func (_ tProducts) GetProduct(
 		code string,
 		) string {
 	args := make(map[string]string)
 	
 	revel.Unbind(args, "code", code)
-	return revel.MainRouter.Reverse("Products.Show", args).URL
+	return revel.MainRouter.Reverse("Products.GetProduct", args).URL
 }
 
 func (_ tProducts) Delete(

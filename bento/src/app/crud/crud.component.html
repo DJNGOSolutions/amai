@@ -1,3 +1,15 @@
+<ul *ngIf="items"> <!-- Angular if, if items (object in home.component.ts) render this. -->
+    <li *ngFor="let item of items"> <!-- Angular for -->
+      {{item.Code}}
+      {{item.Price}}
+      {{item.ProductID}}
+      <form action="" method="POST" accept-charset="utf-8">
+          <button class="btn" (click)="onSubmit(item.ProductID)" type="submit">delete </button>
+      </form>
+   </li>
+</ul>
+<h2> Create Product </h2>
+    <app-create-product></app-create-product>
 <p>
   crud works!
 </p>

@@ -8,6 +8,9 @@ import { Products } from '../Products';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+    /*we created a class named Products as a kind of template that will
+     *contain the same info as the JSON from the API returns
+     */
     items : Products[];
 
     constructor(private service : AmaiService ) {

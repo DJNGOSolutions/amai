@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AmaiService } from '../amai.service';
+import { CreateProductComponent } from '../create-product/create-product.component';
+import { Products } from '../Products';
 
 @Component({
   selector: 'app-crud',
@@ -6,10 +9,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./crud.component.css']
 })
 export class CrudComponent implements OnInit {
+    /*we created a class named Products as a kind of template that will
+     *contain the same info as the JSON from the API returns
+     */
+    items : Products[];
 
-  constructor() { }
+    constructor(private service : AmaiService ) {
+    }
 
-  ngOnInit() {
-  }
+    onSubmit( id: number ){
+        console.log("on submit");
+        this.service.deleteProduct(id);
+    }
+
+
+    ngOnInit() {
+      this.service.getProductsObservable().subscribe(res => {
+        this.items = res;
+      });
+    }
 
 }

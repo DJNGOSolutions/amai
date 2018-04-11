@@ -1,5 +1,5 @@
-<ul *ngIf="items">
-   <li *ngFor="let item of items">
+<ul *ngIf="items"> <!-- Angular if, if items (object in home.component.ts) render this. -->
+    <li *ngFor="let item of items"> <!-- Angular for -->
       {{item.Code}}
       {{item.Price}}
    </li>
