@@ -6,7 +6,7 @@ import { Products } from '../Products';
 @Component({
   selector: 'app-crud',
   templateUrl: './crud.component.html',
-  styleUrls: ['./crud.component.css']
+  styleUrls: ['./crud.component.css'],
 })
 export class CrudComponent implements OnInit {
     /*we created a class named Products as a kind of template that will
@@ -20,12 +20,17 @@ export class CrudComponent implements OnInit {
     onSubmit( id: number ){
         console.log("on submit");
         this.service.deleteProduct(id);
+        this.refresh();
+    }
+
+    refresh(){
+        this.service.getProductsObservable().subscribe(res => {
+            this.items = res;
+      });
     }
 
     ngOnInit() {
-      this.service.getProductsObservable().subscribe(res => {
-        this.items = res;
-      });
+        this.refresh();
     }
 
 }

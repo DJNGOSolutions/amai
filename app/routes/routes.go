@@ -67,13 +67,11 @@ func (_ tProducts) Pop(
 }
 
 func (_ tProducts) Insert(
-		code string,
-		price uint,
+		pro interface{},
 		) string {
 	args := make(map[string]string)
 	
-	revel.Unbind(args, "code", code)
-	revel.Unbind(args, "price", price)
+	revel.Unbind(args, "pro", pro)
 	return revel.MainRouter.Reverse("Products.Insert", args).URL
 }
 

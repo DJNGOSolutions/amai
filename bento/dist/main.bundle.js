@@ -23,8 +23,11 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AmaiService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/catch.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_do__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/do.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_filter__ = __webpack_require__("./node_modules/rxjs/_esm5/add/operator/filter.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37,6 +40,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
+
 var AmaiService = /** @class */ (function () {
     /*since i'm new at ts i don't exactly understatnd why
      * the constructor requires de http var on it
@@ -44,7 +50,7 @@ var AmaiService = /** @class */ (function () {
     function AmaiService(http) {
         this.http = http;
         //local API url
-        this.url = "http://localhost:9000/";
+        this.url = "";
     }
     /* this functions returns the array of object that is given by the api
      */
@@ -57,11 +63,11 @@ var AmaiService = /** @class */ (function () {
     };
     AmaiService.prototype.createProduct = function (code, price) {
         console.log("create");
-        this.http.get(this.url + "insert/" + code + "/" + price).subscribe();
+        this.http.post("insert", { Code: code, Price: price }).subscribe();
     };
     AmaiService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]])
     ], AmaiService);
     return AmaiService;
 }());
@@ -225,7 +231,7 @@ module.exports = ""
 /***/ "./src/app/create-product/create-product.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n    <form action=\"\" method=\"POST\" accept-charset=\"utf-8\">\n        <label>name: <span>{{product.code}} </span>\n            <br>\n            <span>price: </span>{{product.price}}\n            <br>\n          <input [(ngModel)]=\"product.code\" name=\"code\" placeholder=\"Code\">\n          <input [(ngModel)]=\"product.price\" name=\"price\" placeholder=\"Price\">\n        </label>\n        <button class=\"btn\" (click)=\"createProduct(product.code,product.price)\" type=\"submit\">Create</button>\n    </form>\n</div>\n"
+module.exports = "<div>\n    <form action=\"#\" method=\"POST\" accept-charset=\"utf-8\">\n        <label>name: <span>{{product.code}} </span>\n            <br>\n            <span>price: </span>{{product.price}}\n            <br>\n          <input [(ngModel)]=\"product.code\" name=\"code\" placeholder=\"Code\">\n          <input [(ngModel)]=\"product.price\" name=\"price\" placeholder=\"Price\" type=\"number\" min=\"0\">\n        </label>\n        <button class=\"btn\" (click)=\"createProduct(product.code,product.price)\" type=\"submit\">Create</button>\n    </form>\n</div>\n"
 
 /***/ }),
 
@@ -247,6 +253,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var CreateProductComponent = /** @class */ (function () {
     function CreateProductComponent(service) {
         this.service = service;
@@ -254,13 +261,23 @@ var CreateProductComponent = /** @class */ (function () {
             code: 'nil',
             price: 0
         };
+        this.created = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
     }
     CreateProductComponent.prototype.createProduct = function (code, price) {
         console.log("on create");
         this.service.createProduct(code, price);
+        this.product = {
+            code: '',
+            price: 0
+        };
+        //this.created.emit('created');
     };
     CreateProductComponent.prototype.ngOnInit = function () {
     };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
+        __metadata("design:type", Object)
+    ], CreateProductComponent.prototype, "created", void 0);
     CreateProductComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-create-product',
@@ -286,7 +303,7 @@ module.exports = ""
 /***/ "./src/app/crud/crud.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<ul *ngIf=\"items\"> <!-- Angular if, if items (object in home.component.ts) render this. -->\n    <li *ngFor=\"let item of items\"> <!-- Angular for -->\n      {{item.Code}}\n      {{item.Price}}\n      {{item.ProductID}}\n      <form (ngSubmit)=\"onSubmit(item.ProductID)\" [ngFormOptions]=\"{ updateOn: 'submit' }\"method=\"POST\" accept-charset=\"utf-8\">\n          <button class=\"btn\" type=\"submit\">delete </button>\n      </form>\n   </li>\n</ul>\n<h2> Create Product </h2>\n    <app-create-product></app-create-product>\n<p>\n  crud works!\n</p>\n"
+module.exports = "<ul *ngIf=\"items\"> <!-- Angular if, if items (object in home.component.ts) render this. -->\n    <li *ngFor=\"let item of items\"> <!-- Angular for -->\n      {{item.Code}}\n      {{item.Price}}\n      {{item.ProductID}}\n      <form  action=\"/crud\" [ngFormOptions]=\"{ updateOn: 'submit' }\" #myForm=\"ngForm\" method=\"POST\" accept-charset=\"utf-8\">\n          <button class=\"btn\" type=\"submit\" (click)=\"onSubmit(item.ProductID)\">delete </button>\n      </form>\n   </li>\n</ul>\n<h2> Create Product </h2>\n    <app-create-product></app-create-product>\n<p>\n  crud works!\n</p>\n"
 
 /***/ }),
 
@@ -315,18 +332,22 @@ var CrudComponent = /** @class */ (function () {
     CrudComponent.prototype.onSubmit = function (id) {
         console.log("on submit");
         this.service.deleteProduct(id);
+        this.refresh();
     };
-    CrudComponent.prototype.ngOnInit = function () {
+    CrudComponent.prototype.refresh = function () {
         var _this = this;
         this.service.getProductsObservable().subscribe(function (res) {
             _this.items = res;
         });
     };
+    CrudComponent.prototype.ngOnInit = function () {
+        this.refresh();
+    };
     CrudComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-crud',
             template: __webpack_require__("./src/app/crud/crud.component.html"),
-            styles: [__webpack_require__("./src/app/crud/crud.component.css")]
+            styles: [__webpack_require__("./src/app/crud/crud.component.css")],
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__amai_service__["a" /* AmaiService */]])
     ], CrudComponent);

@@ -3,8 +3,6 @@ package controllers
 import (
 	"fmt"
 
-	"github.com/pdmp/amai/app/routes"
-
 	"github.com/pdmp/amai/app/models"
 
 	gormc "github.com/revel/modules/orm/gorm/app/controllers"
@@ -45,12 +43,16 @@ func (c Products) Pop(id uint) revel.Result {
 	var product models.Product
 	c.DB.Raw("DELETE FROM product WHERE product_id = ?;", id).Scan(&product)
 	fmt.Println("id", id)
-	return c.Redirect("/crud")
+	return nil
+	//return c.Redirect("/crud")
 	//return c.RenderJSON(product) //debuging
 }
 
-func (c Products) Insert(code string, price uint) revel.Result {
-	pro := models.Product{Code: code, Price: price}
+func (c Products) Insert( /*code string, price uint */ pro models.Product) revel.Result {
+	// pro := models.Product{Code: code, Price: price}
 	c.DB.Create(&pro)
-	return c.Redirect(routes.App.Index())
+	log := c.Log.New("insert", 1)
+	log.Debug("While inserting:", pro.Code, pro.Price)
+	return nil
+	//return c.Redirect(routes.App.Index())
 }

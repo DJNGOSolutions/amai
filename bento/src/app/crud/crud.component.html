@@ -3,8 +3,8 @@
       {{item.Code}}
       {{item.Price}}
       {{item.ProductID}}
-      <form (ngSubmit)="onSubmit(item.ProductID)" [ngFormOptions]="{ updateOn: 'submit' }"method="POST" accept-charset="utf-8">
-          <button class="btn" type="submit">delete </button>
+      <form  action="/crud" [ngFormOptions]="{ updateOn: 'submit' }" #myForm="ngForm" method="POST" accept-charset="utf-8">
+          <button class="btn" type="submit" (click)="onSubmit(item.ProductID)">delete </button>
       </form>
    </li>
 </ul>

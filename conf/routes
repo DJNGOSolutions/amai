@@ -6,9 +6,9 @@
 module:testrunner
 # module:jobs
 
-GET     /                                       Static.Serve("bento/dist/index.html")
+GET     /                                       App.Index
 GET     /crud                                   Products.Crud
-GET     /insert/:code/:price                    Products.Insert
+POST    /insert                                 Products.Insert
 GET     /show                                   Products.Show
 GET     /show/:code                             Products.GetProduct
 GET     /delete                                 Products.Delete

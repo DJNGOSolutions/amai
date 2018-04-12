@@ -1,11 +1,11 @@
 <div>
-    <form action="" method="POST" accept-charset="utf-8">
+    <form action="#" method="POST" accept-charset="utf-8">
         <label>name: <span>{{product.code}} </span>
             <br>
             <span>price: </span>{{product.price}}
             <br>
           <input [(ngModel)]="product.code" name="code" placeholder="Code">
-          <input [(ngModel)]="product.price" name="price" placeholder="Price">
+          <input [(ngModel)]="product.price" name="price" placeholder="Price" type="number" min="0">
         </label>
         <button class="btn" (click)="createProduct(product.code,product.price)" type="submit">Create</button>
     </form>
