@@ -3,13 +3,13 @@
       {{item.Code}}
       {{item.Price}}
       {{item.ProductID}}
-      <form  action="/crud" [ngFormOptions]="{ updateOn: 'submit' }" #myForm="ngForm" method="POST" accept-charset="utf-8">
+      <form  action="" [ngFormOptions]="{ updateOn: 'submit' }" #myForm="ngForm" method="POST" accept-charset="utf-8">
           <button class="btn" type="submit" (click)="onSubmit(item.ProductID)">delete </button>
       </form>
    </li>
 </ul>
 <h2> Create Product </h2>
-    <app-create-product></app-create-product>
+    <app-create-product (created)="refresh($event)"></app-create-product>
 <p>
   crud works!
 </p>

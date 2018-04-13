@@ -53,6 +53,7 @@ func (c Products) Insert( /*code string, price uint */ pro models.Product) revel
 	c.DB.Create(&pro)
 	log := c.Log.New("insert", 1)
 	log.Debug("While inserting:", pro.Code, pro.Price)
-	return nil
+	//return nil
+	return c.RenderJSON(c.Response.Status)
 	//return c.Redirect(routes.App.Index())
 }

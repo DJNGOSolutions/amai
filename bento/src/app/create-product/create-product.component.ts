@@ -23,7 +23,7 @@ export class CreateProductComponent implements OnInit {
             code: '',
             price: 0
         };
-        //this.created.emit('created');
+        this.created.emit('created');
     }
 
     constructor( private service: AmaiService) { }

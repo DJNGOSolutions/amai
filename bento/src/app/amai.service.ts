@@ -19,16 +19,17 @@ export class AmaiService {
     /* this functions returns the array of object that is given by the api
      */
      getProductsObservable(): Observable<any> {
-         return this.http.get(this.url+"show");
+         return this.http.get(this.url+"/show");
      } 
 
     deleteProduct( id: number ) {
         console.log("delete");
-        this.http.delete(this.url+"delete/"+id).subscribe();
+        this.http.delete(this.url+"/delete/"+id).subscribe();
     }
 
     createProduct( code: string, price: number ) {
         console.log("create");
-        this.http.post("insert",{Code:code, Price:price}).subscribe();
+        this.http.post("/insert",{Code:code, Price:price}).subscribe(
+            res => Response );
     }
 }

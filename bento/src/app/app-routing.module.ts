@@ -1,5 +1,5 @@
 import { NgModule }             from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, ExtraOptions } from '@angular/router';
 // We have to import the components that we are gonna use.
 import { HomeComponent }        from './home/home.component';
 import { CrudComponent }        from './crud/crud.component';
@@ -11,7 +11,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [ RouterModule.forRoot(routes) ],
+    imports: [ RouterModule.forRoot(routes)],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule {}

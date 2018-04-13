@@ -20,17 +20,21 @@ export class CrudComponent implements OnInit {
     onSubmit( id: number ){
         console.log("on submit");
         this.service.deleteProduct(id);
-        this.refresh();
+        this.update();
     }
 
-    refresh(){
+    refresh($event){
+        this.update();
+    }
+
+    update(){
         this.service.getProductsObservable().subscribe(res => {
             this.items = res;
       });
     }
 
     ngOnInit() {
-        this.refresh();
+        this.update();
     }
 
 }
