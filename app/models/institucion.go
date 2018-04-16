@@ -7,12 +7,11 @@ type Institucion struct{
 	gorm.Model
 
 	IdInstitucion uint `gorm: "primary key"`
-	IdMateriaInstitucion uint
+	IdMateria uint
 	idUsuario uint
+	idDepartamento uint
+	idMunicipio uint
 
 	NombreInstitucion string `gorm: "type: varchar(150)"`
-	//PaisInstitucion string `gorm: "type: varchar(100)"`
-	DepartamentoInstitucion string `gorm: "type: varhcar(100) unique"`  //catálogo - cambiar
-	MunicipioInstitucion string `gorm: "type: varchar(100); unique"`	//catálogo - cambiar
 
 }
