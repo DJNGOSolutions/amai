@@ -1,13 +1,10 @@
 package models
 
-import"github.com/jinzhu/gorm"
+import "github.com/jinzhu/gorm"
 
-type Tutoria struct{
-
+type Tutoria struct {
 	gorm.Model
-
-	IdTutoria uint `gorm: "primary key"`
+	IdTutoria uint `gorm:"primary_key"`
 	IdUsuario uint
 	IdMateria uint
-
 }

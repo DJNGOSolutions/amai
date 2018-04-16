@@ -1,13 +1,10 @@
 package models
 
-import"github.com/jinzhu/gorm"
+import "github.com/jinzhu/gorm"
 
-type MateriaxTema struct{
-
+type MateriaxTema struct {
 	gorm.Model
-
-	IdMateriaxTema uint `gorm: "primary key"`
-	IdMateria uint
-	IdTema uint
-
+	IdMateriaxTema uint `gorm:"primary_key"`
+	IdMateria      uint
+	IdTema         uint
 }
