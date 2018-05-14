@@ -8,20 +8,24 @@ module:testrunner
 
 GET     /                                       App.Index
 GET     /crud                                   Products.Crud
-POST    /insert                                 Products.Insert
-GET     /show                                   Products.Show
-GET     /show/:code                             Products.GetProduct
-GET     /delete                                 Products.Delete
-DELETE  /delete/:id                             Products.Pop 
+#POST    /insert                                 Products.Insert
+#GET     /show                                   Products.Show
+#GET     /show/:code                             Products.GetProduct
+#GET     /delete                                 Products.Delete
 GET     /help                                   App.Help
+GET     /show                                   User.Show
+POST    /insert                                 User.Insert
+GET     /show                                   User.Show
+GET     /show/:id                               User.Getuser
+DELETE  /delete/:id                             User.Pop 
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
 
 # Map static resources from the angular folder to rootpath for static links compliance with angular
-GET     /public/*filepath                       Static.Serve("public")
-# Map static resources from the /app/public folder to the /public path
 GET     /*filepath                              Static.Serve("bento/dist")
+# Map static resources from the /app/public folder to the /public path
+GET     /public/*filepath                       Static.Serve("public")
 
 # Catch all, this will route any request into the controller path
 #
