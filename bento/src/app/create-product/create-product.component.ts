@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AmaiService } from '../amai.service';
-import { Products } from '../Products';
+import { User } from '../User';
 import { EventEmitter, Output } from '@angular/core';
 
 @Component({
@@ -9,19 +9,19 @@ import { EventEmitter, Output } from '@angular/core';
   styleUrls: ['./create-product.component.css']
 })
 export class CreateProductComponent implements OnInit {
-    product : Products = {
-        code: 'nil',
-        price: 0
+    user : User = {
+        NombreUsuario: 'nil',
+        EdadUsuario: 0
     };
     @Output()
     created = new EventEmitter<string>();
 
-    createProduct( code: string, price : number ){
+    createProduct( name: string, age : number ){
         console.log("on create");
-        this.service.createProduct(code,price);
-        this.product = {
-            code: '',
-            price: 0
+        this.service.createProduct(name,age);
+        this.user = {
+            NombreUsuario: '',
+            EdadUsuario: 0
         };
         this.created.emit('created');
     }

@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { Products } from './Products';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/filter';
+import { Observable,of } from 'rxjs';
+import { User } from './User';
 @Injectable()
 export class AmaiService {
 
@@ -27,9 +23,9 @@ export class AmaiService {
         this.http.delete(this.url+"/delete/"+id).subscribe();
     }
 
-    createProduct( code: string, price: number ) {
+    createProduct( name: string, age: number ) {
         console.log("create");
-        this.http.post("/insert",{Code:code, Price:price}).subscribe(
+        this.http.post("/insert",{NombreUsuario:name, EdadUsuario:age}).subscribe(
             res => Response );
     }
 }

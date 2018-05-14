@@ -1,12 +1,12 @@
 <div>
     <form action="" method="POST" accept-charset="utf-8">
-        <label>name: <span>{{product.code}} </span>
+        <label>name: <span>{{user.NombreUsuario}} </span>
             <br>
-            <span>price: </span>{{product.price}}
+            <span>price: </span>{{user.EdadUsuario}}
             <br>
-          <input [(ngModel)]="product.code" name="code" placeholder="Code">
-          <input [(ngModel)]="product.price" name="price" placeholder="Price" type="number" min="0">
+          <input [(ngModel)]="user.NombreUsuario" name="name" placeholder="Name">
+          <input [(ngModel)]="user.EdadUsuario" name="age" placeholder="age" type="number" min="0">
         </label>
-        <button class="btn" (click)="createProduct(product.code,product.price)" type="submit">Create</button>
+        <button class="btn" (click)="createProduct(user.NombreUsuario,user.EdadUsuario)" type="submit">Create</button>
     </form>
 </div>

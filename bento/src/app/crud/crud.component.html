@@ -1,14 +1,14 @@
-<ul *ngIf="items"> <!-- Angular if, if items (object in home.component.ts) render this. -->
-    <li *ngFor="let item of items"> <!-- Angular for -->
-      {{item.Code}}
-      {{item.Price}}
-      {{item.ProductID}}
+<ul *ngIf="users"> <!-- Angular if, if items (object in home.component.ts) render this. -->
+    <li *ngFor="let user of users"> <!-- Angular for -->
+      {{user.NombreUsuario}}
+      {{user.EdadUsuario}}
+      {{user.ID}}
       <form  action="" [ngFormOptions]="{ updateOn: 'submit' }" #myForm="ngForm" method="POST" accept-charset="utf-8">
-          <button class="btn" type="submit" (click)="onSubmit(item.ProductID)">delete </button>
+          <button class="btn" type="submit" (click)="onSubmit(user.ID)">delete </button>
       </form>
    </li>
 </ul>
-<h2> Create Product </h2>
+<h2> Create User </h2>
     <app-create-product (created)="refresh($event)"></app-create-product>
 <p>
   crud works!

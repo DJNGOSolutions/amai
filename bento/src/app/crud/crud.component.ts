@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AmaiService } from '../amai.service';
 import { CreateProductComponent } from '../create-product/create-product.component';
-import { Products } from '../Products';
+import { User } from '../User';
 
 @Component({
   selector: 'app-crud',
@@ -12,7 +12,7 @@ export class CrudComponent implements OnInit {
     /*we created a class named Products as a kind of template that will
      *contain the same info as the JSON from the API returns
      */
-    items : Products[];
+    users : User[];
 
     constructor(private service : AmaiService ) {
     }
@@ -29,7 +29,7 @@ export class CrudComponent implements OnInit {
 
     update(){
         this.service.getProductsObservable().subscribe(res => {
-            this.items = res;
+            this.users = res;
       });
     }
 

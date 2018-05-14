@@ -1,7 +1,7 @@
-<ul *ngIf="items"> <!-- Angular if, if items (object in home.component.ts) render this. -->
-    <li *ngFor="let item of items"> <!-- Angular for -->
-      {{item.Code}}
-      {{item.Price}}
+<ul *ngIf="users"> <!-- Angular if, if items (object in home.component.ts) render this. -->
+    <li *ngFor="let user of users"> <!-- Angular for -->
+      {{user.NombreUsuario}}
+      {{user.EdadUsuario}}
    </li>
 </ul>
 <p>home<p>
