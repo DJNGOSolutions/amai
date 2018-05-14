@@ -6,5 +6,5 @@ type Genero_Usuario struct {
 	//Esta estructura es un catálogo
 	gorm.Model
 	IdGenero_Usuario uint   `gorm:"primary_key"`
-	Genero           string `gorm:"type:varchar(100),unique"`
+	Genero           string `gorm:"type:varchar(100);unique"`
 }

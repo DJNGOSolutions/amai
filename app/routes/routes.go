@@ -76,6 +76,59 @@ func (_ tProducts) Insert(
 }
 
 
+type tUser struct {}
+var User tUser
+
+
+func (_ tUser) Show(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("User.Show", args).URL
+}
+
+func (_ tUser) Crud(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("User.Crud", args).URL
+}
+
+func (_ tUser) GetUser(
+		code string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "code", code)
+	return revel.MainRouter.Reverse("User.GetUser", args).URL
+}
+
+func (_ tUser) Delete(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("User.Delete", args).URL
+}
+
+func (_ tUser) Pop(
+		id uint,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "id", id)
+	return revel.MainRouter.Reverse("User.Pop", args).URL
+}
+
+func (_ tUser) Insert(
+		user interface{},
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "user", user)
+	return revel.MainRouter.Reverse("User.Insert", args).URL
+}
+
+
 type tController struct {}
 var Controller tController
 

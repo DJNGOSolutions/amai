@@ -12,7 +12,7 @@ type App struct {
 }
 
 var (
-	url string = "bento/dist/index.html"
+	url = "bento/dist/index.html"
 )
 
 func (c App) Index() revel.Result {
