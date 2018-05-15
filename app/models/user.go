@@ -11,6 +11,5 @@ type User struct {				//Usuario
 	UserName           string `gorm:"type:varchar(150);not null"` //nombreUsuario
 	UserAge             uint8 //edadUsuario
 	UserEmail           string `gorm:"type:varchar(100);not null;unique"` //correoUsuario
-	UserPhone         string `gorm:"type:varchar(30);unique"` //multivaluado - cambiar - telefonoUsuario
-	UserDescription		string `gorm:"type:text"`
+	UserDescription		string `gorm:"type:text"`				//descripcionUsuario
 }
