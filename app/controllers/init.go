@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"github.com/pdmp/amai/app/models"
+	gormdb "github.com/revel/modules/orm/gorm/app"
 	"github.com/revel/revel"
 )
 
@@ -10,24 +12,23 @@ func init() {
 
 func InitDB() {
 	revel.INFO.Println("Doing DB Migrations...")
-	/*
-		gormdb.DB.AutoMigrate(&models.Asistencia{})
-		gormdb.DB.AutoMigrate(&models.Cita{})
-		gormdb.DB.AutoMigrate(&models.Clase{})
-		gormdb.DB.AutoMigrate(&models.Departamento{})
-		gormdb.DB.AutoMigrate(&models.Estudio{})
-		gormdb.DB.AutoMigrate(&models.Genero_Usuario{})
-		gormdb.DB.AutoMigrate(&models.Institucion{})
-		gormdb.DB.AutoMigrate(&models.Lugar_Cita{})
-		gormdb.DB.AutoMigrate(&models.Materia{})
-		gormdb.DB.AutoMigrate(&models.MateriaxTema{})
-		gormdb.DB.AutoMigrate(&models.Municipio{})
-		gormdb.DB.AutoMigrate(&models.NivelEducativo_Usuario{})
-		gormdb.DB.AutoMigrate(&models.Rol_Usuario{})
-		gormdb.DB.AutoMigrate(&models.Tema{})
-		gormdb.DB.AutoMigrate(&models.Tipo_Cita{})
-		gormdb.DB.AutoMigrate(&models.TipoRemuneracion_Cita{})
-		gormdb.DB.AutoMigrate(&models.Tutoria{})
-		gormdb.DB.AutoMigrate(&models.Usuario{})
-	*/
+
+	gormdb.DB.AutoMigrate(&models.Assistance{})
+	gormdb.DB.AutoMigrate(&models.Session{})
+	gormdb.DB.AutoMigrate(&models.Class{})
+	gormdb.DB.AutoMigrate(&models.State{})
+	gormdb.DB.AutoMigrate(&models.Study{})
+	gormdb.DB.AutoMigrate(&models.Gender_User{})
+	gormdb.DB.AutoMigrate(&models.Institution{})
+	gormdb.DB.AutoMigrate(&models.Place_Session{})
+	gormdb.DB.AutoMigrate(&models.Subject{})
+	gormdb.DB.AutoMigrate(&models.SubjectxTopic{})
+	gormdb.DB.AutoMigrate(&models.City{})
+	gormdb.DB.AutoMigrate(&models.AcademicLevel_User{})
+	gormdb.DB.AutoMigrate(&models.Role_User{})
+	gormdb.DB.AutoMigrate(&models.Topic{})
+	gormdb.DB.AutoMigrate(&models.Type_Session{})
+	gormdb.DB.AutoMigrate(&models.TypePayment_Session{})
+	gormdb.DB.AutoMigrate(&models.Tutorial{})
+	gormdb.DB.AutoMigrate(&models.User{})
 }

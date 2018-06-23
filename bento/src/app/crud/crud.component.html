@@ -1,7 +1,8 @@
 <ul *ngIf="users"> <!-- Angular if, if items (object in home.component.ts) render this. -->
     <li *ngFor="let user of users"> <!-- Angular for -->
-      {{user.NombreUsuario}}
-      {{user.EdadUsuario}}
+      {{user.UserName}}
+      {{user.UserAge}}
+      {{user.UserEmail}}
       {{user.ID}}
       <form  action="" [ngFormOptions]="{ updateOn: 'submit' }" #myForm="ngForm" method="POST" accept-charset="utf-8">
           <button class="btn" type="submit" (click)="onSubmit(user.ID)">delete </button>

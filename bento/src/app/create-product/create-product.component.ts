@@ -8,20 +8,23 @@ import { EventEmitter, Output } from '@angular/core';
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.css']
 })
+
 export class CreateProductComponent implements OnInit {
     user : User = {
-        NombreUsuario: 'nil',
-        EdadUsuario: 0
+        UserName: 'nil',
+        UserAge: 0,
+        UserEmail: ''
     };
     @Output()
     created = new EventEmitter<string>();
 
-    createProduct( name: string, age : number ){
+    createProduct( name: string, age : number, userEmail : string ){
         console.log("on create");
-        this.service.createProduct(name,age);
+        this.service.createProduct(name,age,userEmail);
         this.user = {
-            NombreUsuario: '',
-            EdadUsuario: 0
+            UserName: '',
+            UserAge: 0,
+            UserEmail: ''
         };
         this.created.emit('created');
     }

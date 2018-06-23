@@ -17,7 +17,7 @@ func (c User) Show() revel.Result {
 	var users []*models.User
 	//var prods models.Product
 	//Gdb.Select("code", "price").Find(&prods).Scan(&users)
-	c.DB.Raw("SELECT * FROM usuario;").Scan(&users)
+	c.DB.Raw("SELECT * FROM public.user;").Scan(&users)
 	return c.RenderJSON(users)
 }
 
@@ -27,21 +27,21 @@ func (c User) Crud() revel.Result {
 
 func (c User) GetUser(code string) revel.Result {
 	var user models.User
-	c.DB.Raw("SELECT * FROM usuario WHERE id = ?;", code).Scan(&user)
+	c.DB.Raw("SELECT * FROM public.user WHERE id = ?;", code).Scan(&user)
 	//return c.RenderJSON(product) //debug
 	return c.RenderJSON(user)
 }
 
 func (c User) Delete() revel.Result {
 	var users []models.User
-	c.DB.Raw("SELECT nombre_usuario FROM product").Scan(&users)
+	c.DB.Raw("SELECT UserName FROM public.user").Scan(&users)
 	//return c.RenderJSON(users) //debugging
 	return c.Render(users)
 }
 
 func (c User) Pop(id uint) revel.Result {
 	var user models.User
-	c.DB.Raw("DELETE FROM usuario WHERE id = ?;", id).Scan(&user)
+	c.DB.Raw("DELETE FROM public.user WHERE id = ?;", id).Scan(&user)
 	fmt.Println("id", id)
 	return nil
 	//return c.Redirect("/crud")
@@ -52,7 +52,7 @@ func (c User) Insert( /*code string, price uint */ user models.User) revel.Resul
 	// pro := models.Product{Code: code, Price: price}
 	c.DB.Create(&user)
 	log := c.Log.New("insert", 1)
-	log.Debug("Inserting:", user.UserName, user.UserAge)
+	log.Debug("Inserting:", user.UserName, user.UserAge, user.UserEmail, nil)
 	//return nil
 	return c.RenderJSON(c.Response.Status)
 	//return c.Redirect(routes.App.Index())

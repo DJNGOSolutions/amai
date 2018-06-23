@@ -1,7 +1,8 @@
 <ul *ngIf="users"> <!-- Angular if, if items (object in home.component.ts) render this. -->
     <li *ngFor="let user of users"> <!-- Angular for -->
-      {{user.NombreUsuario}}
-      {{user.EdadUsuario}}
+      {{user.UserName}}
+      {{user.UserAge}}
+      {{user.UserEmail}}
    </li>
 </ul>
 <p>home<p>
