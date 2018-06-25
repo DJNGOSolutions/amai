@@ -10,7 +10,7 @@ export class AmaiService {
     /*since i'm new at ts i don't exactly understatnd why
      * the constructor requires de http var on it
      */
-    constructor(private http: HttpClient ) { }
+    constructor(private http: HttpClient) { }
 
     /* this functions returns the array of object that is given by the api
      */
@@ -23,9 +23,9 @@ export class AmaiService {
         this.http.delete(this.url+"/delete/"+id).subscribe();
     }
 
-    createProduct( name: string, age: number ) {
+    createProduct( name: string, age: number, userEmail: string ) {
         console.log("create");
-        this.http.post("/insert",{NombreUsuario:name, EdadUsuario:age}).subscribe(
+        this.http.post("/insert",{UserName:name, UserAge:age,UserEmail:userEmail}).subscribe(
             res => Response );
     }
 }
