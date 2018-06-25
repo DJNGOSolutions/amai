@@ -60,32 +60,26 @@ func (c User) Insert( /*code string, price uint */ user models.User) revel.Resul
 	//return c.Redirect(routes.App.Index())
 }
 
-func (c User) getUserByInstitution(id uint) revel.Result {
+func (c User) getUserByGender(id uint) revel.Result {
 	var user models.User
-	c.DB.Raw("SELECT Photo,UserName,Rate FROM public.user WHERE idInstitution = ?;", id).Scan(&user)
+	c.DB.Raw("SELECT User_Photo, User_Name, User_Age, User_Email, User_Description FROM public.User WHERE Id_Gender_User = ?;", id).Scan(&user)
 	return c.RenderJSON(c.Response.Status)
 }
 
-func (c User) getUserBySubject(id uint) revel.Result {
+func (c User) getUserAcademicLevel(id uint) revel.Result {
 	var user models.User
-	c.DB.Raw("SELECT Photo,UserName,Rate FROM public.user WHERE idSubject = ?;", id).Scan(&user)
+	c.DB.Raw("SELECT User_Photo, User_Name, User_Age, User_Email, User_Description FROM public.User WHERE Id_Academic_Level_User = ?;", id).Scan(&user)
 	return c.RenderJSON(c.Response.Status)
 }
 
-func (c User) getUserByTopic(id uint) revel.Result {
+func (c User) getUserByRole(id uint) revel.Result {
 	var user models.User
-	c.DB.Raw("SELECT Photo,UserName,Rate FROM public.user WHERE idTopic = ?;", id).Scan(&user)
+	c.DB.Raw("SELECT User_Photo, User_Name, User_Age, User_Email, User_Description FROM public.User WHERE Id_Role_User = ?;", id).Scan(&user)
 	return c.RenderJSON(c.Response.Status)
 }
 
-func (c User) getUserByState(id uint) revel.Result {
+func (c User) getUserByRate(id uint) revel.Result {
 	var user models.User
-	c.DB.Raw("SELECT Photo,UserName,Rate FROM public.user WHERE idState = ?;", id).Scan(&user)
-	return c.RenderJSON(c.Response.Status)
-}
-
-func (c User) getUserByCity(id uint) revel.Result {
-	var user models.User
-	c.DB.Raw("SELECT Photo,UserName,Rate FROM public.user WHERE idCity = ?;", id).Scan(&user)
+	c.DB.Raw("SELECT User_Photo, User_Name, User_Age, User_Email, User_Description FROM public.User WHERE Id_Rate_User = ?;", id).Scan(&user)
 	return c.RenderJSON(c.Response.Status)
 }

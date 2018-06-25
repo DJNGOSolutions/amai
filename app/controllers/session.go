@@ -11,32 +11,32 @@ type Session struct {
 	gormc.Controller
 }
 
-func (c Session) getSessionById(id uint) revel.Result {
+func (c Session) getSessionByPlace(id uint) revel.Result {
 	var session models.Session
-	c.DB.Raw("SELECT SessionTopic FROM Session WHERE Id = ?;", id).Scan(&session)
+	c.DB.Raw("SELECT Session_Date, Session_Time_Start, Session_Time_End, SessionFee FROM Session WHERE Id_Session_Place = ?;", id).Scan(&session)
 	return c.RenderJSON(c.Response.Status)
 }
 
 func (c Session) getSessionTopicBySubject(id uint) revel.Result {
 	var session models.Session
-	c.DB.Raw("SELECT SessionTopic FROM Session WHERE IdSubject = ?;", id).Scan(&session)
+	c.DB.Raw("SELECT Session_Date, Session_Time_Start, Session_Time_End, Session_Fee FROM Session WHERE Id_Subject = ?;", id).Scan(&session)
 	return c.RenderJSON(c.Response.Status)
 }
 
-func (c Session) getSessionTopicById(id uint) revel.Result {
+func (c Session) getSessionByTopic(id uint) revel.Result {
 	var session models.Session
-	c.DB.Raw("SELECT SessionTopic FROM Session WHERE IdTopic = ?;", id).Scan(&session)
+	c.DB.Raw("SELECT Session_Date, Session_Time_Start, Session_Time_End, Session_Fee FROM Session WHERE Id_Topic = ?;", id).Scan(&session)
 	return c.RenderJSON(c.Response.Status)
 }
 
-func (c Session) getSessionTopicByUserId(id uint) revel.Result {
+func (c Session) getSessionByType(id uint) revel.Result {
 	var session models.Session
-	c.DB.Raw("SELECT SessionTopic FROM Session WHERE IdUser = ?;", id).Scan(&session)
+	c.DB.Raw("SELECT Session_Date, Session_Time_Start, Session_Time_End, Session_Fee FROM Session WHERE Id_Type_Session = ?;", id).Scan(&session)
 	return c.RenderJSON(c.Response.Status)
 }
 
-func (c Session) getSessionTopicByInstitution(id uint) revel.Result {
+func (c Session) getSessionByPayment(id uint) revel.Result {
 	var session models.Session
-	c.DB.Raw("SELECT SessionTopic FROM Session WHERE IdSubject = ?;", id).Scan(&session)
+	c.DB.Raw("SELECT Session_Date, Session_Time_Start, Session_Time_End, Session_Fee FROM Session WHERE Id_Type_Payment = ?;", id).Scan(&session)
 	return c.RenderJSON(c.Response.Status)
 }
