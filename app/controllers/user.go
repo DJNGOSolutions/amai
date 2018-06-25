@@ -34,7 +34,7 @@ func (c User) GetUser(code string) revel.Result {
 
 func (c User) Delete() revel.Result {
 	var users []models.User
-	c.DB.Raw("SELECT UserName FROM public.user").Scan(&user)
+	c.DB.Raw("SELECT UserName FROM public.user").Scan(&users)
 	//return c.RenderJSON(users) //debugging
 	return c.Render(users)
 }

@@ -76,6 +76,11 @@ func (_ tProducts) Insert(
 }
 
 
+type tSession struct {}
+var Session tSession
+
+
+
 type tUser struct {}
 var User tUser
 
