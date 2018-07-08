@@ -2,8 +2,10 @@ package models
 
 import "github.com/jinzhu/gorm"
 
-type Tutorial struct { //Tutoria
+type Tutorial struct {
+	//Tutoria
 	gorm.Model
-	IdUser    uint //idUsuario
-	IdSubject uint //idMateria
+	IdTutorial uint `gorm:"primary_key"` //idTutoria
+	IdUser     uint //idUsuario
+	IdSubject  uint //idMateria
 }
