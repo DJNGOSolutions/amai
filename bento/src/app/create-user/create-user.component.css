@@ -1,0 +1,79 @@
+.container{
+    margin: 20px;
+    display: grid;
+    grid-template-areas:
+                        "card-create card-show"
+                        "card-create2 card-show2";
+    grid-gap: 20px;
+}
+
+@media only screen and (max-width: 800px) {
+    .container{
+        margin: 20px;
+        display: grid;
+        grid-template-areas: "card-create"
+                             "card-show"
+                             "card-create2"
+                             "card-show2";
+        grid-gap: 20px;
+    }
+}
+
+.form{
+    display: grid;
+}
+
+.card-create{
+    grid-area: card-create;
+    display: grid;
+    max-width: 400px;
+}
+
+.card-create2{
+    grid-area: card-create2;
+    display: grid;
+    grid-gap: 30px;
+    max-width: 400px;
+}
+
+.c1, .c2, .c3{
+}
+
+.card-show{
+    grid-area: card-show;
+    display: grid;
+    max-width: 400px;
+}
+
+
+.card-show2{
+    grid-area: card-show2;
+    display: grid;
+    max-width: 400px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    display: none;
+}  
+
+input{
+    -moz-appearance: textfield;
+}
+
+.mat-form-field{
+    margin: 7px 7px;
+
+}
+
+#id-search{
+    text-align: right;
+    width: 25%;
+    position: absolute;
+    top: -20px;
+    right: 10px;
+}
+
+.btn{
+    margin: 20px 5px;
+}

@@ -32,4 +32,5 @@ func InitDB() {
 	gormdb.DB.AutoMigrate(&models.Tutorial{})
 	gormdb.DB.AutoMigrate(&models.User{})
 	gormdb.DB.AutoMigrate(&models.Rate_User{})
+
 }

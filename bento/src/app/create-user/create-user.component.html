@@ -1,0 +1,111 @@
+<div class="container">
+<mat-card class="card-create">
+  <mat-card-content>
+    <mat-card-title> Crear usuario </mat-card-title>
+<form action="" method="POST" accept-charset="utf-8">
+    <div class="form">
+        <!-- nombre -->
+      <mat-form-field id="name" hintLabel="Max 40 characters">
+        <input [(ngModel)]="user.UserName" name="name" matInput #input maxlength="40" placeholder="Nombre">
+        <mat-hint align="end">{{input.value?.length || 0}}/40</mat-hint>
+      </mat-form-field>
+
+        <!-- genero -->
+      <mat-form-field>
+        <mat-select [(ngModel)]="user.Gender"name="gender" id="gender" placeholder="Genero">
+            <mat-option *ngFor="let gender of genders"
+                [value]="gender.ID"> {{gender.Gender}} </mat-option>
+        </mat-select>
+        <mat-hint align="end">Selecciona tu genero ^</mat-hint>
+      </mat-form-field>
+
+        <!-- edad -->
+      <mat-form-field id="age" hintLabel="">
+        <input  [(ngModel)]="user.Age" name="age" matInput #input type="number" min="0" max="120" placeholder="0">
+        <mat-hint align="end">{{input.value?.length || 0}}/120</mat-hint>
+      </mat-form-field>
+
+        <!-- Email -->
+      <mat-form-field id="email" hintLabel="Max 40 characters">
+        <input  [(ngModel)]="user.UserEmail" name="email" matInput #input maxlength="40" type="email" placeholder="Email@example.com">
+        <mat-hint align="end">{{input.value?.length || 0}}/40</mat-hint>
+      </mat-form-field>
+
+        <!-- Niverl academico -->
+      <mat-form-field>
+        <mat-select  [(ngModel)]="user.AcademicLevel" name="academicLevel" id="academicLevel" placeholder="Nivel educativo">
+            <mat-option *ngFor="let level of levels"
+            [value]="level.ID"> {{level.AcademicLevel}} </mat-option>
+        </mat-select>
+        <mat-hint align="end">Selecciona tu genero ^</mat-hint>
+      </mat-form-field>
+
+        <button class="btn" mat-flat-button 
+            (click)="createUser(user.UserName,user.Age,user.Gender,user.UserEmail, user.AcademicLevel,user.Role)" 
+            type="submit">Crear</button>
+    </div> <!-- from div -->
+    </form>
+
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="card-show">
+    <mat-card-title> Buscar usuario 
+      <mat-form-field id="id-search" hintLabel="">
+        <input matInput placeholder="id">
+      </mat-form-field>
+    </mat-card-title>
+    <mat-label> Nombre: </mat-label>
+    <mat-label> Genero: </mat-label>
+    <mat-label> Edad: </mat-label>
+    <mat-label> Email: </mat-label>
+    <mat-label> Nivel Educativo: </mat-label>
+</mat-card>
+
+<div class="container">
+<mat-card class="card-create2">
+
+    <div class="c1">
+        <div class="form">
+            <mat-card-title> Crear Materias </mat-card-title>
+              <mat-form-field id="name-subject" hintLabel="Max 40 characters">
+                <input [(ngModel)]="subject.SubjectName" name="SubjectName" matInput #input maxlength="40" placeholder="Materia">
+                <mat-hint align="end">{{input.value?.length || 0}}/40</mat-hint>
+             </mat-form-field>
+            <button class="btn" (click)="createSubject(subject.SubjectName)" mat-flat-button type="submit">Crear</button>
+        </div>
+    </div>
+
+    <div class="c2">
+        <div class="form">
+        <mat-card-title> Crear Categoria </mat-card-title>
+          <mat-form-field id="name-category" hintLabel="Max 40 characters">
+            <input [(ngModel)]="category.TopicName" name="TopicName" matInput #input maxlength="40" placeholder="Categoria">
+           <mat-hint align="end">{{input.value?.length || 0}}/40</mat-hint>
+          </mat-form-field>
+            <button class="btn" (click)="createCategory(category.TopicName)" mat-flat-button type="submit">Crear</button>
+        </div>
+    </div>
+
+    <div class="c3">
+        <div class="form">
+    <mat-card-title> Crear Nivel Academico </mat-card-title>
+      <mat-form-field id="name-level" hintLabel="Max 40 characters">
+        <input [(ngModel)]="level.AcademicLevel" name="AcademicLevel" matInput #input maxlength="40" placeholder="Nivel Academico">
+        <mat-hint align="end">{{input.value?.length || 0}}/40</mat-hint>
+      </mat-form-field>
+        <button class="btn"  (click)="createLevel(level.AcademicLevel)" mat-flat-button type="submit">Crear</button>
+        </div>
+    </div>
+
+</mat-card>
+</div>
+
+<mat-card class="card-show2">
+    <mat-card-title> Materias </mat-card-title>
+
+    <br>
+    <mat-card-title> Roles </mat-card-title>
+</mat-card>
+
+</div>

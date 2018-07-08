@@ -13,12 +13,47 @@ type User struct {
 	gormc.Controller
 }
 
+type UserModel struct {
+	Id            uint
+	UserName      string
+	UserAge       uint8
+	Gender        string
+	UserEmail     string
+	AcademicLevel string
+	Role          string
+	Rate          string
+}
+
 func (c User) Show() revel.Result {
-	var users []*models.User
+	//var users []*models.User
+	var model []*UserModel
 	//var prods models.Product
 	//Gdb.Select("code", "price").Find(&prods).Scan(&users)
-	c.DB.Raw("SELECT * FROM public.user;").Scan(&users)
-	return c.RenderJSON(users)
+	//c.DB.Raw("SELECT * FROM public.user ;").Scan(&users)
+	c.DB.Raw(`
+			SELECT 
+			  "user".user_email, 
+			  "user".user_age, 
+			  "user".user_name, 
+			  "user".id, 
+			  academic_level_user.academic_level, 
+			  gender_user.gender, 
+			  role_user.role, 
+			  rate_user.rate
+			FROM 
+			  public."user", 
+			  public.academic_level_user, 
+			  public.role_user, 
+			  public.gender_user, 
+			  public.rate_user
+			WHERE 
+			  academic_level_user.id = "user".id_academic_level_user AND
+			  role_user.id = "user".id_role_user AND
+			  gender_user.id = "user".id_gender_user AND
+			  rate_user.id = "user".id_rate_user;
+				`).Scan(&model)
+
+	return c.RenderJSON(model)
 }
 
 func (c User) Crud() revel.Result {
@@ -48,12 +83,49 @@ func (c User) Pop(id uint) revel.Result {
 	//return c.RenderJSON(product) //debuging
 }
 
-func (c User) Insert( /*code string, price uint */ user models.User) revel.Result {
-	// pro := models.Product{Code: code, Price: price}
+/*
+func parseData(userModel UserModel) (uint, uint, uint) {
+	var data [3]uint
+	if userModel.Gender == "Hombre" {
+		data[0] = 1
+	} else {
+		data[0] = 2
+	}
+
+	if userModel.AcademicLevel == "Educacion Media" {
+		data[1] = 1
+	} else if userModel.AcademicLevel == "Bachiller" {
+		data[1] = 2
+	} else {
+		data[1] = 3
+	}
+
+	if userModel.Role == "Alumno" {
+		data[2] = 1
+	} else {
+		data[2] = 2
+	}
+
+	return data[0], data[1], data[2]
+}
+*/
+func (c User) Insert(user models.User) revel.Result {
+	//gender, level, role := parseData(userModel)
+
+	/*
+		user := models.User{IdGenderUser: gender,
+			IdAcademicLevelUser: level, IdRoleUser: role,
+			IdRateUser: 1, UserPhoto: "None", UserName: userModel.UserName,
+			UserAge: userModel.UserAge, UserEmail: userModel.UserEmail,
+			UserDescription: ""}
+	*/
+	/*
+		log := c.Log.New("insert", 1)
+		log.Debug("Inserting:", userModel)
+		log.Debug("Inserting:", user)*/
+
 	c.DB.Create(&user)
-	log := c.Log.New("insert", 1)
 	//log.Debug("Inserting:", user.UserName, user.UserAge, user.UserEmail, nil)
-	log.Debug("Inserting:", user)
 
 	//return nil
 	return c.RenderJSON(c.Response.Status)

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AmaiService } from '../amai.service';
-import { User } from '../User';
+import { User } from '../models/User';
 
 @Component({
   selector: 'app-home',
@@ -17,9 +17,6 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-      this.service.getProductsObservable().subscribe(res => {
-        this.users = res;
-      });
     }
 
 }

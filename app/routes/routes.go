@@ -4,6 +4,66 @@ package routes
 import "github.com/revel/revel"
 
 
+type tAdmin struct {}
+var Admin tAdmin
+
+
+func (_ tAdmin) Subjects(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Admin.Subjects", args).URL
+}
+
+func (_ tAdmin) CreateSubject(
+		name string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "name", name)
+	return revel.MainRouter.Reverse("Admin.CreateSubject", args).URL
+}
+
+func (_ tAdmin) Category(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Admin.Category", args).URL
+}
+
+func (_ tAdmin) CreateCategory(
+		name string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "name", name)
+	return revel.MainRouter.Reverse("Admin.CreateCategory", args).URL
+}
+
+func (_ tAdmin) AcademicLevel(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Admin.AcademicLevel", args).URL
+}
+
+func (_ tAdmin) CreateAcademicLevel(
+		name string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "name", name)
+	return revel.MainRouter.Reverse("Admin.CreateAcademicLevel", args).URL
+}
+
+func (_ tAdmin) Gender(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Admin.Gender", args).URL
+}
+
+
 type tApp struct {}
 var App tApp
 
@@ -20,59 +80,6 @@ func (_ tApp) Help(
 	args := make(map[string]string)
 	
 	return revel.MainRouter.Reverse("App.Help", args).URL
-}
-
-
-type tProducts struct {}
-var Products tProducts
-
-
-func (_ tProducts) Show(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Products.Show", args).URL
-}
-
-func (_ tProducts) Crud(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Products.Crud", args).URL
-}
-
-func (_ tProducts) GetProduct(
-		code string,
-		) string {
-	args := make(map[string]string)
-	
-	revel.Unbind(args, "code", code)
-	return revel.MainRouter.Reverse("Products.GetProduct", args).URL
-}
-
-func (_ tProducts) Delete(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Products.Delete", args).URL
-}
-
-func (_ tProducts) Pop(
-		id uint,
-		) string {
-	args := make(map[string]string)
-	
-	revel.Unbind(args, "id", id)
-	return revel.MainRouter.Reverse("Products.Pop", args).URL
-}
-
-func (_ tProducts) Insert(
-		pro interface{},
-		) string {
-	args := make(map[string]string)
-	
-	revel.Unbind(args, "pro", pro)
-	return revel.MainRouter.Reverse("Products.Insert", args).URL
 }
 
 

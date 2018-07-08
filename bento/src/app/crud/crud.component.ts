@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AmaiService } from '../amai.service';
-import { CreateProductComponent } from '../create-product/create-product.component';
-import { User } from '../User';
+import { User } from '../models/User';
+import { UsersTableComponent } from '../users-table/users-table.component';
 
 @Component({
   selector: 'app-crud',
   templateUrl: './crud.component.html',
   styleUrls: ['./crud.component.css'],
 })
+
 export class CrudComponent implements OnInit {
     /*we created a class named Products as a kind of template that will
      *contain the same info as the JSON from the API returns
@@ -19,7 +20,6 @@ export class CrudComponent implements OnInit {
 
     onSubmit( id: number ){
         console.log("on submit");
-        this.service.deleteProduct(id);
         this.update();
     }
 
@@ -28,9 +28,6 @@ export class CrudComponent implements OnInit {
     }
 
     update(){
-        this.service.getProductsObservable().subscribe(res => {
-            this.users = res;
-      });
     }
 
     ngOnInit() {

@@ -1,15 +1,23 @@
-<section id="page">
+ <section id="page">
+     <!--
     <header> <h1> Test Page </h1> </header>
-    <nav>
+   <!-- <nav>
         <!-- RouterLinkActive it's a class from Angular than let us highlight the button when
-            it's selected, routerLinkActiveOptions it's used to ensure that only will happen on selected -->
+            it's selected, routerLinkActiveOptions it's used to ensure that only will happen on selected 
         <a [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact:true}" routerLink="/">Home</a>
         <a [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact:true}" class="" routerLink="/crud">crud</a>
-    </nav>
-    <main>
+        <a [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact:true}" class="" routerLink="/panel">panel</a>
+   </nav> -->
+    <app-main-nav></app-main-nav>
         <!-- This components returns the component specified in the app-routing module
-            in the variable const routes -->
-        <router-outlet></router-outlet>
+    <main>
+            in the variable const routes 
+    <router-outlet></router-outlet>
+   <app-panel></app-panel>
     </main>
+        -->
+
+     <!--
     <footer> <p> Footer</p></footer>
+        -->
 </section>
