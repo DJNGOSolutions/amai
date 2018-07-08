@@ -7,6 +7,7 @@ import { UsersTableComponent }        from './users-table/users-table.component'
 import { CreateUserComponent }        from './create-user/create-user.component';
 import { CrudComponent }        from './crud/crud.component';
 import { PanelComponent }   from './panel/panel.component';
+import { LoginComponent }   from './login/login.component';
 
 // Pretty self explicatory we specify a route and it's component.
 const routes: Routes = [

@@ -8,7 +8,13 @@
         <a [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact:true}" class="" routerLink="/crud">crud</a>
         <a [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact:true}" class="" routerLink="/panel">panel</a>
    </nav> -->
-    <app-main-nav></app-main-nav>
+
+   <div *ngIf="!loged; else elseBlock">
+       <app-login></app-login>
+   </div>
+   <ng-template #elseBlock>
+        <app-main-nav></app-main-nav>
+   </ng-template>
         <!-- This components returns the component specified in the app-routing module
     <main>
             in the variable const routes 

@@ -87,6 +87,13 @@ type tSession struct {}
 var Session tSession
 
 
+func (_ tSession) Sessions(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Session.Sessions", args).URL
+}
+
 
 type tUser struct {}
 var User tUser
@@ -97,6 +104,28 @@ func (_ tUser) Show(
 	args := make(map[string]string)
 	
 	return revel.MainRouter.Reverse("User.Show", args).URL
+}
+
+func (_ tUser) GenHash(
+		pass string,
+		id uint,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "pass", pass)
+	revel.Unbind(args, "id", id)
+	return revel.MainRouter.Reverse("User.GenHash", args).URL
+}
+
+func (_ tUser) Login(
+		email string,
+		pass string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "email", email)
+	revel.Unbind(args, "pass", pass)
+	return revel.MainRouter.Reverse("User.Login", args).URL
 }
 
 func (_ tUser) Crud(

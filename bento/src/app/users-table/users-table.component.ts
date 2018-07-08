@@ -19,6 +19,11 @@ export class UsersTableComponent implements OnInit {
     displayedColumns = ['Options','IdUser','UserRole','UserName',
         'UserGender', 'UserEmail','UserAcademicLevel','UserRate'];
 
+    deleteUser(id:number){
+        console.log( "delete: " + id );
+        this.service.deleteUser(id);
+    }
+
   ngOnInit() {
     this.dataSource = new UsersTableDataSource(this.paginator, this.sort,this.service);
   }

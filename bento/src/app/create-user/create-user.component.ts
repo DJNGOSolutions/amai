@@ -6,6 +6,7 @@ import { AcademicLevel } from '../models/AcademicLevel';
 import { Gender } from '../models/Gender';
 import { AmaiService } from '../amai.service';
 import { EventEmitter, Output } from '@angular/core';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-create-user',
@@ -15,12 +16,14 @@ import { EventEmitter, Output } from '@angular/core';
 export class CreateUserComponent implements OnInit {
     user : User = {
         UserName: '',
-        Age: 0,
-        Gender: 1,
+        UserBirthday: '',
+        Gender: null,
         UserEmail: '',
-        AcademicLevel: 1,
+        AcademicLevel: null,
         Role: 1
     }
+
+    startDate = new Date(1990, 0, 1);
 
     category : Category = {
         TopicName: ''
@@ -41,8 +44,8 @@ export class CreateUserComponent implements OnInit {
 
     constructor( private service: AmaiService) { }
 
-    createUser( name: string, age: number, gender: string, userEmail: string,
-        aLevel: string, role: string) {
+    createUser( name: string, age: string, gender: number, userEmail: string,
+        aLevel: number, role: number) {
         console.log("on create");
         console.log("vars",name,age,gender,userEmail,aLevel,role);
         console.log("this user",this.user);
@@ -50,10 +53,10 @@ export class CreateUserComponent implements OnInit {
         //reset placeholder
         this.user = {
             UserName: '',
-            Age: 0,
-            Gender: 1,
+            UserBirthday: '',
+            Gender: null,
             UserEmail: '',
-            AcademicLevel: 1,
+            AcademicLevel: null,
             Role: 1,
         };
         console.log(this.user);
@@ -74,6 +77,11 @@ export class CreateUserComponent implements OnInit {
         this.service.createLevel(name);
         this.level.AcademicLevel = '';
     }
+
+
+    setDate(type: string, event: MatDatepickerInputEvent<Date>) {
+        this.user.UserBirthday = event.value.toDateString()+"";
+      }
 
   ngOnInit() {
       this.service.getGenders().subscribe( res => {

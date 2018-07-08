@@ -23,16 +23,19 @@ export class AmaiService {
     /* this functions returns the array of object that is given by the api
      */
 
-    createUser( name: string, age: number, gender: string, userEmail: string,
-        aLevel: string, role: string ) {
+    createUser( name: string, age: string, gender: number, userEmail: string, aLevel: number, role: number ) {
         console.log("create");
         
         this.http.post(this.url+"/insert",
-            {UserName:name, UserAge:age, UserGender:gender, UserEmail:userEmail,
-                UserAcademicLevel: aLevel, UserRole: role})
-            .subscribe(
-            res => Response );
+            {UserName:name, UserBirthday:age, IdGenderUser:gender, UserEmail:userEmail,
+                IdAcademicLevelUser: aLevel, IdRoleUser: role})
+            .subscribe(res => Response);
     }
+
+    deleteUser( id : number ){
+        this.http.delete(this.url+"/delete/"+id,httpOptions).subscribe( res => { console.log(res); });
+    }
+
      getUsers(): Observable<any> {
              return this.http.get(this.url+"/show");
     } 

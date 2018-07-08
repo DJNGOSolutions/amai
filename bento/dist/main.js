@@ -46,11 +46,15 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+var httpOptions = {
+    headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+        'Content-Type': 'application/json'
+        /*'Authorization': 'my-auth-token'*/
+    })
+};
 var AmaiService = /** @class */ (function () {
     //url : string = "";
-    /*since i'm new at ts i don't exactly understatnd why
-     * the constructor requires de http var on it
-     */
     function AmaiService(http) {
         this.http = http;
         //local API url
@@ -58,18 +62,32 @@ var AmaiService = /** @class */ (function () {
     }
     /* this functions returns the array of object that is given by the api
      */
-    AmaiService.prototype.getProductsObservable = function () {
-        return this.http.get(this.url + "/show");
-    };
-    AmaiService.prototype.deleteProduct = function (id) {
-        console.log("delete");
-        this.http.delete(this.url + "/delete/" + id).subscribe();
-    };
     AmaiService.prototype.createUser = function (name, age, gender, userEmail, aLevel, role) {
         console.log("create");
-        this.http.post(this.url + "/insert", { UserName: name, UserAge: age, UserGender: gender, UserEmail: userEmail,
-            UserAcademicLevel: aLevel, UserRole: role })
+        this.http.post(this.url + "/insert", { UserName: name, UserBirthday: age, IdGenderUser: gender, UserEmail: userEmail,
+            IdAcademicLevelUser: aLevel, IdRoleUser: role })
             .subscribe(function (res) { return Response; });
+    };
+    AmaiService.prototype.deleteUser = function (id) {
+        this.http.delete(this.url + "/delete/" + id).subscribe(function (res) { console.log(res); });
+    };
+    AmaiService.prototype.getUsers = function () {
+        return this.http.get(this.url + "/show");
+    };
+    AmaiService.prototype.getGenders = function () {
+        return this.http.get(this.url + "/genders");
+    };
+    AmaiService.prototype.getLevels = function () {
+        return this.http.get(this.url + "/academics");
+    };
+    AmaiService.prototype.createSubject = function (name) {
+        this.http.post(this.url + "/create/subject/" + name, httpOptions).subscribe(function (res) { return Response; });
+    };
+    AmaiService.prototype.createCategory = function (name) {
+        this.http.post(this.url + "/create/category/" + name, httpOptions).subscribe(function (res) { return Response; });
+    };
+    AmaiService.prototype.createLevel = function (name) {
+        this.http.post(this.url + "/create/academic/" + name, httpOptions).subscribe(function (res) { return Response; });
     };
     AmaiService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -210,17 +228,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _amai_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./amai.service */ "./src/app/amai.service.ts");
 /* harmony import */ var _panel_panel_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./panel/panel.component */ "./src/app/panel/panel.component.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/material/form-field */ "./node_modules/@angular/material/esm5/form-field.es5.js");
-/* harmony import */ var _angular_cdk_layout__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/cdk/layout */ "./node_modules/@angular/cdk/esm5/layout.es5.js");
-/* harmony import */ var _main_nav_main_nav_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./main-nav/main-nav.component */ "./src/app/main-nav/main-nav.component.ts");
-/* harmony import */ var _users_table_users_table_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./users-table/users-table.component */ "./src/app/users-table/users-table.component.ts");
-/* harmony import */ var _create_user_create_user_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./create-user/create-user.component */ "./src/app/create-user/create-user.component.ts");
+/* harmony import */ var _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/material/datepicker */ "./node_modules/@angular/material/esm5/datepicker.es5.js");
+/* harmony import */ var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/material/form-field */ "./node_modules/@angular/material/esm5/form-field.es5.js");
+/* harmony import */ var _angular_cdk_layout__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/cdk/layout */ "./node_modules/@angular/cdk/esm5/layout.es5.js");
+/* harmony import */ var _main_nav_main_nav_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./main-nav/main-nav.component */ "./src/app/main-nav/main-nav.component.ts");
+/* harmony import */ var _users_table_users_table_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./users-table/users-table.component */ "./src/app/users-table/users-table.component.ts");
+/* harmony import */ var _create_user_create_user_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./create-user/create-user.component */ "./src/app/create-user/create-user.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -248,9 +268,9 @@ var AppModule = /** @class */ (function () {
                 _home_home_component__WEBPACK_IMPORTED_MODULE_6__["HomeComponent"],
                 _crud_crud_component__WEBPACK_IMPORTED_MODULE_7__["CrudComponent"],
                 _panel_panel_component__WEBPACK_IMPORTED_MODULE_10__["PanelComponent"],
-                _main_nav_main_nav_component__WEBPACK_IMPORTED_MODULE_14__["MainNavComponent"],
-                _users_table_users_table_component__WEBPACK_IMPORTED_MODULE_15__["UsersTableComponent"],
-                _create_user_create_user_component__WEBPACK_IMPORTED_MODULE_16__["CreateUserComponent"]
+                _main_nav_main_nav_component__WEBPACK_IMPORTED_MODULE_15__["MainNavComponent"],
+                _users_table_users_table_component__WEBPACK_IMPORTED_MODULE_16__["UsersTableComponent"],
+                _create_user_create_user_component__WEBPACK_IMPORTED_MODULE_17__["CreateUserComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -263,17 +283,19 @@ var AppModule = /** @class */ (function () {
                 _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatMenuModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatIconModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatButtonModule"],
-                _angular_cdk_layout__WEBPACK_IMPORTED_MODULE_13__["LayoutModule"],
+                _angular_cdk_layout__WEBPACK_IMPORTED_MODULE_14__["LayoutModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatToolbarModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatSidenavModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatListModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatTableModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatPaginatorModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatSortModule"],
-                _angular_material_form_field__WEBPACK_IMPORTED_MODULE_12__["MatFormFieldModule"],
+                _angular_material_form_field__WEBPACK_IMPORTED_MODULE_13__["MatFormFieldModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatInputModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatSelectModule"],
-                _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatOptionModule"]
+                _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatOptionModule"],
+                _angular_material_datepicker__WEBPACK_IMPORTED_MODULE_12__["MatDatepickerModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatNativeDateModule"]
             ],
             providers: [_amai_service__WEBPACK_IMPORTED_MODULE_9__["AmaiService"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
@@ -293,7 +315,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".container{\r\n    margin: 20px;\r\n    display: -ms-grid;\r\n    display: grid;\r\n        grid-template-areas: \"card-create card-show\";\r\n    grid-gap: 20px;\r\n}\r\n\r\n@media only screen and (max-width: 800px) {\r\n    .container{\r\n        margin: 20px;\r\n        display: -ms-grid;\r\n        display: grid;\r\n            grid-template-areas: \"card-create\"\r\n                             \"card-show\";\r\n        grid-gap: 20px;\r\n    }\r\n    .card-create{\r\n        -ms-grid-row: 1;\r\n        -ms-grid-column: 1;\r\n    }\r\n    .card-show{\r\n        -ms-grid-row: 2;\r\n        -ms-grid-column: 1;\r\n    }\r\n}\r\n\r\n.form{\r\n    display: -ms-grid;\r\n    display: grid;\r\n}\r\n\r\n.card-create{\r\n    -ms-grid-row: 1;\r\n    -ms-grid-column: 1;\r\n    grid-area: card-create;\r\n    display: -ms-grid;\r\n    display: grid;\r\n    max-width: 400px;\r\n}\r\n\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n    display: none;\r\n}\r\n\r\ninput{\r\n    -moz-appearance: textfield;\r\n}\r\n\r\n.mat-form-field{\r\n    margin: 7px 7px;\r\n\r\n}\r\n\r\n.card-show{\r\n    -ms-grid-row: 1;\r\n    -ms-grid-column: 2;\r\n    grid-area: card-show;\r\n    display: -ms-grid;\r\n    display: grid;\r\n    max-width: 400px;\r\n}\r\n\r\n#id-search{\r\n    text-align: right;\r\n    width: 25%;\r\n    position: absolute;\r\n    top: -20px;\r\n    right: 10px;\r\n}\r\n\r\n.btn{\r\n    margin: 20px 5px;\r\n}\r\n"
+module.exports = ".container{\r\n    margin: 20px;\r\n    display: -ms-grid;\r\n    display: grid;\r\n        grid-template-areas:\r\n                        \"card-create card-show\"\r\n                        \"card-create2 card-show2\";\r\n    grid-gap: 20px;\r\n}\r\n\r\n@media only screen and (max-width: 800px) {\r\n    .container{\r\n        margin: 20px;\r\n        display: -ms-grid;\r\n        display: grid;\r\n            grid-template-areas: \"card-create\"\r\n                             \"card-show\"\r\n                             \"card-create2\"\r\n                             \"card-show2\";\r\n        grid-gap: 20px;\r\n    }\r\n    .card-create{\r\n        -ms-grid-row: 1;\r\n        -ms-grid-column: 1;\r\n    }\r\n    .card-create2{\r\n        -ms-grid-row: 3;\r\n        -ms-grid-column: 1;\r\n    }\r\n    .card-show{\r\n        -ms-grid-row: 2;\r\n        -ms-grid-column: 1;\r\n    }\r\n    .card-show2{\r\n        -ms-grid-row: 4;\r\n        -ms-grid-column: 1;\r\n    }\r\n}\r\n\r\n.form{\r\n    display: -ms-grid;\r\n    display: grid;\r\n}\r\n\r\n.card-create{\r\n    -ms-grid-row: 1;\r\n    -ms-grid-column: 1;\r\n    grid-area: card-create;\r\n    display: -ms-grid;\r\n    display: grid;\r\n    max-width: 400px;\r\n}\r\n\r\n.card-create2{\r\n    -ms-grid-row: 2;\r\n    -ms-grid-column: 1;\r\n    grid-area: card-create2;\r\n    display: -ms-grid;\r\n    display: grid;\r\n    grid-gap: 30px;\r\n    max-width: 400px;\r\n}\r\n\r\n.c1, .c2, .c3{\r\n}\r\n\r\n.card-show{\r\n    -ms-grid-row: 1;\r\n    -ms-grid-column: 2;\r\n    grid-area: card-show;\r\n    display: -ms-grid;\r\n    display: grid;\r\n    max-width: 400px;\r\n}\r\n\r\n.card-show2{\r\n    -ms-grid-row: 2;\r\n    -ms-grid-column: 2;\r\n    grid-area: card-show2;\r\n    display: -ms-grid;\r\n    display: grid;\r\n    max-width: 400px;\r\n}\r\n\r\ninput::-webkit-outer-spin-button,\r\ninput::-webkit-inner-spin-button {\r\n    display: none;\r\n}\r\n\r\ninput{\r\n    -moz-appearance: textfield;\r\n}\r\n\r\n.mat-form-field{\r\n    margin: 7px 7px;\r\n\r\n}\r\n\r\n#id-search{\r\n    text-align: right;\r\n    width: 25%;\r\n    position: absolute;\r\n    top: -20px;\r\n    right: 10px;\r\n}\r\n\r\n.btn{\r\n    margin: 20px 5px;\r\n}\r\n"
 
 /***/ }),
 
@@ -304,7 +326,7 @@ module.exports = ".container{\r\n    margin: 20px;\r\n    display: -ms-grid;\r\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n<mat-card class=\"card-create\">\n  <mat-card-content>\n    <mat-card-title> Crear usuario </mat-card-title>\n<form action=\"\" method=\"POST\" accept-charset=\"utf-8\">\n    <div class=\"form\">\n        <!-- nombre -->\n      <mat-form-field id=\"name\" hintLabel=\"Max 40 characters\">\n        <input [(ngModel)]=\"user.UserName\" name=\"name\" matInput #input maxlength=\"40\" placeholder=\"Nombre\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n      </mat-form-field>\n\n        <!-- genero -->\n      <mat-form-field>\n        <mat-select  [(ngModel)]=\"user.Gender\" name=\"gender\" id=\"gender\" placeholder=\"Genero\">\n          <mat-option value=\"Hombre\">Hombre</mat-option>\n         <mat-option value=\"Mujer\">Mujer</mat-option>\n        </mat-select>\n        <mat-hint align=\"end\">Selecciona tu genero ^</mat-hint>\n      </mat-form-field>\n\n        <!-- edad -->\n      <mat-form-field id=\"age\" hintLabel=\"\">\n        <input  [(ngModel)]=\"user.Age\" name=\"age\" matInput #input type=\"number\" min=\"0\" max=\"120\" placeholder=\"0\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/120</mat-hint>\n      </mat-form-field>\n\n        <!-- Email -->\n      <mat-form-field id=\"email\" hintLabel=\"Max 40 characters\">\n        <input  [(ngModel)]=\"user.UserEmail\" name=\"email\" matInput #input maxlength=\"40\" type=\"email\" placeholder=\"Email@example.com\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n      </mat-form-field>\n\n        <!-- Niverl academico -->\n      <mat-form-field>\n        <mat-select  [(ngModel)]=\"user.AcademicLevel\" name=\"academicLevel\" id=\"academicLevel\" placeholder=\"Nivel educativo\">\n          <mat-option value=\"Educacion Media\">Educacion media</mat-option>\n          <mat-option value=\"Bachillerato\">Bachillerato</mat-option>\n         <mat-option value=\"Universidad\">Universidad</mat-option>\n        </mat-select>\n        <mat-hint align=\"end\">Selecciona tu genero ^</mat-hint>\n      </mat-form-field>\n\n        <button class=\"btn\" mat-flat-button \n            (click)=\"createUser(user.UserName,user.Age,user.Gender,user.UserEmail, user.AcademicLevel,user.Role)\" \n            type=\"submit\">Crear</button>\n    </div> <!-- from div -->\n    </form>\n\n  </mat-card-content>\n</mat-card>\n\n<mat-card class=\"card-show\">\n    <mat-card-title> Buscar usuario \n      <mat-form-field id=\"id-search\" hintLabel=\"\">\n        <input matInput placeholder=\"id\">\n      </mat-form-field>\n    </mat-card-title>\n    <mat-label> Nombre: </mat-label>\n    <mat-label> Genero: </mat-label>\n    <mat-label> Edad: </mat-label>\n    <mat-label> Email: </mat-label>\n    <mat-label> Nivel Educativo: </mat-label>\n</mat-card>\n\n</div>\n"
+module.exports = "<div class=\"container\">\n<mat-card class=\"card-create\">\n  <mat-card-content>\n    <mat-card-title> Crear usuario </mat-card-title>\n<form action=\"\" method=\"POST\" accept-charset=\"utf-8\">\n    <div class=\"form\">\n        <!-- nombre -->\n      <mat-form-field id=\"name\" hintLabel=\"Max 40 characters\">\n        <input [(ngModel)]=\"user.UserName\" name=\"name\" matInput #input maxlength=\"40\" placeholder=\"Nombre\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n      </mat-form-field>\n\n        <!-- genero -->\n      <mat-form-field>\n        <mat-select [(ngModel)]=\"user.Gender\"name=\"gender\" id=\"gender\" placeholder=\"Genero\">\n            <mat-option *ngFor=\"let gender of genders\"\n                [value]=\"gender.ID\"> {{gender.Gender}} </mat-option>\n        </mat-select>\n        <mat-hint align=\"end\">Selecciona tu genero ^</mat-hint>\n      </mat-form-field>\n\n        <!-- edad -->\n        <!--\n      <mat-form-field id=\"age\" hintLabel=\"\">\n        <input  [(ngModel)]=\"user.Age\" name=\"age\" matInput #input type=\"number\" min=\"0\" max=\"120\" placeholder=\"0\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/120</mat-hint>\n      </mat-form-field>\n        -->\n    <mat-form-field>\n        <input matInput [matDatepicker]=\"picker\" placeholder=\"Fecha de nacimiento\"\n        (dateInput)=\"setDate('input', $event)\" (dateChange)=\"setDate('change', $event)\" >\n      <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\n      <mat-datepicker #picker startView=\"year\" [startAt]=\"startDate\"></mat-datepicker>\n    </mat-form-field>\n\n\n        <!-- Email -->\n      <mat-form-field id=\"email\" hintLabel=\"Max 40 characters\">\n        <input  [(ngModel)]=\"user.UserEmail\" name=\"email\" matInput #input maxlength=\"40\" type=\"email\" placeholder=\"Email@example.com\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n      </mat-form-field>\n\n        <!-- Niverl academico -->\n      <mat-form-field>\n        <mat-select  [(ngModel)]=\"user.AcademicLevel\" name=\"academicLevel\" id=\"academicLevel\" placeholder=\"Nivel educativo\">\n            <mat-option *ngFor=\"let level of levels\"\n            [value]=\"level.ID\"> {{level.AcademicLevel}} </mat-option>\n        </mat-select>\n        <mat-hint align=\"end\">Selecciona tu genero ^</mat-hint>\n      </mat-form-field>\n\n        <button class=\"btn\" mat-flat-button \n            (click)=\"createUser(user.UserName,user.UserBirthday,user.Gender,user.UserEmail, user.AcademicLevel,user.Role)\" \n            type=\"submit\">Crear</button>\n    </div> <!-- from div -->\n    </form>\n\n  </mat-card-content>\n</mat-card>\n\n<mat-card class=\"card-show\">\n    <mat-card-title> Buscar usuario \n      <mat-form-field id=\"id-search\" hintLabel=\"\">\n        <input matInput placeholder=\"id\">\n      </mat-form-field>\n    </mat-card-title>\n    <mat-label> Nombre: </mat-label>\n    <mat-label> Genero: </mat-label>\n    <mat-label> Edad: </mat-label>\n    <mat-label> Email: </mat-label>\n    <mat-label> Nivel Educativo: </mat-label>\n</mat-card>\n\n<div class=\"container\">\n<mat-card class=\"card-create2\">\n\n    <div class=\"c1\">\n        <div class=\"form\">\n            <mat-card-title> Crear Materias </mat-card-title>\n              <mat-form-field id=\"name-subject\" hintLabel=\"Max 40 characters\">\n                <input [(ngModel)]=\"subject.SubjectName\" name=\"SubjectName\" matInput #input maxlength=\"40\" placeholder=\"Materia\">\n                <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n             </mat-form-field>\n            <button class=\"btn\" (click)=\"createSubject(subject.SubjectName)\" mat-flat-button type=\"submit\">Crear</button>\n        </div>\n    </div>\n\n    <div class=\"c2\">\n        <div class=\"form\">\n        <mat-card-title> Crear Categoria </mat-card-title>\n          <mat-form-field id=\"name-category\" hintLabel=\"Max 40 characters\">\n            <input [(ngModel)]=\"category.TopicName\" name=\"TopicName\" matInput #input maxlength=\"40\" placeholder=\"Categoria\">\n           <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n          </mat-form-field>\n            <button class=\"btn\" (click)=\"createCategory(category.TopicName)\" mat-flat-button type=\"submit\">Crear</button>\n        </div>\n    </div>\n\n    <div class=\"c3\">\n        <div class=\"form\">\n    <mat-card-title> Crear Nivel Academico </mat-card-title>\n      <mat-form-field id=\"name-level\" hintLabel=\"Max 40 characters\">\n        <input [(ngModel)]=\"level.AcademicLevel\" name=\"AcademicLevel\" matInput #input maxlength=\"40\" placeholder=\"Nivel Academico\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n      </mat-form-field>\n        <button class=\"btn\"  (click)=\"createLevel(level.AcademicLevel)\" mat-flat-button type=\"submit\">Crear</button>\n        </div>\n    </div>\n\n</mat-card>\n</div>\n\n<mat-card class=\"card-show2\">\n    <mat-card-title> Materias </mat-card-title>\n\n    <br>\n    <mat-card-title> Roles </mat-card-title>\n</mat-card>\n\n</div>\n"
 
 /***/ }),
 
@@ -336,34 +358,64 @@ var CreateUserComponent = /** @class */ (function () {
         this.service = service;
         this.user = {
             UserName: '',
-            Age: 0,
-            Gender: '',
+            UserBirthday: '',
+            Gender: null,
             UserEmail: '',
-            AcademicLevel: '',
-            Role: 'Estudiante',
+            AcademicLevel: null,
+            Role: 1
+        };
+        this.startDate = new Date(1990, 0, 1);
+        this.category = {
+            TopicName: ''
+        };
+        this.subject = {
+            SubjectName: ''
+        };
+        this.level = {
+            AcademicLevel: ''
         };
     }
-    /*
-@Output()
-created = new EventEmitter<string>();
-     */
     CreateUserComponent.prototype.createUser = function (name, age, gender, userEmail, aLevel, role) {
         console.log("on create");
-        console.log(name, age, gender, userEmail, aLevel, role);
+        console.log("vars", name, age, gender, userEmail, aLevel, role);
+        console.log("this user", this.user);
         this.service.createUser(name, age, gender, userEmail, aLevel, role);
         //reset placeholder
         this.user = {
             UserName: '',
-            Age: 0,
-            Gender: '',
+            UserBirthday: '',
+            Gender: null,
             UserEmail: '',
-            AcademicLevel: '',
-            Role: 'Estudiante',
+            AcademicLevel: null,
+            Role: 1,
         };
         console.log(this.user);
         //this.created.emit('created');
     };
+    CreateUserComponent.prototype.createSubject = function (name) {
+        this.service.createSubject(name);
+        this.subject.SubjectName = '';
+    };
+    CreateUserComponent.prototype.createCategory = function (name) {
+        this.service.createCategory(name);
+        this.category.TopicName = '';
+    };
+    CreateUserComponent.prototype.createLevel = function (name) {
+        this.service.createLevel(name);
+        this.level.AcademicLevel = '';
+    };
+    CreateUserComponent.prototype.setDate = function (type, event) {
+        this.user.UserBirthday = event.value.toDateString() + "";
+    };
     CreateUserComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.service.getGenders().subscribe(function (res) {
+            _this.genders = res;
+            console.log(_this.genders);
+        });
+        this.service.getLevels().subscribe(function (res) {
+            _this.levels = res;
+        });
     };
     CreateUserComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -431,17 +483,12 @@ var CrudComponent = /** @class */ (function () {
     }
     CrudComponent.prototype.onSubmit = function (id) {
         console.log("on submit");
-        this.service.deleteProduct(id);
         this.update();
     };
     CrudComponent.prototype.refresh = function ($event) {
         this.update();
     };
     CrudComponent.prototype.update = function () {
-        var _this = this;
-        this.service.getProductsObservable().subscribe(function (res) {
-            _this.users = res;
-        });
     };
     CrudComponent.prototype.ngOnInit = function () {
         this.update();
@@ -511,10 +558,6 @@ var HomeComponent = /** @class */ (function () {
         this.service = service;
     }
     HomeComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.service.getProductsObservable().subscribe(function (res) {
-            _this.users = res;
-        });
     };
     HomeComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -713,36 +756,6 @@ var __extends = (undefined && undefined.__extends) || (function () {
     };
 })();
 
-/*
-export interface UsersTableItem {
-  name: string;
-  id: number;
-}
- */
-/*
-const EXAMPLE_DATA: UsersTableItem[] = [
-  {id: 1, name: 'Hydrogen'},
-  {id: 2, name: 'Helium'},
-  {id: 3, name: 'Lithium'},
-  {id: 4, name: 'Beryllium'},
-  {id: 5, name: 'Boron'},
-  {id: 6, name: 'Carbon'},
-  {id: 7, name: 'Nitrogen'},
-  {id: 8, name: 'Oxygen'},
-  {id: 9, name: 'Fluorine'},
-  {id: 10, name: 'Neon'},
-  {id: 11, name: 'Sodium'},
-  {id: 12, name: 'Magnesium'},
-  {id: 13, name: 'Aluminum'},
-  {id: 14, name: 'Silicon'},
-  {id: 15, name: 'Phosphorus'},
-  {id: 16, name: 'Sulfur'},
-  {id: 17, name: 'Chlorine'},
-  {id: 18, name: 'Argon'},
-  {id: 19, name: 'Potassium'},
-  {id: 20, name: 'Calcium'},
-];
- */
 /**
  * Data source for the UsersTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
@@ -767,10 +780,10 @@ var UsersTableDataSource = /** @class */ (function (_super) {
         var _this = this;
         // Combine everything that affects the rendered data into one update
         // stream for the data-table to consume.
-        this.service.getProductsObservable().subscribe(function (res) {
+        this.service.getUsers().subscribe(function (res) {
             _this.usersList = res;
         });
-        return this.service.getProductsObservable();
+        return this.service.getUsers();
         /*
         const dataMutations = [
           observableOf(this.usersList),
@@ -848,7 +861,7 @@ module.exports = ".container{\r\n    margin: 20px;\r\n}\r\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <h1 class=\"mat-h1\">Usuarios</h1>\n<div class=\"mat-elevation-z2\">\n  <table mat-table #table [dataSource]=\"dataSource\" matSort style=\"width: 100%;\">\n\n    <!-- button -->\n    <ng-container matColumnDef=\"Options\">\n     <th mat-header-cell *matHeaderCellDef mat-sort-header> Options </th>\n      <td mat-cell *matCellDef=\"let row\" >\n          <button mat-flat-button> <mat-icon>delete</mat-icon> </button>\n      </td>\n    </ng-container>\n\n    <!-- Id Column -->\n    <ng-container matColumnDef=\"IdUser\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.Id}}</td>\n    </ng-container>\n\n    <!-- Role Column -->\n    <ng-container matColumnDef=\"UserRole\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.Role}}</td>\n    </ng-container>\n\n    <!-- Name Column -->\n    <ng-container matColumnDef=\"UserName\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.UserName}}</td>\n    </ng-container>\n\n    <!-- Gender Column -->\n    <ng-container matColumnDef=\"UserGender\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.Gender}}</td>\n    </ng-container>\n\n    <!-- Email Column -->\n    <ng-container matColumnDef=\"UserEmail\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.UserEmail}}</td>\n    </ng-container>\n\n    <!-- Academic Level Column -->\n    <ng-container matColumnDef=\"UserAcademicLevel\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Academic Level</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.AcademicLevel}}</td>\n    </ng-container>\n\n    <!-- Rate Column -->\n    <ng-container matColumnDef=\"UserRate\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Rate</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.Rate}}</td>\n    </ng-container>\n\n    <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n    <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n  </table>\n\n  <mat-paginator #paginator\n    [length]=\"dataSource?.data?.length\"\n    [pageIndex]=\"0\"\n    [pageSize]=\"50\"\n    [pageSizeOptions]=\"[25, 50, 100, 250]\">\n  </mat-paginator>\n</div>\n</div>\n"
+module.exports = "<div class=\"container\">\n  <h1 class=\"mat-h1\">Usuarios</h1>\n<div class=\"mat-elevation-z2\">\n  <table mat-table #table [dataSource]=\"dataSource\" matSort style=\"width: 100%;\">\n\n    <!-- button -->\n    <ng-container matColumnDef=\"Options\">\n     <th mat-header-cell *matHeaderCellDef mat-sort-header> Options </th>\n      <td mat-cell *matCellDef=\"let row\" >\n          <button mat-flat-button type=\"button\" (click)=\"deleteUser(row.Id)\"> <mat-icon>delete</mat-icon> </button>\n      </td>\n    </ng-container>\n\n    <!-- Id Column -->\n    <ng-container matColumnDef=\"IdUser\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.Id}}</td>\n    </ng-container>\n\n    <!-- Role Column -->\n    <ng-container matColumnDef=\"UserRole\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.Role}}</td>\n    </ng-container>\n\n    <!-- Name Column -->\n    <ng-container matColumnDef=\"UserName\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.UserName}}</td>\n    </ng-container>\n\n    <!-- Gender Column -->\n    <ng-container matColumnDef=\"UserGender\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Gender</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.Gender}}</td>\n    </ng-container>\n\n    <!-- Email Column -->\n    <ng-container matColumnDef=\"UserEmail\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.UserEmail}}</td>\n    </ng-container>\n\n    <!-- Academic Level Column -->\n    <ng-container matColumnDef=\"UserAcademicLevel\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Academic Level</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.AcademicLevel}}</td>\n    </ng-container>\n\n    <!-- Rate Column -->\n    <ng-container matColumnDef=\"UserRate\">\n      <th mat-header-cell *matHeaderCellDef mat-sort-header>Rate</th>\n      <td mat-cell *matCellDef=\"let row\">{{row.Rate}}</td>\n    </ng-container>\n\n    <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n    <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n  </table>\n\n  <mat-paginator #paginator\n    [length]=\"dataSource?.data?.length\"\n    [pageIndex]=\"0\"\n    [pageSize]=\"50\"\n    [pageSizeOptions]=\"[25, 50, 100, 250]\">\n  </mat-paginator>\n</div>\n</div>\n"
 
 /***/ }),
 
@@ -882,10 +895,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var UsersTableComponent = /** @class */ (function () {
     function UsersTableComponent(service) {
         this.service = service;
-        /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
+        /** Columns displayed in the table. */
         this.displayedColumns = ['Options', 'IdUser', 'UserRole', 'UserName',
             'UserGender', 'UserEmail', 'UserAcademicLevel', 'UserRate'];
     }
+    UsersTableComponent.prototype.deleteUser = function (id) {
+        console.log("delete: " + id);
+        this.service.deleteUser(id);
+    };
     UsersTableComponent.prototype.ngOnInit = function () {
         this.dataSource = new _users_table_datasource__WEBPACK_IMPORTED_MODULE_2__["UsersTableDataSource"](this.paginator, this.sort, this.service);
     };

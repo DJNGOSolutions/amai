@@ -7,13 +7,15 @@ module:testrunner
 # module:jobs
 
 GET     /                                       App.Index
-GET     /crud                                   App.Index
+GET     /tools                                  App.Index
 GET     /help                                   App.Help
 GET     /show                                   User.Show
 POST    /insert                                 User.Insert
 GET     /show                                   User.Show
 GET     /show/:id                               User.Getuser
 DELETE  /delete/:id                             User.Pop 
+GET     /genhash/:pass/:id                      User.GenHash
+POST    /auth/:email/:pass                      User.Login
 
 GET     /subjects                               Admin.Subjects
 GET     /category                               Admin.Category
@@ -22,6 +24,11 @@ GET     /genders                                Admin.Gender
 POST    /create/subject/:name                   Admin.CreateSubject
 POST    /create/category/:name                  Admin.CreateCategory
 POST    /create/academic/:name                  Admin.CreateAcademicLevel
+
+
+#SESSIONS
+GET     /sessions                               Session.Sessions
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

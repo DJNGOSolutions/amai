@@ -1,0 +1,30 @@
+.container{
+    display: grid;
+}
+.header{
+    padding-top: 24px;
+    padding-bottom: 10px;
+}
+
+.card{
+    display: grid;
+    max-width: 400px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+.mat-form-field{
+    padding: 10px 24px;
+}
+
+.form{
+    display: grid;
+    max-width: 400px;
+}
+
+button{
+    margin: 10px 20px;
+}

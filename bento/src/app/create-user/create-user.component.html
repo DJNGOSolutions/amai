@@ -20,10 +20,19 @@
       </mat-form-field>
 
         <!-- edad -->
+        <!--
       <mat-form-field id="age" hintLabel="">
         <input  [(ngModel)]="user.Age" name="age" matInput #input type="number" min="0" max="120" placeholder="0">
         <mat-hint align="end">{{input.value?.length || 0}}/120</mat-hint>
       </mat-form-field>
+        -->
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento"
+        (dateInput)="setDate('input', $event)" (dateChange)="setDate('change', $event)" >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+    </mat-form-field>
+
 
         <!-- Email -->
       <mat-form-field id="email" hintLabel="Max 40 characters">
@@ -41,7 +50,7 @@
       </mat-form-field>
 
         <button class="btn" mat-flat-button 
-            (click)="createUser(user.UserName,user.Age,user.Gender,user.UserEmail, user.AcademicLevel,user.Role)" 
+            (click)="createUser(user.UserName,user.UserBirthday,user.Gender,user.UserEmail, user.AcademicLevel,user.Role)" 
             type="submit">Crear</button>
     </div> <!-- from div -->
     </form>

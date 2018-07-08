@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/pdmp/amai/app/models"
+	"golang.org/x/crypto/bcrypt"
 
 	gormc "github.com/revel/modules/orm/gorm/app/controllers"
 	"github.com/revel/revel"
@@ -32,28 +33,59 @@ func (c User) Show() revel.Result {
 	//c.DB.Raw("SELECT * FROM public.user ;").Scan(&users)
 	c.DB.Raw(`
 			SELECT 
-			  "user".user_email, 
-			  "user".user_age, 
-			  "user".user_name, 
-			  "user".id, 
-			  academic_level_user.academic_level, 
-			  gender_user.gender, 
-			  role_user.role, 
-			  rate_user.rate
-			FROM 
-			  public."user", 
-			  public.academic_level_user, 
-			  public.role_user, 
-			  public.gender_user, 
-			  public.rate_user
-			WHERE 
-			  academic_level_user.id = "user".id_academic_level_user AND
-			  role_user.id = "user".id_role_user AND
-			  gender_user.id = "user".id_gender_user AND
-			  rate_user.id = "user".id_rate_user;
+  "user".id, 
+  role_user.role, 
+  "user".user_name, 
+  gender_user.gender, 
+  "user".user_email, 
+  academic_level_user.academic_level, 
+  ratex_user.rate, 
+  "user".user_description, 
+  "user".user_photo
+FROM 
+  public.ratex_user, 
+  public."user", 
+  public.gender_user, 
+  public.academic_level_user, 
+  public.role_user
+WHERE 
+  ratex_user.id = "user".id_rate_user AND
+  gender_user.id = "user".id_gender_user AND
+  academic_level_user.id = "user".id_academic_level_user AND
+  role_user.id = "user".id_role_user;
 				`).Scan(&model)
 
 	return c.RenderJSON(model)
+}
+
+func (c User) GenHash(pass string, id uint) revel.Result {
+
+	var user models.User
+	c.DB.Where("id = ?", id).Find(&user)
+
+	user.Hash, _ = bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
+	c.DB.Save(&user)
+	return c.RenderJSON(user.Hash)
+}
+
+func (c User) Login(email string, pass string) revel.Result {
+	var user models.User
+	//return c.RenderJSON(c.DB.Where("user_email = ?", email).Find(&user))
+	c.DB.Where("user_email = ?", email).Find(&user)
+	//return c.RenderJSON(&user)
+	fmt.Println("hash", user.Hash, "\npass -> "+pass, "\nbyte", []byte(pass))
+	if user.UserEmail != "" {
+		err := bcrypt.CompareHashAndPassword(user.Hash, []byte(pass))
+		if err == nil {
+			if user.IdRoleUser == 1 {
+				c.Session["user"] = user.UserName
+				c.Session.SetDefaultExpiration()
+			}
+			token, _ := bcrypt.GenerateFromPassword([]byte(user.UserPassword+user.UserName), bcrypt.DefaultCost)
+			return c.RenderJSON(token)
+		}
+	}
+	return c.RenderFileName("bento/dist/index.html", revel.NoDisposition)
 }
 
 func (c User) Crud() revel.Result {
@@ -76,39 +108,13 @@ func (c User) Delete() revel.Result {
 
 func (c User) Pop(id uint) revel.Result {
 	//var user models.User
-	c.DB.Raw("DELETE FROM public.user WHERE id = ?;", id)
-	fmt.Println("id", id)
-	return nil
+	//c.DB.Raw(`DELETE FROM public."user" WHERE id = ?;`, id)
+	//return c.RenderJSON(c.DB.Raw(`DELETE FROM public."user" WHERE id = ?;`, id))
+	return c.RenderJSON(c.DB.Unscoped().Delete(models.User{}, "id = ?", id))
 	//return c.Redirect("/crud")
 	//return c.RenderJSON(product) //debuging
 }
 
-/*
-func parseData(userModel UserModel) (uint, uint, uint) {
-	var data [3]uint
-	if userModel.Gender == "Hombre" {
-		data[0] = 1
-	} else {
-		data[0] = 2
-	}
-
-	if userModel.AcademicLevel == "Educacion Media" {
-		data[1] = 1
-	} else if userModel.AcademicLevel == "Bachiller" {
-		data[1] = 2
-	} else {
-		data[1] = 3
-	}
-
-	if userModel.Role == "Alumno" {
-		data[2] = 1
-	} else {
-		data[2] = 2
-	}
-
-	return data[0], data[1], data[2]
-}
-*/
 func (c User) Insert(user models.User) revel.Result {
 	//gender, level, role := parseData(userModel)
 

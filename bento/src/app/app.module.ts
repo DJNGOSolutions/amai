@@ -13,12 +13,14 @@ import { PanelComponent } from './panel/panel.component';
 import { MatGridListModule, MatCardModule, MatMenuModule, MatIconModule,
     MatButtonModule, MatToolbarModule, MatSidenavModule, MatListModule,
     MatTableModule, MatPaginatorModule, MatSortModule, MatInputModule, 
-    MatSelectModule,MatOptionModule  /*, MatFormFieldModule */ } from '@angular/material';
+    MatSelectModule,MatOptionModule,MatNativeDateModule } from '@angular/material';
+import {MatDatepickerModule, } from '@angular/material/datepicker';
 import {MatFormFieldModule } from '@angular/material/form-field';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { UsersTableComponent } from './users-table/users-table.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import { CreateUserComponent } from './create-user/create-user.component';
     PanelComponent,
     MainNavComponent,
     UsersTableComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,9 @@ import { CreateUserComponent } from './create-user/create-user.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [AmaiService],
   bootstrap: [AppComponent]
