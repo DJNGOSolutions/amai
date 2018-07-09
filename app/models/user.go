@@ -12,7 +12,6 @@ type User struct {
 	UserPhoto           string `gorm:"type:text"`                  //fotoUsuario
 	UserName            string `gorm:"type:varchar(150);not null"` //nombreUsuario
 	UserPassword        string `gorm:"type:text"`
-	Hash                []byte `gorm:"type:text"`
 	UserAge             uint
 	UserBirthday        string `gorm:"type:text"`                         //fechaNacimientoUsuario
 	UserEmail           string `gorm:"type:varchar(100);not null;unique"` //correoUsuario

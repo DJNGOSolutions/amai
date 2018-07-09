@@ -11,28 +11,12 @@ type Admin struct {
 	gormc.Controller
 }
 
-func (c Admin) Subjects() revel.Result {
-	var subjects []*models.Subject
-
-	c.DB.Find(&subjects)
-
-	return c.RenderJSON(subjects)
-}
-
 func (c Admin) CreateSubject(name string) revel.Result {
 
 	subject := models.Subject{SubjectName: name}
 	c.DB.Create(&subject)
 
 	return c.RenderJSON(subject)
-}
-
-func (c Admin) Category() revel.Result {
-	var topics []*models.Topic
-
-	c.DB.Find(&topics)
-
-	return c.RenderJSON(topics)
 }
 
 func (c Admin) CreateCategory(name string) revel.Result {
@@ -42,24 +26,17 @@ func (c Admin) CreateCategory(name string) revel.Result {
 	return c.RenderJSON(topic)
 }
 
-func (c Admin) AcademicLevel() revel.Result {
-	var levels []*models.AcademicLevel_User
-
-	c.DB.Find(&levels)
-
-	return c.RenderJSON(levels)
-}
-
 func (c Admin) CreateAcademicLevel(name string) revel.Result {
 	level := models.AcademicLevel_User{AcademicLevel: name}
 	c.DB.Create(&level)
 	return c.RenderJSON(level)
 }
 
-func (c Admin) Gender() revel.Result {
-	var genders []*models.Gender_User
-
-	c.DB.Find(&genders)
-
-	return c.RenderJSON(genders)
+func (c Admin) Pop(id uint) revel.Result {
+	//var user models.User
+	//c.DB.Raw(`DELETE FROM public."user" WHERE id = ?;`, id)
+	//return c.RenderJSON(c.DB.Raw(`DELETE FROM public."user" WHERE id = ?;`, id))
+	return c.RenderJSON(c.DB.Unscoped().Delete(models.User{}, "id = ?", id))
+	//return c.Redirect("/crud")
+	//return c.RenderJSON(product) //debuging
 }

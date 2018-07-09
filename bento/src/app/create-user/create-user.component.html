@@ -40,6 +40,12 @@
         <mat-hint align="end">{{input.value?.length || 0}}/40</mat-hint>
       </mat-form-field>
 
+        <!-- pass -->
+      <mat-form-field id="pass" hintLabel="Max 40 characters">
+        <input  [(ngModel)]="user.UserPassword" name="pass" matInput #input maxlength="40" type="password" placeholder="password" required>
+        <mat-hint align="end">{{input.value?.length || 0}}/40</mat-hint>
+      </mat-form-field>
+
         <!-- Niverl academico -->
       <mat-form-field>
         <mat-select  [(ngModel)]="user.AcademicLevel" name="academicLevel" id="academicLevel" placeholder="Nivel educativo">
@@ -50,7 +56,7 @@
       </mat-form-field>
 
         <button class="btn" mat-flat-button 
-            (click)="createUser(user.UserName,user.UserBirthday,user.Gender,user.UserEmail, user.AcademicLevel,user.Role)" 
+            (click)="createUser(user.UserName,user.UserBirthday,user.Gender,user.UserEmail,user.UserPassword, user.AcademicLevel,user.Role)" 
             type="submit">Crear</button>
     </div> <!-- from div -->
     </form>

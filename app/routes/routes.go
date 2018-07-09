@@ -8,13 +8,6 @@ type tAdmin struct {}
 var Admin tAdmin
 
 
-func (_ tAdmin) Subjects(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Admin.Subjects", args).URL
-}
-
 func (_ tAdmin) CreateSubject(
 		name string,
 		) string {
@@ -22,13 +15,6 @@ func (_ tAdmin) CreateSubject(
 	
 	revel.Unbind(args, "name", name)
 	return revel.MainRouter.Reverse("Admin.CreateSubject", args).URL
-}
-
-func (_ tAdmin) Category(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Admin.Category", args).URL
 }
 
 func (_ tAdmin) CreateCategory(
@@ -40,13 +26,6 @@ func (_ tAdmin) CreateCategory(
 	return revel.MainRouter.Reverse("Admin.CreateCategory", args).URL
 }
 
-func (_ tAdmin) AcademicLevel(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Admin.AcademicLevel", args).URL
-}
-
 func (_ tAdmin) CreateAcademicLevel(
 		name string,
 		) string {
@@ -56,11 +35,13 @@ func (_ tAdmin) CreateAcademicLevel(
 	return revel.MainRouter.Reverse("Admin.CreateAcademicLevel", args).URL
 }
 
-func (_ tAdmin) Gender(
+func (_ tAdmin) Pop(
+		id uint,
 		) string {
 	args := make(map[string]string)
 	
-	return revel.MainRouter.Reverse("Admin.Gender", args).URL
+	revel.Unbind(args, "id", id)
+	return revel.MainRouter.Reverse("Admin.Pop", args).URL
 }
 
 
@@ -75,11 +56,40 @@ func (_ tApp) Index(
 	return revel.MainRouter.Reverse("App.Index", args).URL
 }
 
+func (_ tApp) Login(
+		email string,
+		pass string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "email", email)
+	revel.Unbind(args, "pass", pass)
+	return revel.MainRouter.Reverse("App.Login", args).URL
+}
+
+func (_ tApp) Register(
+		user interface{},
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "user", user)
+	return revel.MainRouter.Reverse("App.Register", args).URL
+}
+
 func (_ tApp) Help(
 		) string {
 	args := make(map[string]string)
 	
 	return revel.MainRouter.Reverse("App.Help", args).URL
+}
+
+func (_ tApp) HashTest(
+		pass string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "pass", pass)
+	return revel.MainRouter.Reverse("App.HashTest", args).URL
 }
 
 
@@ -94,6 +104,20 @@ func (_ tSession) Sessions(
 	return revel.MainRouter.Reverse("Session.Sessions", args).URL
 }
 
+func (_ tSession) MySessions(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Session.MySessions", args).URL
+}
+
+func (_ tSession) SessionsByTopic(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Session.SessionsByTopic", args).URL
+}
+
 
 type tUser struct {}
 var User tUser
@@ -104,17 +128,6 @@ func (_ tUser) Show(
 	args := make(map[string]string)
 	
 	return revel.MainRouter.Reverse("User.Show", args).URL
-}
-
-func (_ tUser) GenHash(
-		pass string,
-		id uint,
-		) string {
-	args := make(map[string]string)
-	
-	revel.Unbind(args, "pass", pass)
-	revel.Unbind(args, "id", id)
-	return revel.MainRouter.Reverse("User.GenHash", args).URL
 }
 
 func (_ tUser) Login(
@@ -128,45 +141,32 @@ func (_ tUser) Login(
 	return revel.MainRouter.Reverse("User.Login", args).URL
 }
 
-func (_ tUser) Crud(
+func (_ tUser) Gender(
 		) string {
 	args := make(map[string]string)
 	
-	return revel.MainRouter.Reverse("User.Crud", args).URL
+	return revel.MainRouter.Reverse("User.Gender", args).URL
 }
 
-func (_ tUser) GetUser(
-		code string,
+func (_ tUser) AcademicLevel(
 		) string {
 	args := make(map[string]string)
 	
-	revel.Unbind(args, "code", code)
-	return revel.MainRouter.Reverse("User.GetUser", args).URL
+	return revel.MainRouter.Reverse("User.AcademicLevel", args).URL
 }
 
-func (_ tUser) Delete(
+func (_ tUser) Category(
 		) string {
 	args := make(map[string]string)
 	
-	return revel.MainRouter.Reverse("User.Delete", args).URL
+	return revel.MainRouter.Reverse("User.Category", args).URL
 }
 
-func (_ tUser) Pop(
-		id uint,
+func (_ tUser) Subjects(
 		) string {
 	args := make(map[string]string)
 	
-	revel.Unbind(args, "id", id)
-	return revel.MainRouter.Reverse("User.Pop", args).URL
-}
-
-func (_ tUser) Insert(
-		user interface{},
-		) string {
-	args := make(map[string]string)
-	
-	revel.Unbind(args, "user", user)
-	return revel.MainRouter.Reverse("User.Insert", args).URL
+	return revel.MainRouter.Reverse("User.Subjects", args).URL
 }
 
 

@@ -16,6 +16,7 @@ import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 export class CreateUserComponent implements OnInit {
     user : User = {
         UserName: '',
+        UserPassword: '',
         UserBirthday: '',
         Gender: null,
         UserEmail: '',
@@ -45,14 +46,15 @@ export class CreateUserComponent implements OnInit {
     constructor( private service: AmaiService) { }
 
     createUser( name: string, age: string, gender: number, userEmail: string,
-        aLevel: number, role: number) {
+        pass: string,aLevel: number, role: number) {
         console.log("on create");
         console.log("vars",name,age,gender,userEmail,aLevel,role);
         console.log("this user",this.user);
-        this.service.createUser(name,age,gender,userEmail,aLevel,role);
+        this.service.createUser(name,age,gender,userEmail,pass,aLevel,role);
         //reset placeholder
         this.user = {
             UserName: '',
+            UserPassword: '',
             UserBirthday: '',
             Gender: null,
             UserEmail: '',

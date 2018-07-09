@@ -49,36 +49,38 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var httpOptions = {
     headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-        'Content-Type': 'application/json'
-        /*'Authorization': 'my-auth-token'*/
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YW1wbGVAZW1haWwyLmNvbSIsIm5iZiI6MTUzMDk2NDgwMH0.YhaqEjwdSSQ04AnJIZ-Nu7ETjgsNL-jvA1lSLRb4Ol4'
     })
 };
 var AmaiService = /** @class */ (function () {
-    //url : string = "";
     function AmaiService(http) {
         this.http = http;
         //local API url
-        this.url = "http://localhost:9000";
+        //url : string = "http://localhost:9000";
+        //url : string = "";
+        ////server url
+        this.url = "http::206.189.212.245:9000";
     }
     /* this functions returns the array of object that is given by the api
      */
-    AmaiService.prototype.createUser = function (name, age, gender, userEmail, aLevel, role) {
+    AmaiService.prototype.createUser = function (name, age, gender, userEmail, pass, aLevel, role) {
         console.log("create");
-        this.http.post(this.url + "/insert", { UserName: name, UserBirthday: age, IdGenderUser: gender, UserEmail: userEmail,
-            IdAcademicLevelUser: aLevel, IdRoleUser: role })
+        this.http.post(this.url + "/register", { UserName: name, UserPassword: pass, UserBirthday: age, IdGenderUser: gender, UserEmail: userEmail,
+            IdAcademicLevelUser: aLevel, IdRoleUser: role }, httpOptions)
             .subscribe(function (res) { return Response; });
     };
     AmaiService.prototype.deleteUser = function (id) {
-        this.http.delete(this.url + "/delete/" + id).subscribe(function (res) { console.log(res); });
+        this.http.delete(this.url + "/delete/" + id, httpOptions).subscribe(function (res) { console.log(res); });
     };
     AmaiService.prototype.getUsers = function () {
-        return this.http.get(this.url + "/show");
+        return this.http.get(this.url + "/show", httpOptions);
     };
     AmaiService.prototype.getGenders = function () {
-        return this.http.get(this.url + "/genders");
+        return this.http.get(this.url + "/genders", httpOptions);
     };
     AmaiService.prototype.getLevels = function () {
-        return this.http.get(this.url + "/academics");
+        return this.http.get(this.url + "/academics", httpOptions);
     };
     AmaiService.prototype.createSubject = function (name) {
         this.http.post(this.url + "/create/subject/" + name, httpOptions).subscribe(function (res) { return Response; });
@@ -166,7 +168,7 @@ module.exports = "/* Application-wide Styles */\r\nh1 {\r\n    color: #369;\r\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = " <section id=\"page\">\n     <!--\n    <header> <h1> Test Page </h1> </header>\n   <!-- <nav>\n        <!-- RouterLinkActive it's a class from Angular than let us highlight the button when\n            it's selected, routerLinkActiveOptions it's used to ensure that only will happen on selected \n        <a [routerLinkActive]=\"'active'\" [routerLinkActiveOptions]=\"{exact:true}\" routerLink=\"/\">Home</a>\n        <a [routerLinkActive]=\"'active'\" [routerLinkActiveOptions]=\"{exact:true}\" class=\"\" routerLink=\"/crud\">crud</a>\n        <a [routerLinkActive]=\"'active'\" [routerLinkActiveOptions]=\"{exact:true}\" class=\"\" routerLink=\"/panel\">panel</a>\n   </nav> -->\n    <app-main-nav></app-main-nav>\n        <!-- This components returns the component specified in the app-routing module\n    <main>\n            in the variable const routes \n    <router-outlet></router-outlet>\n   <app-panel></app-panel>\n    </main>\n        -->\n\n     <!--\n    <footer> <p> Footer</p></footer>\n        -->\n</section>\n"
+module.exports = " <section id=\"page\">\n     <!--\n    <header> <h1> Test Page </h1> </header>\n   <!-- <nav>\n        <!-- RouterLinkActive it's a class from Angular than let us highlight the button when\n            it's selected, routerLinkActiveOptions it's used to ensure that only will happen on selected \n        <a [routerLinkActive]=\"'active'\" [routerLinkActiveOptions]=\"{exact:true}\" routerLink=\"/\">Home</a>\n        <a [routerLinkActive]=\"'active'\" [routerLinkActiveOptions]=\"{exact:true}\" class=\"\" routerLink=\"/crud\">crud</a>\n        <a [routerLinkActive]=\"'active'\" [routerLinkActiveOptions]=\"{exact:true}\" class=\"\" routerLink=\"/panel\">panel</a>\n   </nav> -->\n\n   <div *ngIf=\"!loged; else elseBlock\">\n       <app-login></app-login>\n   </div>\n   <ng-template #elseBlock>\n        <app-main-nav></app-main-nav>\n   </ng-template>\n        <!-- This components returns the component specified in the app-routing module\n    <main>\n            in the variable const routes \n    <router-outlet></router-outlet>\n   <app-panel></app-panel>\n    </main>\n        -->\n\n     <!--\n    <footer> <p> Footer</p></footer>\n        -->\n</section>\n"
 
 /***/ }),
 
@@ -191,6 +193,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var AppComponent = /** @class */ (function () {
     function AppComponent() {
         this.title = 'app';
+        this.loged = true;
     }
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -234,12 +237,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main_nav_main_nav_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./main-nav/main-nav.component */ "./src/app/main-nav/main-nav.component.ts");
 /* harmony import */ var _users_table_users_table_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./users-table/users-table.component */ "./src/app/users-table/users-table.component.ts");
 /* harmony import */ var _create_user_create_user_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./create-user/create-user.component */ "./src/app/create-user/create-user.component.ts");
+/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -270,7 +275,8 @@ var AppModule = /** @class */ (function () {
                 _panel_panel_component__WEBPACK_IMPORTED_MODULE_10__["PanelComponent"],
                 _main_nav_main_nav_component__WEBPACK_IMPORTED_MODULE_15__["MainNavComponent"],
                 _users_table_users_table_component__WEBPACK_IMPORTED_MODULE_16__["UsersTableComponent"],
-                _create_user_create_user_component__WEBPACK_IMPORTED_MODULE_17__["CreateUserComponent"]
+                _create_user_create_user_component__WEBPACK_IMPORTED_MODULE_17__["CreateUserComponent"],
+                _login_login_component__WEBPACK_IMPORTED_MODULE_18__["LoginComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -326,7 +332,7 @@ module.exports = ".container{\r\n    margin: 20px;\r\n    display: -ms-grid;\r\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n<mat-card class=\"card-create\">\n  <mat-card-content>\n    <mat-card-title> Crear usuario </mat-card-title>\n<form action=\"\" method=\"POST\" accept-charset=\"utf-8\">\n    <div class=\"form\">\n        <!-- nombre -->\n      <mat-form-field id=\"name\" hintLabel=\"Max 40 characters\">\n        <input [(ngModel)]=\"user.UserName\" name=\"name\" matInput #input maxlength=\"40\" placeholder=\"Nombre\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n      </mat-form-field>\n\n        <!-- genero -->\n      <mat-form-field>\n        <mat-select [(ngModel)]=\"user.Gender\"name=\"gender\" id=\"gender\" placeholder=\"Genero\">\n            <mat-option *ngFor=\"let gender of genders\"\n                [value]=\"gender.ID\"> {{gender.Gender}} </mat-option>\n        </mat-select>\n        <mat-hint align=\"end\">Selecciona tu genero ^</mat-hint>\n      </mat-form-field>\n\n        <!-- edad -->\n        <!--\n      <mat-form-field id=\"age\" hintLabel=\"\">\n        <input  [(ngModel)]=\"user.Age\" name=\"age\" matInput #input type=\"number\" min=\"0\" max=\"120\" placeholder=\"0\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/120</mat-hint>\n      </mat-form-field>\n        -->\n    <mat-form-field>\n        <input matInput [matDatepicker]=\"picker\" placeholder=\"Fecha de nacimiento\"\n        (dateInput)=\"setDate('input', $event)\" (dateChange)=\"setDate('change', $event)\" >\n      <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\n      <mat-datepicker #picker startView=\"year\" [startAt]=\"startDate\"></mat-datepicker>\n    </mat-form-field>\n\n\n        <!-- Email -->\n      <mat-form-field id=\"email\" hintLabel=\"Max 40 characters\">\n        <input  [(ngModel)]=\"user.UserEmail\" name=\"email\" matInput #input maxlength=\"40\" type=\"email\" placeholder=\"Email@example.com\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n      </mat-form-field>\n\n        <!-- Niverl academico -->\n      <mat-form-field>\n        <mat-select  [(ngModel)]=\"user.AcademicLevel\" name=\"academicLevel\" id=\"academicLevel\" placeholder=\"Nivel educativo\">\n            <mat-option *ngFor=\"let level of levels\"\n            [value]=\"level.ID\"> {{level.AcademicLevel}} </mat-option>\n        </mat-select>\n        <mat-hint align=\"end\">Selecciona tu genero ^</mat-hint>\n      </mat-form-field>\n\n        <button class=\"btn\" mat-flat-button \n            (click)=\"createUser(user.UserName,user.UserBirthday,user.Gender,user.UserEmail, user.AcademicLevel,user.Role)\" \n            type=\"submit\">Crear</button>\n    </div> <!-- from div -->\n    </form>\n\n  </mat-card-content>\n</mat-card>\n\n<mat-card class=\"card-show\">\n    <mat-card-title> Buscar usuario \n      <mat-form-field id=\"id-search\" hintLabel=\"\">\n        <input matInput placeholder=\"id\">\n      </mat-form-field>\n    </mat-card-title>\n    <mat-label> Nombre: </mat-label>\n    <mat-label> Genero: </mat-label>\n    <mat-label> Edad: </mat-label>\n    <mat-label> Email: </mat-label>\n    <mat-label> Nivel Educativo: </mat-label>\n</mat-card>\n\n<div class=\"container\">\n<mat-card class=\"card-create2\">\n\n    <div class=\"c1\">\n        <div class=\"form\">\n            <mat-card-title> Crear Materias </mat-card-title>\n              <mat-form-field id=\"name-subject\" hintLabel=\"Max 40 characters\">\n                <input [(ngModel)]=\"subject.SubjectName\" name=\"SubjectName\" matInput #input maxlength=\"40\" placeholder=\"Materia\">\n                <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n             </mat-form-field>\n            <button class=\"btn\" (click)=\"createSubject(subject.SubjectName)\" mat-flat-button type=\"submit\">Crear</button>\n        </div>\n    </div>\n\n    <div class=\"c2\">\n        <div class=\"form\">\n        <mat-card-title> Crear Categoria </mat-card-title>\n          <mat-form-field id=\"name-category\" hintLabel=\"Max 40 characters\">\n            <input [(ngModel)]=\"category.TopicName\" name=\"TopicName\" matInput #input maxlength=\"40\" placeholder=\"Categoria\">\n           <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n          </mat-form-field>\n            <button class=\"btn\" (click)=\"createCategory(category.TopicName)\" mat-flat-button type=\"submit\">Crear</button>\n        </div>\n    </div>\n\n    <div class=\"c3\">\n        <div class=\"form\">\n    <mat-card-title> Crear Nivel Academico </mat-card-title>\n      <mat-form-field id=\"name-level\" hintLabel=\"Max 40 characters\">\n        <input [(ngModel)]=\"level.AcademicLevel\" name=\"AcademicLevel\" matInput #input maxlength=\"40\" placeholder=\"Nivel Academico\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n      </mat-form-field>\n        <button class=\"btn\"  (click)=\"createLevel(level.AcademicLevel)\" mat-flat-button type=\"submit\">Crear</button>\n        </div>\n    </div>\n\n</mat-card>\n</div>\n\n<mat-card class=\"card-show2\">\n    <mat-card-title> Materias </mat-card-title>\n\n    <br>\n    <mat-card-title> Roles </mat-card-title>\n</mat-card>\n\n</div>\n"
+module.exports = "<div class=\"container\">\n<mat-card class=\"card-create\">\n  <mat-card-content>\n    <mat-card-title> Crear usuario </mat-card-title>\n<form action=\"\" method=\"POST\" accept-charset=\"utf-8\">\n    <div class=\"form\">\n        <!-- nombre -->\n      <mat-form-field id=\"name\" hintLabel=\"Max 40 characters\">\n        <input [(ngModel)]=\"user.UserName\" name=\"name\" matInput #input maxlength=\"40\" placeholder=\"Nombre\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n      </mat-form-field>\n\n        <!-- genero -->\n      <mat-form-field>\n        <mat-select [(ngModel)]=\"user.Gender\"name=\"gender\" id=\"gender\" placeholder=\"Genero\">\n            <mat-option *ngFor=\"let gender of genders\"\n                [value]=\"gender.ID\"> {{gender.Gender}} </mat-option>\n        </mat-select>\n        <mat-hint align=\"end\">Selecciona tu genero ^</mat-hint>\n      </mat-form-field>\n\n        <!-- edad -->\n        <!--\n      <mat-form-field id=\"age\" hintLabel=\"\">\n        <input  [(ngModel)]=\"user.Age\" name=\"age\" matInput #input type=\"number\" min=\"0\" max=\"120\" placeholder=\"0\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/120</mat-hint>\n      </mat-form-field>\n        -->\n    <mat-form-field>\n        <input matInput [matDatepicker]=\"picker\" placeholder=\"Fecha de nacimiento\"\n        (dateInput)=\"setDate('input', $event)\" (dateChange)=\"setDate('change', $event)\" >\n      <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\n      <mat-datepicker #picker startView=\"year\" [startAt]=\"startDate\"></mat-datepicker>\n    </mat-form-field>\n\n\n        <!-- Email -->\n      <mat-form-field id=\"email\" hintLabel=\"Max 40 characters\">\n        <input  [(ngModel)]=\"user.UserEmail\" name=\"email\" matInput #input maxlength=\"40\" type=\"email\" placeholder=\"Email@example.com\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n      </mat-form-field>\n\n        <!-- pass -->\n      <mat-form-field id=\"pass\" hintLabel=\"Max 40 characters\">\n        <input  [(ngModel)]=\"user.UserPassword\" name=\"pass\" matInput #input maxlength=\"40\" type=\"password\" placeholder=\"password\" required>\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n      </mat-form-field>\n\n        <!-- Niverl academico -->\n      <mat-form-field>\n        <mat-select  [(ngModel)]=\"user.AcademicLevel\" name=\"academicLevel\" id=\"academicLevel\" placeholder=\"Nivel educativo\">\n            <mat-option *ngFor=\"let level of levels\"\n            [value]=\"level.ID\"> {{level.AcademicLevel}} </mat-option>\n        </mat-select>\n        <mat-hint align=\"end\">Selecciona tu genero ^</mat-hint>\n      </mat-form-field>\n\n        <button class=\"btn\" mat-flat-button \n            (click)=\"createUser(user.UserName,user.UserBirthday,user.Gender,user.UserEmail,user.UserPassword, user.AcademicLevel,user.Role)\" \n            type=\"submit\">Crear</button>\n    </div> <!-- from div -->\n    </form>\n\n  </mat-card-content>\n</mat-card>\n\n<mat-card class=\"card-show\">\n    <mat-card-title> Buscar usuario \n      <mat-form-field id=\"id-search\" hintLabel=\"\">\n        <input matInput placeholder=\"id\">\n      </mat-form-field>\n    </mat-card-title>\n    <mat-label> Nombre: </mat-label>\n    <mat-label> Genero: </mat-label>\n    <mat-label> Edad: </mat-label>\n    <mat-label> Email: </mat-label>\n    <mat-label> Nivel Educativo: </mat-label>\n</mat-card>\n\n<div class=\"container\">\n<mat-card class=\"card-create2\">\n\n    <div class=\"c1\">\n        <div class=\"form\">\n            <mat-card-title> Crear Materias </mat-card-title>\n              <mat-form-field id=\"name-subject\" hintLabel=\"Max 40 characters\">\n                <input [(ngModel)]=\"subject.SubjectName\" name=\"SubjectName\" matInput #input maxlength=\"40\" placeholder=\"Materia\">\n                <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n             </mat-form-field>\n            <button class=\"btn\" (click)=\"createSubject(subject.SubjectName)\" mat-flat-button type=\"submit\">Crear</button>\n        </div>\n    </div>\n\n    <div class=\"c2\">\n        <div class=\"form\">\n        <mat-card-title> Crear Categoria </mat-card-title>\n          <mat-form-field id=\"name-category\" hintLabel=\"Max 40 characters\">\n            <input [(ngModel)]=\"category.TopicName\" name=\"TopicName\" matInput #input maxlength=\"40\" placeholder=\"Categoria\">\n           <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n          </mat-form-field>\n            <button class=\"btn\" (click)=\"createCategory(category.TopicName)\" mat-flat-button type=\"submit\">Crear</button>\n        </div>\n    </div>\n\n    <div class=\"c3\">\n        <div class=\"form\">\n    <mat-card-title> Crear Nivel Academico </mat-card-title>\n      <mat-form-field id=\"name-level\" hintLabel=\"Max 40 characters\">\n        <input [(ngModel)]=\"level.AcademicLevel\" name=\"AcademicLevel\" matInput #input maxlength=\"40\" placeholder=\"Nivel Academico\">\n        <mat-hint align=\"end\">{{input.value?.length || 0}}/40</mat-hint>\n      </mat-form-field>\n        <button class=\"btn\"  (click)=\"createLevel(level.AcademicLevel)\" mat-flat-button type=\"submit\">Crear</button>\n        </div>\n    </div>\n\n</mat-card>\n</div>\n\n<mat-card class=\"card-show2\">\n    <mat-card-title> Materias </mat-card-title>\n\n    <br>\n    <mat-card-title> Roles </mat-card-title>\n</mat-card>\n\n</div>\n"
 
 /***/ }),
 
@@ -358,6 +364,7 @@ var CreateUserComponent = /** @class */ (function () {
         this.service = service;
         this.user = {
             UserName: '',
+            UserPassword: '',
             UserBirthday: '',
             Gender: null,
             UserEmail: '',
@@ -375,14 +382,15 @@ var CreateUserComponent = /** @class */ (function () {
             AcademicLevel: ''
         };
     }
-    CreateUserComponent.prototype.createUser = function (name, age, gender, userEmail, aLevel, role) {
+    CreateUserComponent.prototype.createUser = function (name, age, gender, userEmail, pass, aLevel, role) {
         console.log("on create");
         console.log("vars", name, age, gender, userEmail, aLevel, role);
         console.log("this user", this.user);
-        this.service.createUser(name, age, gender, userEmail, aLevel, role);
+        this.service.createUser(name, age, gender, userEmail, pass, aLevel, role);
         //reset placeholder
         this.user = {
             UserName: '',
+            UserPassword: '',
             UserBirthday: '',
             Gender: null,
             UserEmail: '',
@@ -574,6 +582,69 @@ var HomeComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/login/login.component.css":
+/*!*******************************************!*\
+  !*** ./src/app/login/login.component.css ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".container{\r\n    display: -ms-grid;\r\n    display: grid;\r\n}\r\n.header{\r\n    padding-top: 24px;\r\n    padding-bottom: 10px;\r\n}\r\n.card{\r\n    display: -ms-grid;\r\n    display: grid;\r\n    max-width: 400px;\r\n  position: fixed;\r\n  top: 50%;\r\n  left: 50%;\r\n  /* bring your own prefixes */\r\n  -webkit-transform: translate(-50%, -50%);\r\n          transform: translate(-50%, -50%);\r\n}\r\n.mat-form-field{\r\n    padding: 10px 24px;\r\n}\r\n.form{\r\n    display: -ms-grid;\r\n    display: grid;\r\n    max-width: 400px;\r\n}\r\nbutton{\r\n    margin: 10px 20px;\r\n}\r\n"
+
+/***/ }),
+
+/***/ "./src/app/login/login.component.html":
+/*!********************************************!*\
+  !*** ./src/app/login/login.component.html ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n<mat-card class=\"card\" style=\"padding: 0px;\">\n    <mat-card-content>\n<div class=\"form\">\n        <mat-card-header class=\" header mat-toolbar mat-primary\"> Login </mat-card-header>\n\n        <!-- email -->\n        <mat-form-field id=\"email\">\n            <input name=\"email\" matInput #input placeholder=\"Email\">\n        <mat-hint align=\"end\">example@email.com </mat-hint>\n      </mat-form-field>\n\n        <!-- password -->\n        <mat-form-field id=\"pass\" >\n            <input type=\"password\" name=\"pass\" matInput #input placeholder=\"password\">\n      </mat-form-field>\n\n        <button class=\"btn\" mat-flat-button type=\"submit\">Login</button>\n\n        <button class=\"btn\" mat-flat-button type=\"submit\">Registrar</button>\n\n</div>\n    </mat-card-content>\n</mat-card >\n</div>\n\n"
+
+/***/ }),
+
+/***/ "./src/app/login/login.component.ts":
+/*!******************************************!*\
+  !*** ./src/app/login/login.component.ts ***!
+  \******************************************/
+/*! exports provided: LoginComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginComponent", function() { return LoginComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var LoginComponent = /** @class */ (function () {
+    function LoginComponent() {
+    }
+    LoginComponent.prototype.ngOnInit = function () {
+    };
+    LoginComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-login',
+            template: __webpack_require__(/*! ./login.component.html */ "./src/app/login/login.component.html"),
+            styles: [__webpack_require__(/*! ./login.component.css */ "./src/app/login/login.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], LoginComponent);
+    return LoginComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/main-nav/main-nav.component.css":
 /*!*************************************************!*\
   !*** ./src/app/main-nav/main-nav.component.css ***!
@@ -660,7 +731,7 @@ module.exports = ".grid-container {\n  margin: 20px;\n}\n\n.dashboard-card {\n  
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"grid-container\">\n  <h1 class=\"mat-h1\">Dashboard</h1>\n  <mat-grid-list cols=\"2\" rowHeight=\"350px\">\n    <mat-grid-tile *ngFor=\"let card of cards\" [colspan]=\"card.cols\" [rowspan]=\"card.rows\">\n      <mat-card class=\"dashboard-card\">\n        <mat-card-header>\n          <mat-card-title>\n            {{card.title}}\n            <button mat-icon-button class=\"more-button\" [matMenuTriggerFor]=\"menu\" aria-label=\"Toggle menu\">\n              <mat-icon>more_vert</mat-icon>\n            </button>\n            <mat-menu #menu=\"matMenu\" xPosition=\"before\">\n              <button mat-menu-item>Expand</button>\n              <button mat-menu-item>Remove</button>\n            </mat-menu>\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content class=\"dashboard-card-content\">\n          <div>Card Content Here</div>\n        </mat-card-content>\n      </mat-card>\n    </mat-grid-tile>\n  </mat-grid-list>\n</div>\n"
+module.exports = ""
 
 /***/ }),
 

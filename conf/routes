@@ -7,20 +7,21 @@ module:testrunner
 # module:jobs
 
 GET     /                                       App.Index
+POST     /login/:email/:pass                    App.Login
+POST    /register                               App.Register
+GET     /hash/:pass                             App.HashTest
 GET     /tools                                  App.Index
-GET     /help                                   App.Help
-GET     /show                                   User.Show
-POST    /insert                                 User.Insert
-GET     /show                                   User.Show
-GET     /show/:id                               User.Getuser
-DELETE  /delete/:id                             User.Pop 
-GET     /genhash/:pass/:id                      User.GenHash
-POST    /auth/:email/:pass                      User.Login
 
-GET     /subjects                               Admin.Subjects
-GET     /category                               Admin.Category
-GET     /academics                              Admin.AcademicLevel
-GET     /genders                                Admin.Gender
+#AUTH REQUIRED
+GET     /show                                   User.Show
+#GET    /show/:id                               User.Getuser
+GET     /subjects                               User.Subjects
+GET     /category                               User.Category
+GET     /academics                              User.AcademicLevel
+GET     /genders                                User.Gender
+
+#ADMIN AUTH
+DELETE  /delete/:id                             Admin.Pop 
 POST    /create/subject/:name                   Admin.CreateSubject
 POST    /create/category/:name                  Admin.CreateCategory
 POST    /create/academic/:name                  Admin.CreateAcademicLevel
@@ -28,6 +29,8 @@ POST    /create/academic/:name                  Admin.CreateAcademicLevel
 
 #SESSIONS
 GET     /sessions                               Session.Sessions
+GET     /user/sessions                          Session.MySessions
+GET     /sessions/topic                         Session.SessionsByTopic
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
