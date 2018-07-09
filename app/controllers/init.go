@@ -20,7 +20,6 @@ func InitDB() {
 	gormdb.DB.AutoMigrate(&models.Gender_User{})
 	gormdb.DB.AutoMigrate(&models.Place_Session{})
 	gormdb.DB.AutoMigrate(&models.Subject{})
-	gormdb.DB.AutoMigrate(&models.SubjectxTopic{})
 	gormdb.DB.AutoMigrate(&models.AcademicLevel_User{})
 	gormdb.DB.AutoMigrate(&models.Role_User{})
 	gormdb.DB.AutoMigrate(&models.Topic{})
