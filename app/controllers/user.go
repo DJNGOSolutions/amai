@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"time"
 
 	"github.com/pdmp/amai/app/models"
@@ -30,13 +31,7 @@ type UserModel struct {
 
 var hmacSecret = []byte{97, 48, 97, 50, 97, 98, 105, 49, 99, 102, 83, 53, 57, 98, 52, 54, 97, 102, 99, 12, 12, 13, 56, 34, 23, 16, 78, 67, 54, 34, 32, 21}
 
-func (c User) Show() revel.Result {
-	//var users []*models.User
-	var model []*UserModel
-	//var prods models.Product
-	//Gdb.Select("code", "price").Find(&prods).Scan(&users)
-	//c.DB.Raw("SELECT * FROM public.user ;").Scan(&users)
-	c.DB.Raw(`
+var query = `
 			SELECT 
   "user".id, 
   role_user.role, 
@@ -44,7 +39,6 @@ func (c User) Show() revel.Result {
   gender_user.gender, 
   "user".user_email, 
   academic_level_user.academic_level, 
-  session.session_rate, 
   "user".user_description, 
   "user".user_photo
 FROM 
@@ -54,11 +48,18 @@ FROM
   public.academic_level_user, 
   public.role_user
 WHERE 
-  session.id = "user".id_rate_user AND
   gender_user.id = "user".id_gender_user AND
   academic_level_user.id = "user".id_academic_level_user AND
-  role_user.id = "user".id_role_user;
-				`).Scan(&model).GetErrors()
+  role_user.id = "user".id_role_user
+`
+
+func (c User) Show() revel.Result {
+	//var users []*models.User
+	var model []*UserModel
+	//var prods models.Product
+	//Gdb.Select("code", "price").Find(&prods).Scan(&users)
+	//c.DB.Raw("SELECT * FROM public.user ;").Scan(&users)
+	c.DB.Raw(query).Scan(&model).GetErrors()
 
 	return c.RenderJSON(model)
 }
@@ -81,6 +82,38 @@ func (c User) Login(email string, pass string) revel.Result {
 		}
 	}
 	return c.RenderFileName("bento/dist/index.html", revel.NoDisposition)
+}
+
+func (c User) GetUser() revel.Result {
+	token := c.Params.Form.Get("token")
+	var claims jwt.MapClaims
+	var err error
+	claims, err = decodeToken(token)
+	if err != nil {
+		c.Response.Status = http.StatusUnauthorized
+		return c.RenderJSON("auth failed")
+	}
+
+	email, found := claims["email"]
+	if !found {
+		log.Println(err)
+		c.Response.Status = http.StatusBadRequest
+		return c.RenderJSON("email not found in db")
+	}
+
+	log.Println("email found:", email)
+	var user UserModel
+	err = c.DB.Raw(query+" AND user_email = ?", email).Scan(&user).Error
+	log.Println(query+" AND user_email =", email)
+	//err = gormdb.DB.Where("user_email = ?", email).First(&user).Error
+
+	if err != nil {
+		log.Println(err)
+		c.Response.Status = http.StatusUnauthorized
+		return c.RenderJSON("auth failed")
+	}
+
+	return c.RenderJSON(&user)
 }
 
 func encodeToken(email string) string {
@@ -119,12 +152,6 @@ func decodeToken(tokenString string) (jwt.MapClaims, error) {
 	}
 	return claims, nil
 	// return claims["email"].(string), claims["nbf"].(string)
-}
-
-func (c User) getUser(email string) error {
-	var user models.User
-	return c.DB.Where("user_email = ?", email).Find(user).Error
-	//return c.RenderJSON(product) //debug
 }
 
 func (c User) Gender() revel.Result {

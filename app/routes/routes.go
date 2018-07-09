@@ -141,6 +141,13 @@ func (_ tUser) Login(
 	return revel.MainRouter.Reverse("User.Login", args).URL
 }
 
+func (_ tUser) GetUser(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("User.GetUser", args).URL
+}
+
 func (_ tUser) Gender(
 		) string {
 	args := make(map[string]string)

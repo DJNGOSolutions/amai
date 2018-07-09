@@ -14,6 +14,7 @@ GET     /tools                                  App.Index
 
 #AUTH REQUIRED
 GET     /show                                   User.Show
+POST     /find/user                              User.GetUser
 #GET    /show/:id                               User.Getuser
 GET     /subjects                               User.Subjects
 GET     /category                               User.Category
