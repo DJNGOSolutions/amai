@@ -6,5 +6,5 @@ type RatexUser struct {
 	//Esta estructura es un catálogo
 	gorm.Model
 	IdUser uint //idUsuario
-	Rate   uint `gorm:"type:number(20);unique"` //Rol
+	Rate   float32 //Rol
 }
