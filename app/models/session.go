@@ -12,4 +12,6 @@ type Session struct { //Cita
 	SessionTimeStart string `gorm:"type:time"`  //horaInicioCita
 	SessionTimeEnd   string `gorm:"type:time"`  //horaFinalizacionCita
 	SessionFee       string `gorm:"type:money"` //precioCita
+	SessionRate		float32
+	SessionReview	string	`gorm:"type:text"`
 }

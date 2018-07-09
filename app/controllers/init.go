@@ -24,7 +24,6 @@ func InitDB() {
 	gormdb.DB.AutoMigrate(&models.Type_Session{})
 	gormdb.DB.AutoMigrate(&models.TypePayment_Session{})
 	gormdb.DB.AutoMigrate(&models.User{})
-	gormdb.DB.AutoMigrate(&models.RatexUser{})
 	gormdb.DB.AutoMigrate(&models.Classroom{})
 	gormdb.DB.AutoMigrate(&models.UserxClassroom{})
 	gormdb.DB.AutoMigrate(&models.Subscription{})
