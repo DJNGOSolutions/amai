@@ -15,8 +15,6 @@ func InitDB() {
 
 	gormdb.DB.AutoMigrate(&models.Assistance{})
 	gormdb.DB.AutoMigrate(&models.Session{})
-	gormdb.DB.AutoMigrate(&models.Class{})
-	gormdb.DB.AutoMigrate(&models.Study{})
 	gormdb.DB.AutoMigrate(&models.Gender_User{})
 	gormdb.DB.AutoMigrate(&models.Place_Session{})
 	gormdb.DB.AutoMigrate(&models.Subject{})
@@ -25,10 +23,10 @@ func InitDB() {
 	gormdb.DB.AutoMigrate(&models.Topic{})
 	gormdb.DB.AutoMigrate(&models.Type_Session{})
 	gormdb.DB.AutoMigrate(&models.TypePayment_Session{})
-	gormdb.DB.AutoMigrate(&models.Tutorial{})
 	gormdb.DB.AutoMigrate(&models.User{})
 	gormdb.DB.AutoMigrate(&models.RatexUser{})
 	gormdb.DB.AutoMigrate(&models.Classroom{})
 	gormdb.DB.AutoMigrate(&models.UserxClassroom{})
 	gormdb.DB.AutoMigrate(&models.Subscription{})
+	gormdb.DB.AutoMigrate(&models.Category{})
 }
