@@ -50,7 +50,7 @@ func (c Session) SessionsByTopic() revel.Result {
 
 func (c Session) getSessionByPlace(id uint) revel.Result {
 	var session models.Session
-	c.DB.Raw("SELECT Session_Date, Session_Time_Start, Session_Time_End, SessionFee FROM Session WHERE Id_Session_Place = ?;", id).Scan(&session)
+	c.DB.Raw("SELECT Session_Date, Session_Time_Start, Session_Time_End, Session_Fee FROM Session WHERE Id_Session_Place = ?;", id).Scan(&session)
 	return c.RenderJSON(c.Response.Status)
 }
 

@@ -44,17 +44,17 @@ func (c User) Show() revel.Result {
   gender_user.gender, 
   "user".user_email, 
   academic_level_user.academic_level, 
-  ratex_user.rate, 
+  session.session_rate, 
   "user".user_description, 
   "user".user_photo
 FROM 
-  public.ratex_user, 
+  public.session, 
   public."user", 
   public.gender_user, 
   public.academic_level_user, 
   public.role_user
 WHERE 
-  ratex_user.id = "user".id_rate_user AND
+  session.id = "user".id_rate_user AND
   gender_user.id = "user".id_gender_user AND
   academic_level_user.id = "user".id_academic_level_user AND
   role_user.id = "user".id_role_user;
@@ -174,11 +174,5 @@ func (c User) getUserAcademicLevel(id uint) revel.Result {
 func (c User) getUserByRole(id uint) revel.Result {
 	var user models.User
 	c.DB.Raw("SELECT User_Photo, User_Name, User_Age, User_Email, User_Description FROM public.User WHERE Id_Role_User = ?;", id).Scan(&user)
-	return c.RenderJSON(c.Response.Status)
-}
-
-func (c User) getUserByRate(id uint) revel.Result {
-	var user models.User
-	c.DB.Raw("SELECT User_Photo, User_Name, User_Age, User_Email, User_Description FROM public.User WHERE Id_Rate_User = ?;", id).Scan(&user)
 	return c.RenderJSON(c.Response.Status)
 }

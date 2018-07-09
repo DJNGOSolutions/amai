@@ -2,8 +2,8 @@ package models
 
 import "github.com/jinzhu/gorm"
 
-type Classroom struct{
+type Classroom struct {
 	gorm.Model
-	IdTopic		uint
-	IdSubject	uint
+	IdSubject uint
+	IdTopic   uint
 }
