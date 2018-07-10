@@ -29,6 +29,13 @@ type UserModel struct {
 	Rate          string
 }
 
+type SessionsModel struct {
+	UserEmail         string
+	SessionDate       string
+	SessionTime_Start string
+	SessionTime_End   string
+}
+
 var hmacSecret = []byte{97, 48, 97, 50, 97, 98, 105, 49, 99, 102, 83, 53, 57, 98, 52, 54, 97, 102, 99, 12, 12, 13, 56, 34, 23, 16, 78, 67, 54, 34, 32, 21}
 
 var query = `
@@ -186,40 +193,12 @@ func (c User) Subjects() revel.Result {
 	return c.RenderJSON(subjects)
 }
 
-type modelSessions struct {
-	userEmail        string
-	sessionDate      string
-	sessionTimeStart string
-	sessionTimeEnd   string
-}
-
 func (c User) Sessions() revel.Result {
-	var model modelSessions
+	var sessions []*SessionsModel
 	c.DB.Raw(`
-SELECT U.User_Email, S.Session_Date, S.Session_Time_Start, S.Session_Time_End 
-FROM public.User AS U 
-INNER JOIN Assistance AS A
-ON U.Id = A.Id_user
-INNER JOIN Session AS S
-ON A.Id_User = S.Id;
-	`).Scan(&model)
-	return c.RenderJSON(model)
-}
-
-func (c User) getUserByGender(id uint) revel.Result {
-	var user models.User
-	c.DB.Raw("SELECT User_Photo, User_Name, User_Age, User_Email, User_Description FROM public.User WHERE Id_Gender_User = ?;", id).Scan(&user)
-	return c.RenderJSON(c.Response.Status)
-}
-
-func (c User) getUserAcademicLevel(id uint) revel.Result {
-	var user models.User
-	c.DB.Raw("SELECT User_Photo, User_Name, User_Age, User_Email, User_Description FROM public.User WHERE Id_Academic_Level_User = ?;", id).Scan(&user)
-	return c.RenderJSON(c.Response.Status)
-}
-
-func (c User) getUserByRole(id uint) revel.Result {
-	var user models.User
-	c.DB.Raw("SELECT User_Photo, User_Name, User_Age, User_Email, User_Description FROM public.User WHERE Id_Role_User = ?;", id).Scan(&user)
-	return c.RenderJSON(c.Response.Status)
+SELECT user_email, session_date, session_time_start, session_time_end 
+FROM public.user, assistance, session
+WHERE public.user.id = assistance.id_user AND assistance.id_user = session.id
+	`).Find(&sessions)
+	return c.RenderJSON(sessions)
 }
