@@ -186,6 +186,19 @@ func (c User) Subjects() revel.Result {
 	return c.RenderJSON(subjects)
 }
 
+type modelSessions struct {
+	userEmail        string
+	sessionDate      string
+	sessionTimeStart string
+	sessionTimeEnd   string
+}
+
+func (c User) Sessions() revel.Result {
+	var model modelSessions
+	c.DB.Joins(" inner join assistance on assistance.id = public.user.id").Joins(" inner join session on session.id = publir.user.id").Find(&model)
+	return c.RenderJSON(model)
+}
+
 func (c User) getUserByGender(id uint) revel.Result {
 	var user models.User
 	c.DB.Raw("SELECT User_Photo, User_Name, User_Age, User_Email, User_Description FROM public.User WHERE Id_Gender_User = ?;", id).Scan(&user)
