@@ -195,10 +195,12 @@ func (c User) Subjects() revel.Result {
 
 func (c User) Sessions() revel.Result {
 	var sessions []*SessionsModel
+
 	c.DB.Raw(`
 SELECT user_email, session_date, session_time_start, session_time_end 
 FROM public.user, assistance, session
 WHERE public.user.id = assistance.id_user AND assistance.id_user = session.id
 	`).Find(&sessions)
+
 	return c.RenderJSON(sessions)
 }
