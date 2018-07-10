@@ -195,7 +195,14 @@ type modelSessions struct {
 
 func (c User) Sessions() revel.Result {
 	var model modelSessions
-	c.DB.Joins(" inner join assistance on assistance.id = public.user.id").Joins(" inner join session on session.id = publir.user.id").Find(&model)
+	c.DB.Raw(`
+SELECT U.User_Email, S.Session_Date, S.Session_Time_Start, S.Session_Time_End 
+FROM public.User AS U 
+INNER JOIN Assistance AS A
+ON U.Id = A.Id_user
+INNER JOIN Session AS S
+ON A.Id_User = S.Id;
+	`).Scan(&model)
 	return c.RenderJSON(model)
 }
 
