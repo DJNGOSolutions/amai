@@ -19,6 +19,7 @@ GET     /image/:name                            App.Image
 POST     /find/user                             User.GetUser
 POST     /create/session                        User.Session
 POST     /join/session                          User.SubscribeSession
+DELETE     /delete/session                        User.DeleteSession
 #GET    /show/:id                               User.Getuser
 #GET     /subjects                               User.Subjects
 #GET     /category                               User.Category

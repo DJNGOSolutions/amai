@@ -145,6 +145,14 @@ func (c User) SubscribeSession() revel.Result {
 	return c.RenderJSON(session)
 }
 
+func (c User) DeleteSession() revel.Result {
+	res := c.Params.Form.Get("id")
+	id, _ := strconv.Atoi(res)
+	c.DB.Raw("DELETE FROM session WHERE id = ?", uint(id))
+	var session models.Session
+	return c.RenderJSON(session)
+}
+
 /*
 func (c User) Gender() revel.Result {
 	var genders []*models.Gender_User

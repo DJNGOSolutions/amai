@@ -88,6 +88,13 @@ func (_ tUser) SubscribeSession(
 	return revel.MainRouter.Reverse("User.SubscribeSession", args).URL
 }
 
+func (_ tUser) DeleteSession(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("User.DeleteSession", args).URL
+}
+
 
 type tController struct {}
 var Controller tController
