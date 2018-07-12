@@ -5,6 +5,6 @@ import "github.com/jinzhu/gorm"
 type Subject struct {
 	//Materia
 	gorm.Model
-	IdCategory	uint
-	SubjectName string `gorm:"type:varchar(75);unique"` //nombreMateria
+	IdCategory  uint   `gorm:"tye:varchar(75)"`
+	SubjectName string `gorm:"type:varchar(75);unique"`
 }
