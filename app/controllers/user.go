@@ -204,3 +204,38 @@ WHERE public.user.id = assistance.id_user AND assistance.id_user = session.id
 
 	return c.RenderJSON(sessions)
 }
+
+type ClassroomModel struct {
+	Id          int
+	UserName    string
+	TopicName   string
+	IdSubject   int
+	SubjectName string
+}
+
+func (c User) Classroom() revel.Result {
+	var classroom []*ClassroomModel
+
+	c.DB.Raw(`
+		SELECT 
+		  userx_classroom.id, 
+		  "user".user_name, 
+		  topic.topic_name, 
+		  classroom.id_subject, 
+		  subject.subject_name
+		FROM 
+		  public.userx_classroom, 
+		  public.classroom, 
+		  public."user", 
+		  public.topic, 
+		  public.subject
+		WHERE 
+		  classroom.id = userx_classroom.id_classroom AND
+		  classroom.id_topic = topic.id AND
+		  "user".id = userx_classroom.id_user AND
+		  topic.id_subject = subject.id;
+	`).Scan(&classroom)
+
+	return c.RenderJSON(classroom)
+
+}

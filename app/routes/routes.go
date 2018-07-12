@@ -183,6 +183,13 @@ func (_ tUser) Sessions(
 	return revel.MainRouter.Reverse("User.Sessions", args).URL
 }
 
+func (_ tUser) Classroom(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("User.Classroom", args).URL
+}
+
 
 type tController struct {}
 var Controller tController

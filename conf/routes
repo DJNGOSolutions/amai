@@ -21,6 +21,7 @@ GET     /category                               User.Category
 GET     /academics                              User.AcademicLevel
 GET     /genders                                User.Gender
 GET     /users/sessions                         User.Sessions
+GET     /classrooms                             User.Classroom
 
 #ADMIN AUTH
 DELETE  /delete/:id                             Admin.Pop 
