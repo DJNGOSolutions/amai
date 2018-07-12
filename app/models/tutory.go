@@ -13,5 +13,5 @@ type Session struct { //Cita
 	TutoryPlace    string `gorm:"type:text"`
 	TutoryTime     string `gorm:"type:time"`
 	TutoryDate     string `gorm:"type:date"`
-	TutoryPrince   string `gorm:"type:money"`
+	TutoryPrice    string `gorm:"type:money"`
 }

@@ -1,13 +1,18 @@
 package controllers
 
 import (
+	"errors"
+	"log"
+	"net/http"
+	"strings"
+
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/pdmp/amai/app/models"
 
 	gormdb "github.com/revel/modules/orm/gorm/app"
 	"github.com/revel/revel"
 )
 
-/*
 var (
 	errAuthHeaderNotFound = errors.New("authorization header not found")
 	errInvalidTokenFormat = errors.New("token format is invalid")
@@ -43,17 +48,17 @@ func Authenticate(c *revel.Controller) revel.Result {
 		return c.RenderJSON("auth failed")
 	}
 	log.Println("claims decode:", claims)
-	log.Println(claims["email"])
-	email, found := claims["email"]
+	log.Println(claims["username"])
+	username, found := claims["username"]
 	if !found {
 		log.Println(err)
 		c.Response.Status = http.StatusBadRequest
-		return c.RenderJSON("email not found in db")
+		return c.RenderJSON("username not found in db")
 	}
 
-	log.Println("email found:", email)
-	var user models.User
-	err = gormdb.DB.Where("user_email = ?", email).First(&user).Error
+	log.Println("username found:", username)
+	var user models.UserT
+	err = gormdb.DB.Where("user_name = ?", username).First(&user).Error
 
 	if err != nil {
 		log.Println(err)
@@ -83,17 +88,17 @@ func AuthenticateAdmin(c *revel.Controller) revel.Result {
 		return c.RenderJSON("auth failed")
 	}
 	log.Println("claims decode:", claims)
-	log.Println(claims["email"])
-	email, found := claims["email"]
+	log.Println(claims["username"])
+	username, found := claims["username"]
 	if !found {
 		log.Println(err)
 		c.Response.Status = http.StatusBadRequest
-		return c.RenderJSON("email not found in db")
+		return c.RenderJSON("username not found in db")
 	}
 
-	log.Println("email found:", email)
-	var user models.User
-	err = gormdb.DB.Where("user_email = ? AND id_role_user = 1", email).First(&user).Error
+	log.Println("username found:", username)
+	var user models.UserT
+	err = gormdb.DB.Where("user_name = ? AND id_role_user = 1", username).First(&user).Error
 
 	if err != nil {
 		log.Println(err)
@@ -119,7 +124,7 @@ func getTokenString(c *revel.Controller) (tokenString string, err error) {
 	return tokenString, nil
 
 }
-*/
+
 func init() {
 	revel.OnAppStart(InitDB)
 }
@@ -135,11 +140,9 @@ func InitDB() {
 	gormdb.DB.AutoMigrate(&models.TypeStudent{})
 	gormdb.DB.AutoMigrate(&models.UserT{})
 
-	/*
-		revel.InterceptFunc(AddLog, revel.BEFORE, &App{})
-		//	revel.InterceptFunc(Authenticate, revel.BEFORE, &App{})
-		revel.InterceptFunc(Authenticate, revel.BEFORE, &User{})
-		revel.InterceptFunc(Authenticate, revel.BEFORE, &Session{})
-		revel.InterceptFunc(AuthenticateAdmin, revel.BEFORE, &Admin{})
-	*/
+	revel.InterceptFunc(AddLog, revel.BEFORE, &App{})
+	//	revel.InterceptFunc(Authenticate, revel.BEFORE, &App{})
+	revel.InterceptFunc(Authenticate, revel.BEFORE, &User{})
+	revel.InterceptFunc(Authenticate, revel.BEFORE, &Session{})
+	revel.InterceptFunc(AuthenticateAdmin, revel.BEFORE, &Admin{})
 }

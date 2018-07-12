@@ -7,7 +7,8 @@ module:testrunner
 # module:jobs
 
 GET     /                                       App.Index
-#POST     /login/:email/:pass                    App.Login
+POST    /debug/create/user                      App.Insert
+POST    /login                                  App.Login
 #POST    /register                               App.Register
 #GET     /hash/:pass                             App.HashTest
 #GET     /tools                                  App.Index

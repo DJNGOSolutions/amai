@@ -20,10 +20,52 @@ func (_ tApp) Index(
 	return revel.MainRouter.Reverse("App.Index", args).URL
 }
 
+func (_ tApp) Login(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("App.Login", args).URL
+}
+
+func (_ tApp) Register(
+		user interface{},
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "user", user)
+	return revel.MainRouter.Reverse("App.Register", args).URL
+}
+
+func (_ tApp) Insert(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("App.Insert", args).URL
+}
+
 
 type tSession struct {}
 var Session tSession
 
+
+
+type tUser struct {}
+var User tUser
+
+
+func (_ tUser) Show(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("User.Show", args).URL
+}
+
+func (_ tUser) GetUser(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("User.GetUser", args).URL
+}
 
 
 type tController struct {}
