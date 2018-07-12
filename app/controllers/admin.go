@@ -1,16 +1,14 @@
 package controllers
 
 import (
-	"github.com/pdmp/amai/app/models"
-
 	gormc "github.com/revel/modules/orm/gorm/app/controllers"
-	"github.com/revel/revel"
 )
 
 type Admin struct {
 	gormc.Controller
 }
 
+/*
 func (c Admin) CreateSubject(name string) revel.Result {
 
 	subject := models.Subject{SubjectName: name}
@@ -39,4 +37,4 @@ func (c Admin) Pop(id uint) revel.Result {
 	return c.RenderJSON(c.DB.Unscoped().Delete(models.User{}, "id = ?", id))
 	//return c.Redirect("/crud")
 	//return c.RenderJSON(product) //debuging
-}
+}*/

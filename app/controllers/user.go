@@ -1,22 +1,10 @@
 package controllers
 
-import (
-	"fmt"
-	"log"
-	"net/http"
-	"time"
-
-	"github.com/pdmp/amai/app/models"
-	"golang.org/x/crypto/bcrypt"
-
-	jwt "github.com/dgrijalva/jwt-go"
-	gormc "github.com/revel/modules/orm/gorm/app/controllers"
-	"github.com/revel/revel"
-)
-
+/*
 type User struct {
 	gormc.Controller
 }
+
 
 type UserModel struct {
 	Id            uint
@@ -39,22 +27,22 @@ type SessionsModel struct {
 var hmacSecret = []byte{97, 48, 97, 50, 97, 98, 105, 49, 99, 102, 83, 53, 57, 98, 52, 54, 97, 102, 99, 12, 12, 13, 56, 34, 23, 16, 78, 67, 54, 34, 32, 21}
 
 var query = `
-			SELECT 
-  "user".id, 
-  role_user.role, 
-  "user".user_name, 
-  gender_user.gender, 
-  "user".user_email, 
-  academic_level_user.academic_level, 
-  "user".user_description, 
+			SELECT
+  "user".id,
+  role_user.role,
+  "user".user_name,
+  gender_user.gender,
+  "user".user_email,
+  academic_level_user.academic_level,
+  "user".user_description,
   "user".user_photo
-FROM 
-  public.session, 
-  public."user", 
-  public.gender_user, 
-  public.academic_level_user, 
+FROM
+  public.session,
+  public."user",
+  public.gender_user,
+  public.academic_level_user,
   public.role_user
-WHERE 
+WHERE
   gender_user.id = "user".id_gender_user AND
   academic_level_user.id = "user".id_academic_level_user AND
   role_user.id = "user".id_role_user
@@ -197,7 +185,7 @@ func (c User) Sessions() revel.Result {
 	var sessions []*SessionsModel
 
 	c.DB.Raw(`
-SELECT user_email, session_date, session_time_start, session_time_end 
+SELECT user_email, session_date, session_time_start, session_time_end
 FROM public.user, assistance, session
 WHERE public.user.id = assistance.id_user AND assistance.id_user = session.id
 	`).Find(&sessions)
@@ -217,19 +205,19 @@ func (c User) Classroom() revel.Result {
 	var classroom []*ClassroomModel
 
 	c.DB.Raw(`
-		SELECT 
-		  userx_classroom.id, 
-		  "user".user_name, 
-		  topic.topic_name, 
-		  classroom.id_subject, 
+		SELECT
+		  userx_classroom.id,
+		  "user".user_name,
+		  topic.topic_name,
+		  classroom.id_subject,
 		  subject.subject_name
-		FROM 
-		  public.userx_classroom, 
-		  public.classroom, 
-		  public."user", 
-		  public.topic, 
+		FROM
+		  public.userx_classroom,
+		  public.classroom,
+		  public."user",
+		  public.topic,
 		  public.subject
-		WHERE 
+		WHERE
 		  classroom.id = userx_classroom.id_classroom AND
 		  classroom.id_topic = topic.id AND
 		  "user".id = userx_classroom.id_user AND
@@ -238,4 +226,4 @@ func (c User) Classroom() revel.Result {
 
 	return c.RenderJSON(classroom)
 
-}
+}*/

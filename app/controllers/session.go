@@ -1,16 +1,14 @@
 package controllers
 
 import (
-	"github.com/pdmp/amai/app/models"
-
 	gormc "github.com/revel/modules/orm/gorm/app/controllers"
-	"github.com/revel/revel"
 )
 
 type Session struct {
 	gormc.Controller
 }
 
+/*
 func (c Session) Sessions() revel.Result {
 	var session []*models.Session
 	c.DB.Raw(`
@@ -25,8 +23,8 @@ func (c Session) Sessions() revel.Result {
 func (c Session) MySessions() revel.Result {
 	var session []*models.Session
 	c.DB.Raw(`
-		SELECT U.User_Email, S.Session_Date, S.Session_Time_Start, S.Session_Time_End 
-		FROM public."user" AS U 
+		SELECT U.User_Email, S.Session_Date, S.Session_Time_Start, S.Session_Time_End
+		FROM public."user" AS U
 		INNER JOIN Assistance AS A
 		ON U.Id = A.Id_User
 		INNER JOIN Session AS S
@@ -46,4 +44,4 @@ func (c Session) SessionsByTopic() revel.Result {
 		ON T.id = S.Id;
 	`).Scan(&session)
 	return c.RenderJSON(session)
-}
+}*/

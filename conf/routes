@@ -7,33 +7,33 @@ module:testrunner
 # module:jobs
 
 GET     /                                       App.Index
-POST     /login/:email/:pass                    App.Login
-POST    /register                               App.Register
-GET     /hash/:pass                             App.HashTest
-GET     /tools                                  App.Index
+#POST     /login/:email/:pass                    App.Login
+#POST    /register                               App.Register
+#GET     /hash/:pass                             App.HashTest
+#GET     /tools                                  App.Index
 
 #AUTH REQUIRED
-GET     /show                                   User.Show
-POST     /find/user                             User.GetUser
+#GET     /show                                   User.Show
+#POST     /find/user                             User.GetUser
 #GET    /show/:id                               User.Getuser
-GET     /subjects                               User.Subjects
-GET     /category                               User.Category
-GET     /academics                              User.AcademicLevel
-GET     /genders                                User.Gender
-GET     /users/sessions                         User.Sessions
-GET     /classrooms                             User.Classroom
+#GET     /subjects                               User.Subjects
+#GET     /category                               User.Category
+#GET     /academics                              User.AcademicLevel
+#GET     /genders                                User.Gender
+#GET     /users/sessions                         User.Sessions
+#GET     /classrooms                             User.Classroom
 
 #ADMIN AUTH
-DELETE  /delete/:id                             Admin.Pop 
-POST    /create/subject/:name                   Admin.CreateSubject
-POST    /create/category/:name                  Admin.CreateCategory
-POST    /create/academic/:name                  Admin.CreateAcademicLevel
+#DELETE  /delete/:id                             Admin.Pop 
+#POST    /create/subject/:name                   Admin.CreateSubject
+#POST    /create/category/:name                  Admin.CreateCategory
+#POST    /create/academic/:name                  Admin.CreateAcademicLevel
 
 
 #SESSIONS
-GET     /sessions                               Session.Sessions
-GET     /user/sessions                          Session.MySessions
-GET     /sessions/topic                         Session.SessionsByTopic
+#GET     /sessions                               Session.Sessions
+#GET     /user/sessions                          Session.MySessions
+#GET     /sessions/topic                         Session.SessionsByTopic
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

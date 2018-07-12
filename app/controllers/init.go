@@ -1,18 +1,13 @@
 package controllers
 
 import (
-	"errors"
-	"log"
-	"net/http"
-	"strings"
-
 	"github.com/pdmp/amai/app/models"
 
-	jwt "github.com/dgrijalva/jwt-go"
 	gormdb "github.com/revel/modules/orm/gorm/app"
 	"github.com/revel/revel"
 )
 
+/*
 var (
 	errAuthHeaderNotFound = errors.New("authorization header not found")
 	errInvalidTokenFormat = errors.New("token format is invalid")
@@ -24,9 +19,6 @@ func checkErr(err error, msg string) {
 	}
 }
 
-func init() {
-	revel.OnAppStart(InitDB)
-}
 func AddLog(c *revel.Controller) revel.Result {
 	log.Println("InterceptFunc Test.")
 	return nil
@@ -127,6 +119,11 @@ func getTokenString(c *revel.Controller) (tokenString string, err error) {
 	return tokenString, nil
 
 }
+*/
+func init() {
+	revel.OnAppStart(InitDB)
+}
+
 func InitDB() {
 	revel.INFO.Println("Doing DB Migrations...")
 
@@ -138,9 +135,11 @@ func InitDB() {
 	gormdb.DB.AutoMigrate(&models.TypeStudent{})
 	gormdb.DB.AutoMigrate(&models.UserT{})
 
-	revel.InterceptFunc(AddLog, revel.BEFORE, &App{})
-	//	revel.InterceptFunc(Authenticate, revel.BEFORE, &App{})
-	revel.InterceptFunc(Authenticate, revel.BEFORE, &User{})
-	revel.InterceptFunc(Authenticate, revel.BEFORE, &Session{})
-	revel.InterceptFunc(AuthenticateAdmin, revel.BEFORE, &Admin{})
+	/*
+		revel.InterceptFunc(AddLog, revel.BEFORE, &App{})
+		//	revel.InterceptFunc(Authenticate, revel.BEFORE, &App{})
+		revel.InterceptFunc(Authenticate, revel.BEFORE, &User{})
+		revel.InterceptFunc(Authenticate, revel.BEFORE, &Session{})
+		revel.InterceptFunc(AuthenticateAdmin, revel.BEFORE, &Admin{})
+	*/
 }
