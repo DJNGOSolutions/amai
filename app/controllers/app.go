@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/pdmp/amai/app/models"
 	gormc "github.com/revel/modules/orm/gorm/app/controllers"
@@ -32,7 +34,6 @@ func (c App) Login() revel.Result {
 	if user.UserName != "" {
 		err := bcrypt.CompareHashAndPassword([]byte(user.UserPassword), []byte(pass))
 		if err == nil {
-			//TODO INSERT TYPE ON DATABASE
 			if user.IdTipo == 1 {
 				c.Session["user"] = user.UserName
 				c.Session.SetDefaultExpiration()
@@ -44,12 +45,25 @@ func (c App) Login() revel.Result {
 	return c.RenderJSON("auth failed")
 	//return c.RenderFileName("bento/dist/index.html", revel.NoDisposition)
 }
-func (c App) Register(user models.UserT) revel.Result {
-	hashPass, _ := bcrypt.GenerateFromPassword([]byte(user.UserPassword), bcrypt.DefaultCost)
+func (c App) Register() revel.Result {
+	username := c.Params.Form.Get("username")
+	pass := c.Params.Form.Get("password")
+	idGoogle := c.Params.Form.Get("idGoogle")
+	hashPass, _ := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
+	var user models.UserT
+	user.UserName = username
 	user.UserPassword = hashPass
+
+	if pass == "" {
+		value, _ := strconv.Atoi(idGoogle)
+		user.IdGoogle = uint(value)
+	}
+
+	user.IdTipo = 3
+
 	c.DB.Create(&user)
 
-	return c.RenderJSON(c.Response.Status)
+	return c.RenderJSON(user)
 	//return c.Redirect(routes.App.Index())
 }
 
@@ -62,4 +76,10 @@ func (c App) Insert() revel.Result {
 	c.DB.Create(&user)
 
 	return c.RenderJSON(user)
+}
+
+func (c App) Image(name string) revel.Result {
+	f, _ := os.Open("public/img/" + name)
+
+	return c.RenderFile(f, revel.Attachment)
 }

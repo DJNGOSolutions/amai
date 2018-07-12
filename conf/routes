@@ -9,13 +9,16 @@ module:testrunner
 GET     /                                       App.Index
 POST    /debug/create/user                      App.Insert
 POST    /login                                  App.Login
-#POST    /register                               App.Register
+POST    /register                               App.Register
+GET     /image/:name                            App.Image
 #GET     /hash/:pass                             App.HashTest
 #GET     /tools                                  App.Index
 
 #AUTH REQUIRED
 #GET     /show                                   User.Show
-#POST     /find/user                             User.GetUser
+POST     /find/user                             User.GetUser
+POST     /create/session                        User.Session
+POST     /join/session                          User.SubscribeSession
 #GET    /show/:id                               User.Getuser
 #GET     /subjects                               User.Subjects
 #GET     /category                               User.Category

@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/pdmp/amai/app/models"
 	gormc "github.com/revel/modules/orm/gorm/app/controllers"
 	"github.com/revel/revel"
 )
@@ -18,14 +20,12 @@ type User struct {
 var hmacSecret = []byte{97, 48, 97, 50, 97, 98, 105, 49, 99, 102, 83, 53, 57, 98, 52, 54, 97, 102, 99, 12, 12, 13, 56, 34, 23, 16, 78, 67, 54, 34, 32, 21}
 
 type UserModel struct {
-	Id            uint
-	UserName      string
-	UserAge       uint8
-	Gender        string
-	Userusername  string
-	AcademicLevel string
-	Role          string
-	Rate          string
+	Id              uint
+	UserPhoto       string
+	UserName        string
+	UserInstitution string
+	IdGoogle        uint
+	IdTipo          uint
 }
 
 type SessionsModel struct {
@@ -87,8 +87,23 @@ func (c User) GetUser() revel.Result {
 
 	log.Println("username found:", username)
 	var user UserModel
-	err = c.DB.Raw(query+" AND user_name = ?", username).Scan(&user).Error
-	log.Println(query+" AND user_name =", username)
+	err = c.DB.Raw(`
+	SELECT 
+		  type_student.type_name, 
+		  user_t.id, 
+		  user_t.user_photo, 
+		  user_t.user_name, 
+		  user_t.user_institution, 
+		  user_t.id_google, 
+		  user_t.id_tipo
+		FROM 
+		  public.type_student, 
+		  public.user_t
+		WHERE 
+  type_student.id = 1 AND
+   user_name = ?;
+  `, username).Find(&user).Error
+	//log.Println(query+" AND user_name =", username)
 	//err = gormdb.DB.Where("user_username = ?", username).First(&user).Error
 
 	if err != nil {
@@ -98,6 +113,36 @@ func (c User) GetUser() revel.Result {
 	}
 
 	return c.RenderJSON(&user)
+}
+
+func (c User) Session() revel.Result {
+	idCat := c.Params.Form.Get("idCategory")
+	idSub := c.Params.Form.Get("idSubject")
+	idUser := c.Params.Form.Get("idUserTutor")
+	place := c.Params.Form.Get("place")
+	tutorTheme := c.Params.Form.Get("tutoryTheme")
+	tutorTime := c.Params.Form.Get("tutoryTime")
+	tutoryDate := c.Params.Form.Get("tutoryDate")
+	tutoryPrice := c.Params.Form.Get("tutoryPrice")
+
+	idc, _ := strconv.Atoi(idCat)
+	ids, _ := strconv.Atoi(idSub)
+	idu, _ := strconv.Atoi(idUser)
+	session := models.Session{IdCategory: uint(idc), IdSubject: uint(ids), IdUserTutor: uint(idu), TutoryTheme: tutorTheme, TutoryTime: tutorTime, TutoryPlace: place, TutoryDate: tutoryDate, TutoryPrice: tutoryPrice}
+
+	c.DB.Create(&session)
+
+	return c.RenderJSON(&session)
+}
+
+func (c User) SubscribeSession() revel.Result {
+	idCost := c.Params.Form.Get("idUserCostumer")
+	idS := c.Params.Form.Get("id")
+	idc, _ := strconv.Atoi(idCost)
+	ids, _ := strconv.Atoi(idS)
+	var session models.Session
+	c.DB.Raw("UPDATE session SET id_user_customer = ? WHERE id = ?", idc, ids).Scan(&session)
+	return c.RenderJSON(session)
 }
 
 /*

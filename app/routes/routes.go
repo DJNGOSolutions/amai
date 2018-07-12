@@ -28,11 +28,9 @@ func (_ tApp) Login(
 }
 
 func (_ tApp) Register(
-		user interface{},
 		) string {
 	args := make(map[string]string)
 	
-	revel.Unbind(args, "user", user)
 	return revel.MainRouter.Reverse("App.Register", args).URL
 }
 
@@ -41,6 +39,15 @@ func (_ tApp) Insert(
 	args := make(map[string]string)
 	
 	return revel.MainRouter.Reverse("App.Insert", args).URL
+}
+
+func (_ tApp) Image(
+		name string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "name", name)
+	return revel.MainRouter.Reverse("App.Image", args).URL
 }
 
 
@@ -65,6 +72,20 @@ func (_ tUser) GetUser(
 	args := make(map[string]string)
 	
 	return revel.MainRouter.Reverse("User.GetUser", args).URL
+}
+
+func (_ tUser) Session(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("User.Session", args).URL
+}
+
+func (_ tUser) SubscribeSession(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("User.SubscribeSession", args).URL
 }
 
 
